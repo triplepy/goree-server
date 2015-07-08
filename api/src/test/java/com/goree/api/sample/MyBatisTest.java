@@ -13,7 +13,7 @@ import com.goree.api.Application;
 @SpringApplicationConfiguration(classes={Application.class})
 public class MyBatisTest {
     @Autowired
-    MybatisTestService service;
+    private MybatisTestService service;
     
     @Test
     public void selectWithMybatis() {
