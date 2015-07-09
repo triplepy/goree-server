@@ -60,4 +60,6 @@ public class MyBatisConfigTest {
     public void sqlSessionRegistered() {
         Assert.assertNotNull(sqlSession);
     }
+    
+    // TODO mybatis-config.xml에 들어가는 내용 즉, sqlSessionFactoryBean에 들어가는 설정값들에 대한 테스트케이스 및 코드 작성 필요.
 }
