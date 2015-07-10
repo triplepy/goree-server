@@ -1,7 +1,7 @@
 package com.goree.api.sample;
 
 public class FooBar {
-    int id;
+    private int id;
 
     public int getId() {
         return id;

@@ -17,7 +17,8 @@ public class MyBatisSampleTest {
     
     @Test
     public void selectWithMybatis() {
-        FooBar fooBar = service.selectFooBar();
+        FooBar fooBar = service.findAllFooBar();
         Assert.assertNotNull(fooBar);
+        Assert.assertEquals(1, fooBar.getId());
     }
 }
