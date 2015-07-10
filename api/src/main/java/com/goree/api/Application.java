@@ -1,4 +1,4 @@
-package com.goree.api.config;
+package com.goree.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -11,9 +11,10 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.goree.api.config.Application;
+import com.goree.api.Application;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
@@ -30,6 +31,8 @@ public class MyBatisConfigTest {
     private SqlSessionTemplate sqlSessionTemplate;
     @Autowired
     private SqlSession sqlSession;
+    @Autowired
+    private DataSourceTransactionManager transactionManager;
     
     @Test
     public void autowiredDatasource() {
@@ -59,6 +62,11 @@ public class MyBatisConfigTest {
     @Test
     public void sqlSessionRegistered() {
         Assert.assertNotNull(sqlSession);
+    }
+    
+    @Test
+    public void transactionManagerRegistered() {
+        Assert.assertNotNull(transactionManager);
     }
     
     // TODO test about configurations for mybatis-config.xml(SqlSessionFactory on javaconfig)
