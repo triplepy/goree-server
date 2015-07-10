@@ -67,5 +67,33 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+        <resource>
+            <directory>src/main/resources/${env}</directory>
+        </resource>
+    </resources>
+    <testResources>
+        <testResource>
+            <directory>src/test/resources/${env}</directory>
+        </testResource>
+    </testResources>
   </build>
+  <profiles>
+    <profile>
+        <id>local</id>
+        <properties>
+            <env>local</env>
+        </properties>
+    </profile>
+    <profile>
+        <id>server</id>
+        <properties>
+            <env>server</env>
+        </properties>
+    </profile>
+    
+  </profiles>
+  <properties>
+    <env>local</env>
+  </properties>
 </project>
