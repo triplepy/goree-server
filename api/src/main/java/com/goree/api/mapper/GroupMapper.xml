@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.GroupMapper">
+  <resultMap type="com.goree.api.domain.Member" id="Member">
+    <id column="id" property="id" />
+    <result column="email" property="email" />
+    <result column="full_name" property="fullName" />
+    <result column="facebook" property="facebook" />
+    <result column="twitter" property="twitter" />
+    <result column="kakaotalk" property="kakaotalk" />
+    <result column="age" property="age" />
+    <result column="gender" property="gender" />
+    <result column="phone" property="phone" />
+  </resultMap>
+  <resultMap type="com.goree.api.domain.Group" id="Group">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="description" property="description" />
+  </resultMap>
+  <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="description" property="description" />
+    <collection property="member" resultMap="Member" />
+  </resultMap>
+  <select id="selectGroupsByMemberId" resultType="com.goree.api.domain.Group">
+    SELECT group.id, group.name
+	    FROM group 
+	        INNER JOIN group_has_member 
+	            ON group.id = group_has_member.group_id 
+	            INNER JOIN member 
+	                ON group_has_member.member_id = member.id
+	WHERE member.id = 1
+  </select>
+
+</mapper>
