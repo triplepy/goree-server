@@ -23,14 +23,15 @@
     <result column="description" property="description" />
     <collection property="member" resultMap="Member" />
   </resultMap>
-  <select id="selectGroupsByMemberId" resultType="com.goree.api.domain.Group">
-    SELECT group.id, group.name
-	    FROM group 
+  <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
+        resultType="com.goree.api.domain.Group">
+    SELECT `group`.id, `group`.name
+	    FROM `group` 
 	        INNER JOIN group_has_member 
-	            ON group.id = group_has_member.group_id 
+	            ON `group`.id = group_has_member.group_id 
 	            INNER JOIN member 
 	                ON group_has_member.member_id = member.id
-	WHERE member.id = 1
+	WHERE member.id = #{id}
   </select>
 
 </mapper>

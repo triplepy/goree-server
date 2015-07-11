@@ -1,6 +1,5 @@
 package com.goree.api.sample.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -22,27 +21,12 @@ public class GroupControllerTest {
     private GroupController groupController;
     
     @Test
-    public void joinedGroupTest {
+    public void joinedGroupTest() {
         Member member = new Member();
         member.setId(1);
         
-        Group group1 = new Group();
-        Group group2 = new Group();
-        group1.setId(1);
-        group2.setId(2);
-        group1.setName("Java");
-        group2.setName("Python");
-        
-       
-        
-        List<Group> expected = new ArrayList<>();
-        expected.add(group1);
-        expected.add(group2);
-        
-        
-        List<Group> groupList = groupController.joined(member);
-        Assert.assertEquals(expected.get(0).get, groupList);
-        
-        
+        List<Group> joinedGroups = groupController.groupsJoined(member);
+        Assert.assertNotNull(member);
+        Assert.assertTrue(joinedGroups.size() > 0);
     }
 }

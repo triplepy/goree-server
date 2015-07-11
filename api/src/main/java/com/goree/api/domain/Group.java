@@ -2,8 +2,6 @@ package com.goree.api.domain;
 
 import java.util.List;
 
-import org.apache.ibatis.javassist.expr.Instanceof;
-
 public class Group {
     private int id;
     private Member leader;
@@ -42,10 +40,13 @@ public class Group {
         this.members = members;
     }
     
+    @Override
     public boolean equals(Object obj){
-        if (obj instanceof Group  ){
-            this.id = 
-        }
+        if (!(obj instanceof Group)) 
+            return false;
+        
+        Group group = (Group) obj;
+        return this.getId() == group.getId();
     }
     
 }

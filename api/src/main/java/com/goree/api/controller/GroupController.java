@@ -17,7 +17,7 @@ public class GroupController {
     private GroupService groupService;
     
     @RequestMapping(name="/groups/joined")
-    public List<Group> joined(Member member){
+    public List<Group> groupsJoined(Member member){
         return groupService.findRegistedGroupsByMember(member);
     }
 }
