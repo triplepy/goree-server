@@ -1,4 +1,4 @@
-package com.goree.api.sample.controller;
+package com.goree.api.controller;
 
 import java.util.List;
 
