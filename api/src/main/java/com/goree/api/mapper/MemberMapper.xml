@@ -12,17 +12,7 @@
     <result column="gender" property="gender" />
     <result column="phone" property="phone" />
   </resultMap>
-  <resultMap type="com.goree.api.domain.Group" id="Group">
-    <id column="id" property="id" />
-    <result column="name" property="name" />
-    <result column="description" property="description" />
-  </resultMap>
-  <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
-    <id column="id" property="id" />
-    <result column="name" property="name" />
-    <result column="description" property="description" />
-    <collection property="member" resultMap="Member" />
-  </resultMap>
+  
   <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
     INSERT INTO 
             member (email, password, full_name, facebook, twitter, kakaotalk, age, gender, phone) 
