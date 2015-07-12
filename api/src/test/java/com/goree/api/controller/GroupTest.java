@@ -16,12 +16,12 @@ import com.goree.api.domain.Member;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
-public class GroupControllerTest {
+public class GroupTest {
     @Autowired
     private GroupController groupController;
     
     @Test
-    public void joinedGroupTest() {
+    public void joinedGroup() {
         Member member = new Member();
         member.setId(1);
         
@@ -29,4 +29,11 @@ public class GroupControllerTest {
         Assert.assertNotNull(member);
         Assert.assertTrue(joinedGroups.size() > 0);
     }
+    
+//    @Test
+//    public void createGroup() {
+//        Group group = new Group();
+//        group.setName("develop_t!e@s#t$");
+//        group.set
+//    }
 }

@@ -15,7 +15,7 @@ public class Member {
     public enum Gender {
         M, F
     }
-
+    
     public int getId() {
         return id;
     }
