@@ -1,5 +1,7 @@
 package com.goree.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,14 @@ public class MemberService {
         memberMapper.insertMember(member);
         Member registered = memberMapper.selectMemberByEmail(member.getEmail());
         return registered;
+    }
+
+    public List<Member> findMemberAll() {
+        return memberMapper.selectMemberAll();
+    }
+
+    public void deleteMemberById(int id) {
+        memberMapper.deleteMemberById(id);
     }
 
 }

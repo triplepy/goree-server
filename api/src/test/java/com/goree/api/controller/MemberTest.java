@@ -1,6 +1,7 @@
 package com.goree.api.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,6 +22,13 @@ public class MemberTest {
     private MemberController controller;
     
     @Test
+    public void findMemberAll() {
+        List<Member> members = controller.findMemberAll();
+        Assert.assertNotNull(members);
+        Assert.assertFalse(members.isEmpty());
+    }
+    
+    @Test
     public void registerMember() {
         Member expected = new Member();
         expected.setEmail("rpxhdnjsdud"+new Date().getTime()+"@nate.com");
@@ -34,5 +42,15 @@ public class MemberTest {
         Assert.assertNotNull(registered);
         Assert.assertEquals(expected.getEmail(), registered.getEmail());
     }
-
+    
+    @Test
+    public void deleteMemberById() {
+        List<Member> members = controller.findMemberAll();
+        Member toBeDeleted = members.get(members.size()-1);
+        controller.deleteMemberById(toBeDeleted.getId());
+        
+        boolean deleted = !controller.findMemberAll().stream()
+                .anyMatch(m-> m.getId() == toBeDeleted.getId());
+        Assert.assertTrue(deleted);
+    }
 }

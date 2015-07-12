@@ -22,4 +22,10 @@
   <select id="selectMemberByEmail" parameterType="string" resultMap="Member">
     SELECT * FROM member WHERE email = #{email}
   </select>
+  <select id="selectMemberAll" resultMap="Member">
+    SELECT * FROM member
+  </select>
+  <delete id="deleteMemberById" parameterType="int">
+    DELETE FROM member WHERE id = #{id}
+  </delete>
 </mapper>

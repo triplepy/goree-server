@@ -10,15 +10,17 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.goree.api.Application;
-import com.goree.api.controller.GroupController;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
+import com.goree.api.service.MemberService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
 public class GroupTest {
     @Autowired
     private GroupController groupController;
+    @Autowired
+    private MemberService memberService;
     
     @Test
     public void joinedGroup() {
@@ -34,6 +36,9 @@ public class GroupTest {
 //    public void createGroup() {
 //        Group group = new Group();
 //        group.setName("develop_t!e@s#t$");
-//        group.set
+//        group.setDescription("description");
+//        Member leader = memberService.
+//        
+//        group.setLeader(leader);
 //    }
 }

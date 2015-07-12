@@ -1,5 +1,7 @@
 package com.goree.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,5 +18,13 @@ public class MemberController {
     @RequestMapping(value="/member", method=RequestMethod.GET)
     public Member registerMember(Member member) {
         return memberService.registerMember(member);
+    }
+
+    public List<Member> findMemberAll() {
+        return memberService.findMemberAll();
+    }
+
+    public void deleteMemberById(int id) {
+        memberService.deleteMemberById(id);
     }
 }
