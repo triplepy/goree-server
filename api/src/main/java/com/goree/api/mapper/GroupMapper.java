@@ -13,4 +13,8 @@ public interface GroupMapper {
     void insertGroup(Group group);
     
     Group selectGroupById(int id);
+    
+    List<Group> selectGroupAll();
+    
+    Group selectGroupByName(String name);
 }

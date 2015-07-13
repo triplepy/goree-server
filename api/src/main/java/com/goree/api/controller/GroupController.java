@@ -29,4 +29,12 @@ public class GroupController {
     public Group findGroupById(int id) {
         return groupService.findGroupById(id);
     }
+
+    public List<Group> findGroupAll() {
+        return groupService.findGroupAll();
+    }
+
+    public Group findGroupByName(String name) {
+        return groupService.findGroupByName(name);
+    }
 }

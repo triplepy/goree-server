@@ -5,8 +5,7 @@
     <id column="group_id" property="id" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
-    <association resultMap="Member" property="leader" >
-    </association>
+    <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
     <id column="group_id" property="id" />
@@ -28,5 +27,44 @@
     INSERT INTO `group`(group_name, leader_id,description) 
          values (#{name}, #{leader.id},#{description})
   </insert>
+  <select id="selectGroupById" parameterType="int" resultMap="Group">
+    SELECT 
+        `group`.group_id, 
+        `group`.group_name, 
+        `group`.description, 
+        member.member_id, 
+        member.email,
+        member.full_name
+    FROM 
+        `group`INNER JOIN member 
+            ON `group`.leader_id = member.member_id
+    WHERE `group`.group_id = #{id}
+  </select>
+  <select id="selectGroupAll" resultMap="Group">
+    SELECT 
+        `group`.group_id, 
+        `group`.group_name, 
+        `group`.description, 
+        member.member_id, 
+        member.email,
+        member.full_name
+    FROM 
+        `group`INNER JOIN member 
+            ON `group`.leader_id = member.member_id
+  </select>
+
+  <select id="selectGroupByName" parameterType="string" resultMap="Group">
+        SELECT 
+        `group`.group_id, 
+        `group`.group_name, 
+        `group`.description, 
+        member.member_id, 
+        member.email,
+        member.full_name
+    FROM 
+        `group`INNER JOIN member 
+            ON `group`.leader_id = member.member_id
+    WHERE `group`.group_name = #{name}
+  </select>
 
 </mapper>

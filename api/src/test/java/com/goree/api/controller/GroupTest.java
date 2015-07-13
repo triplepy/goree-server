@@ -51,16 +51,33 @@ public class GroupTest {
         
         Group resultGroup = groupController.makingGroup(expected);
         
-        Assert.assertTrue(expected.equals(resultGroup));
+        Assert.assertEquals(expected.getName(), resultGroup.getName());
     }
     
     @Test
     public void findGroupById(){
-        int expectedId = 1;
-        
-        Group resultGroup = groupController.findGroupById(expectedId);
-        
-        Assert.assertEquals(expectedId, resultGroup.getId());
+        Group expected = groupController.findGroupAll().get(0);
+        Group result = groupController.findGroupById(expected.getId());
+        Assert.assertEquals(expected.getId(), result.getId());
         
     }
+    
+    @Test
+    public void findGroupByName(){
+        List<Group> groups = groupController.findGroupAll();
+        Group expected = groups.get(0);
+        Group result = groupController.findGroupByName(expected.getName());
+        
+        Assert.assertEquals(expected.getName(), result.getName()); 
+        
+    }
+    
+    @Test
+    public void findGroupAll() {
+        List<Group> groups = groupController.findGroupAll();
+        Assert.assertNotNull(groups);
+        Assert.assertFalse(groups.isEmpty());
+    }
+    
+    
 }

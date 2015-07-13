@@ -20,12 +20,18 @@ public class GroupService {
     }
     public Group makingGroup(Group group) {
         groupMapper.insertGroup(group);
-//        Group makedGroup = groupMapper.selectGroupById(group.getId());
-        return group;
+        Group makedGroup = groupMapper.selectGroupByName(group.getName());
+        return makedGroup;
     }
     public Group findGroupById(int id) {
         Group group = new Group();
         group.setId(id);
         return group;
+    }
+    public List<Group> findGroupAll() {
+        return groupMapper.selectGroupAll();
+    }
+    public Group findGroupByName(String name) {
+        return groupMapper.selectGroupByName(name);
     }
 }
