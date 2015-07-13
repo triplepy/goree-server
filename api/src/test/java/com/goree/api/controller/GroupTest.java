@@ -24,11 +24,11 @@ public class GroupTest {
     private MemberService memberService;
     
     @Test
-    public void joinedGroup() {
+    public void findGroupsJoined() {
         Member member = new Member();
         member.setId(1);
         
-        List<Group> joinedGroups = groupController.groupsJoined(member);
+        List<Group> joinedGroups = groupController.findGroupsJoined(member);
         Assert.assertNotNull(member);
         Assert.assertTrue(joinedGroups.size() > 0);
     }
