@@ -15,13 +15,17 @@
   </resultMap>
   <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
         resultType="com.goree.api.domain.Group">
-    SELECT `group`.group_id, `group`.group_name
-	    FROM `group` 
-	        INNER JOIN group_has_member 
-	            ON `group`.group_id = group_has_member.group_id 
-	            INNER JOIN member 
-	                ON group_has_member.member_id = member.member_id
-	WHERE member.member_id = #{id}
+    SELECT 
+        `group`.group_id, 
+        `group`.group_name
+    FROM 
+        `group` 
+            INNER JOIN group_has_member 
+                ON `group`.group_id = group_has_member.group_id 
+            INNER JOIN member 
+                ON group_has_member.member_id = member.member_id
+    WHERE 
+        member.member_id = #{id}
   </select>
   <insert id="insertGroup" parameterType="com.goree.api.domain.Group">
     INSERT INTO `group`(group_name, leader_id,description) 
@@ -36,9 +40,11 @@
         member.email,
         member.full_name
     FROM 
-        `group`INNER JOIN member 
-            ON `group`.leader_id = member.member_id
-    WHERE `group`.group_id = #{id}
+        `group`
+            INNER JOIN member 
+                ON `group`.leader_id = member.member_id
+    WHERE 
+        `group`.group_id = #{id}
   </select>
   <select id="selectGroupAll" resultMap="Group">
     SELECT 
@@ -49,8 +55,9 @@
         member.email,
         member.full_name
     FROM 
-        `group`INNER JOIN member 
-            ON `group`.leader_id = member.member_id
+        `group`
+            INNER JOIN member 
+                ON `group`.leader_id = member.member_id
   </select>
 
   <select id="selectGroupByName" parameterType="string" resultMap="Group">
@@ -62,9 +69,11 @@
         member.email,
         member.full_name
     FROM 
-        `group`INNER JOIN member 
-            ON `group`.leader_id = member.member_id
-    WHERE `group`.group_name = #{name}
+        `group`
+            INNER JOIN member 
+                ON `group`.leader_id = member.member_id
+    WHERE 
+        `group`.group_name = #{name}
   </select>
 
 </mapper>
