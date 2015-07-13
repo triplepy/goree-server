@@ -21,4 +21,12 @@ public class GroupController {
     public List<Group> groupsJoined(Member member){
         return groupService.findRegistedGroupsByMember(member);
     }
+
+    public Group makingGroup(Group group) {
+        return groupService.makingGroup(group);
+    }
+
+    public Group findGroupById(int id) {
+        return groupService.findGroupById(id);
+    }
 }

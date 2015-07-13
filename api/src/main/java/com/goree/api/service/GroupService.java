@@ -18,4 +18,14 @@ public class GroupService {
     public List<Group> findRegistedGroupsByMember(Member member) {
         return groupMapper.selectGroupsByMemberId(member);
     }
+    public Group makingGroup(Group group) {
+        groupMapper.insertGroup(group);
+//        Group makedGroup = groupMapper.selectGroupById(group.getId());
+        return group;
+    }
+    public Group findGroupById(int id) {
+        Group group = new Group();
+        group.setId(id);
+        return group;
+    }
 }

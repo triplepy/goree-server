@@ -10,4 +10,7 @@ public interface GroupMapper {
     
     List<Group> selectGroupsByMemberId(Member member);
 
+    void insertGroup(Group group);
+    
+    Group selectGroupById(int id);
 }

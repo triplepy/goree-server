@@ -2,25 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.GroupMapper">
   <resultMap type="com.goree.api.domain.Group" id="Group">
-    <id column="id" property="id" />
-    <result column="name" property="name" />
+    <id column="group_id" property="id" />
+    <result column="group_name" property="name" />
     <result column="description" property="description" />
+    <association resultMap="Member" property="leader" >
+    </association>
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
-    <id column="id" property="id" />
-    <result column="name" property="name" />
+    <id column="group_id" property="id" />
+    <result column="group_name" property="name" />
     <result column="description" property="description" />
     <collection property="member" resultMap="Member" />
   </resultMap>
   <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
         resultType="com.goree.api.domain.Group">
-    SELECT `group`.id, `group`.name
+    SELECT `group`.group_id, `group`.group_name
 	    FROM `group` 
 	        INNER JOIN group_has_member 
-	            ON `group`.id = group_has_member.group_id 
+	            ON `group`.group_id = group_has_member.group_id 
 	            INNER JOIN member 
-	                ON group_has_member.member_id = member.id
-	WHERE member.id = #{id}
+	                ON group_has_member.member_id = member.member_id
+	WHERE member.member_id = #{id}
   </select>
+  <insert id="insertGroup" parameterType="com.goree.api.domain.Group">
+    INSERT INTO `group`(group_name, leader_id,description) 
+         values (#{name}, #{leader.id},#{description})
+  </insert>
 
 </mapper>

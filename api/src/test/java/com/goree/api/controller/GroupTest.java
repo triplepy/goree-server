@@ -1,5 +1,6 @@
 package com.goree.api.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -32,13 +33,34 @@ public class GroupTest {
         Assert.assertTrue(joinedGroups.size() > 0);
     }
     
-//    @Test
-//    public void createGroup() {
-//        Group group = new Group();
-//        group.setName("develop_t!e@s#t$");
-//        group.setDescription("description");
-//        Member leader = memberService.
-//        
-//        group.setLeader(leader);
-//    }
+    @Test
+    public void createGroup() {
+        List<Member> memberList = memberService.findMemberAll();
+        Member leader = null;
+        if(memberList != null && !memberList.isEmpty() ){
+            leader = memberList.get(0);
+        } else {
+            
+            Assert.fail("memberList is null or empty");
+        }
+        
+        Group expected = new Group();
+        expected.setName("It is Group"+new Date().getTime());
+        expected.setDescription("It is description");
+        expected.setLeader(leader);
+        
+        Group resultGroup = groupController.makingGroup(expected);
+        
+        Assert.assertTrue(expected.equals(resultGroup));
+    }
+    
+    @Test
+    public void findGroupById(){
+        int expectedId = 1;
+        
+        Group resultGroup = groupController.findGroupById(expectedId);
+        
+        Assert.assertEquals(expectedId, resultGroup.getId());
+        
+    }
 }
