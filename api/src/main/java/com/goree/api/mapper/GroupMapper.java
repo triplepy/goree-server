@@ -17,4 +17,8 @@ public interface GroupMapper {
     List<Group> selectGroupAll();
     
     Group selectGroupByName(String name);
+    
+    void deleteGroupMemberMappingByMemberId(int id);
+    
+    void insertToGroupHasMember(int groupId, int memberId);
 }

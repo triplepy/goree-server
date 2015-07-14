@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goree.api.domain.Member;
+import com.goree.api.mapper.GroupMapper;
 import com.goree.api.mapper.MemberMapper;
 
 @Service
@@ -14,6 +15,8 @@ import com.goree.api.mapper.MemberMapper;
 public class MemberService {
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private GroupMapper groupMapper;
     
     public Member registerMember(Member member) {
         memberMapper.insertMember(member);
@@ -27,6 +30,7 @@ public class MemberService {
 
     public void deleteMemberById(int id) {
         memberMapper.deleteMemberById(id);
+        groupMapper.deleteGroupMemberMappingByMemberId(id);
     }
 
 }

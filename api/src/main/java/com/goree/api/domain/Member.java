@@ -1,8 +1,10 @@
 package com.goree.api.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(of={"id"})
 public class Member {
     private int id;
     private String email;

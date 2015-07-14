@@ -34,4 +34,7 @@ public class GroupService {
     public Group findGroupByName(String name) {
         return groupMapper.selectGroupByName(name);
     }
+    public void joinMember(int groupId, int memberId) {
+        groupMapper.insertToGroupHasMember(groupId, memberId);
+    }
 }
