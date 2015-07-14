@@ -1,0 +1,16 @@
+package com.goree.api.mapper;
+
+import java.util.List;
+
+import com.goree.api.domain.Tag;
+
+public interface TagMapper {
+
+	void insertTag(Tag tag);
+
+	Tag selectTagByName(String tagName);
+
+	Tag selectTagById(int id);
+
+	List<Tag> selectTagByStartWord(String startWords);
+}
