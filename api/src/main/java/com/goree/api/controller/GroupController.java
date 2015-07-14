@@ -44,4 +44,8 @@ public class GroupController {
         return groupService.findGroupByName(name);
     }
 
+    public void joinMember(int groupId, int memberId) {
+        groupService.joinMember(groupId, memberId);
+    }
+
 }

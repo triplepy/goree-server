@@ -79,5 +79,4 @@ public class GroupTest {
         Assert.assertFalse(groups.isEmpty());
     }
     
-    
 }

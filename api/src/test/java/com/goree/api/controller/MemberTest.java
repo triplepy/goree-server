@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goree.api.Application;
+import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Member.Gender;
 
@@ -22,25 +23,27 @@ import com.goree.api.domain.Member.Gender;
 public class MemberTest {
 
     @Autowired
-    private MemberController controller;
+    private MemberController memberController;
+    @Autowired
+    private GroupController groupController;
 
     private Member testMember;
     
     @Before
     public void setUp() {
         Member member = new Member();
-        member.setEmail("test@gmail.com");
+        member.setEmail("test1@gmail.com");
         member.setPassword("qlalfqjsgh");
         member.setFullName("Wonyoung Ju");
         member.setAge(22);
         member.setGender(Gender.M);
         member.setPhone("010-8826-0173");
-        testMember = controller.registerMember(member);
+        testMember = memberController.registerMember(member);
     }
     
     @Test
     public void findMemberAll() {
-        List<Member> members = controller.findMemberAll();
+        List<Member> members = memberController.findMemberAll();
         Assert.assertNotNull(members);
         Assert.assertFalse(members.isEmpty());
     }
@@ -55,17 +58,32 @@ public class MemberTest {
         expected.setGender(Gender.M);
         expected.setPhone("010-8826-0173");
         
-        Member registered = controller.registerMember(expected);
+        Member registered = memberController.registerMember(expected);
         Assert.assertNotNull(registered);
         Assert.assertEquals(expected.getEmail(), registered.getEmail());
     }
     
     @Test
     public void deleteMemberById() {
-        controller.deleteMemberById(testMember.getId());
+        memberController.deleteMemberById(testMember.getId());
         
-        boolean deleted = !controller.findMemberAll().stream()
+        boolean deleted = !memberController.findMemberAll().stream()
                 .anyMatch(m-> m.getId() == testMember.getId());
         Assert.assertTrue(deleted);
+        
+        List<Group> groupsHasDeletedMember = 
+                groupController.findGroupsJoined(testMember);
+        Assert.assertTrue(groupsHasDeletedMember.isEmpty());
+    }
+    
+    @Test
+    public void joinMemberToGroup() {
+        Group toBeJoined = groupController.findGroupAll().get(0);
+        int toBeJoinedGroupId = toBeJoined.getId();
+        groupController.joinMember(toBeJoinedGroupId, testMember.getId());
+        
+        List<Group> joinedGroups = groupController.findGroupsJoined(testMember);
+        boolean joined = joinedGroups.contains(toBeJoined);
+        Assert.assertTrue(joined);
     }
 }

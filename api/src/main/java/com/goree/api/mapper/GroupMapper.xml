@@ -61,7 +61,7 @@
   </select>
 
   <select id="selectGroupByName" parameterType="string" resultMap="Group">
-        SELECT 
+    SELECT 
         `group`.group_id, 
         `group`.group_name, 
         `group`.description, 
@@ -75,5 +75,14 @@
     WHERE 
         `group`.group_name = #{name}
   </select>
+  
+  <delete id="deleteGroupMemberMappingByMemberId" parameterType="int">
+    DELETE FROM group_has_member WHERE member_id = #{id}
+  </delete>
+  
+  <insert id="insertToGroupHasMember">
+    INSERT INTO group_has_member (group_id, member_id)
+    VALUES (#{param1}, #{param2})
+  </insert>
 
 </mapper>
