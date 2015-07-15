@@ -1,6 +1,7 @@
 package com.goree.api.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -73,9 +74,34 @@ public class TagTest {
 		// 추후 매핑시에는 아래와 같은 방법으로 테스트가 불가능 하여 다른 방법으로 Assert 필요함
 		// (순서가 변경될시엔 아래 테스트가 실패하게 됨)
 		List<Tag> actuals = tagController.searchTagsByStartWord("Search");
-		for (int i = 0; i < expecteds.size(); i++) {
-			Assert.assertEquals(expecteds.get(i), actuals.get(i));
-		}
+		Assert.assertTrue(actuals.containsAll(expecteds));
 	}
+	
+//	@Test
+//	public void insertTagListByJoinUser() {
+//	    List<Tag> expects = new ArrayList<>();
+//
+//	    String insertValueByUser = "#abc #abcd #abcde #adsarrst";
+//	    String[] values = insretValueByUser.split(" ");
+//	    for (String value : values) {
+//	        value.replace("#", "");
+//	    }
+//
+//	        
+//	    for (int i = 0 ; i < values.length() ; i++) {
+//	        Tag item = new Tag();
+//	        item.setTagName(values[i]);
+//	        expects.add(item);
+//	    }
+//	    
+//	    List<Tag> actuals = tagController.insertTagListByJoinUser(insertValueByUser);   
+//	    
+//	    for(int i = 0 ; i < actuals.size(); i++ ) {
+//	        Assert.assertEquals(expects.get(i).getTagName(), actuals.get(i).getTagName());
+//	    }
+//
+//	}
+
+	
 
 }
