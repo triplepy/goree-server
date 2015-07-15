@@ -14,7 +14,7 @@
     <collection property="member" resultMap="Member" />
   </resultMap>
   <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
-        resultType="com.goree.api.domain.Group">
+        resultMap="Group">
     SELECT 
         `group`.group_id, 
         `group`.group_name
