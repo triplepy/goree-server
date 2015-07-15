@@ -28,4 +28,8 @@
   <delete id="deleteMemberById" parameterType="int">
     DELETE FROM member WHERE member_id = #{id}
   </delete>
+  <insert id="insertMemberHasTag">
+    INSERT INTO member_has_tag (member_id, tag_id) 
+    VALUES (#{param1}, #{param2})
+  </insert>
 </mapper>

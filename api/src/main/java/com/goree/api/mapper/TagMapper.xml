@@ -11,6 +11,14 @@
     INSERT INTO tag (tag_name) VALUES(#{tagName})
   </insert>
   
+  <insert id="insertTags">
+    INSERT INTO tag (tag_name) VALUES 
+    <foreach item="item" collection="list" separator=",">
+        (#{item.tagName})
+    </foreach>
+  
+  </insert>
+  
   <select id="selectTagByName" parameterType="string" resultMap="Tag">
     SELECT * FROM tag WHERE tag_name = #{tagName}
   </select>
@@ -20,6 +28,18 @@
   </select>
   
   <select id="selectTagByStartWord" parameterType="string" resultMap="Tag">
-    SELECT * FROM tag WHERE tag_name LIKE CONCAT(#{startWords}, '%')
+    SELECT 
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided,
+        (SELECT
+		    (SELECT COUNT(member_id) FROM member_has_tag WHERE tag_id = #{tag.id}) 
+		    + 
+		    (SELECT COUNT(group_id) FROM group_has_tag WHERE tag_id = #{tag.id})
+		FROM DUAL) AS count
+    FROM 
+        tag WHERE tag_name LIKE CONCAT(#{startWords}, '%')
+    ORDER BY 
+        count DESC
   </select>
 </mapper>

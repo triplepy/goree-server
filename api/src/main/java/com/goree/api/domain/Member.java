@@ -1,5 +1,7 @@
 package com.goree.api.domain;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +18,7 @@ public class Member {
     private int age;
     private Gender gender;
     private String phone;
+    private List<Tag> tags;
     
     public enum Gender {
         M, F

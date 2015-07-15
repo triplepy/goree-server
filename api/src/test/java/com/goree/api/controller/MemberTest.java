@@ -1,5 +1,6 @@
 package com.goree.api.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import com.goree.api.Application;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Member.Gender;
+import com.goree.api.domain.Tag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
@@ -57,7 +59,9 @@ public class MemberTest {
         expected.setAge(22);
         expected.setGender(Gender.M);
         expected.setPhone("010-8826-0173");
-        
+        Tag tag = new Tag();
+        tag.setTagName("memberTest");
+        expected.setTags(Arrays.asList(tag));
         Member registered = memberController.registerMember(expected);
         Assert.assertNotNull(registered);
         Assert.assertEquals(expected.getEmail(), registered.getEmail());

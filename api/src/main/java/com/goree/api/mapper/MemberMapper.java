@@ -14,4 +14,5 @@ public interface MemberMapper {
 
     void deleteMemberById(int id);
 
+    void insertMemberHasTag(int memberId, int tagId);
 }
