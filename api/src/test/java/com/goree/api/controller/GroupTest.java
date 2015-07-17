@@ -1,8 +1,20 @@
 package com.goree.api.controller;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.dbunit.DataSourceDatabaseTester;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,14 +35,18 @@ public class GroupTest {
     @Autowired
     private MemberService memberService;
     
+    
+    
+    
     @Test
-    public void findGroupsJoined() {
+    public void findGroupsJoined() throws Exception {
+        
+        
         Member member = new Member();
         member.setId(1);
-        
         List<Group> joinedGroups = groupController.findGroupsJoined(member);
-        Assert.assertNotNull(member);
-        Assert.assertTrue(joinedGroups.size() > 0);
+        Assert.assertTrue(joinedGroups.size() == 1);
+        Assert.assertTrue(joinedGroups.get(0).getId() == 1 );
     }
     
     @Test
