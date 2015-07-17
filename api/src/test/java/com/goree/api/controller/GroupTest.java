@@ -1,7 +1,5 @@
 package com.goree.api.controller;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -11,11 +9,10 @@ import javax.sql.DataSource;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,8 @@ import com.goree.api.Application;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.service.MemberService;
+import com.goree.api.util.DBUnitOperator;
+import com.goree.api.util.IDataSetFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
@@ -35,12 +34,20 @@ public class GroupTest {
     @Autowired
     private MemberService memberService;
     
+    @Autowired
+    private DataSource dataSource;
     
+    
+    @Before
+    public void setUp() {
+    	DBUnitOperator.setDataSource(dataSource);
+    	IDataSet dataset = IDataSetFactory.fromXml("src/test/resources/testdataset/findGroupsJoined_setup.xml");
+    	DBUnitOperator.cleanInsert(dataset);
+    }
     
     
     @Test
     public void findGroupsJoined() throws Exception {
-        
         
         Member member = new Member();
         member.setId(1);
