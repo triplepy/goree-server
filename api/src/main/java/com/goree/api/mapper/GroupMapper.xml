@@ -16,64 +16,64 @@
   <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
         resultMap="Group">
     SELECT 
-        `group`.group_id, 
-        `group`.group_name
+        `groups`.group_id, 
+        `groups`.group_name
     FROM 
-        `group` 
+        `groups` 
             INNER JOIN group_has_member 
-                ON `group`.group_id = group_has_member.group_id 
+                ON `groups`.group_id = group_has_member.group_id 
             INNER JOIN member 
                 ON group_has_member.member_id = member.member_id
     WHERE 
         member.member_id = #{id}
   </select>
   <insert id="insertGroup" parameterType="com.goree.api.domain.Group">
-    INSERT INTO `group`(group_name, leader_id,description) 
+    INSERT INTO `groups`(group_name, leader_id,description) 
          values (#{name}, #{leader.id},#{description})
   </insert>
   <select id="selectGroupById" parameterType="int" resultMap="Group">
     SELECT 
-        `group`.group_id, 
-        `group`.group_name, 
-        `group`.description, 
+        `groups`.group_id, 
+        `groups`.group_name, 
+        `groups`.description, 
         member.member_id, 
         member.email,
         member.full_name
     FROM 
-        `group`
+        `groups`
             INNER JOIN member 
-                ON `group`.leader_id = member.member_id
+                ON `groups`.leader_id = member.member_id
     WHERE 
-        `group`.group_id = #{id}
+        `groups`.group_id = #{id}
   </select>
   <select id="selectGroupAll" resultMap="Group">
     SELECT 
-        `group`.group_id, 
-        `group`.group_name, 
-        `group`.description, 
+        `groups`.group_id, 
+        `groups`.group_name, 
+        `groups`.description, 
         member.member_id, 
         member.email,
         member.full_name
     FROM 
-        `group`
+        `groups`
             INNER JOIN member 
-                ON `group`.leader_id = member.member_id
+                ON `groups`.leader_id = member.member_id
   </select>
 
   <select id="selectGroupByName" parameterType="string" resultMap="Group">
     SELECT 
-        `group`.group_id, 
-        `group`.group_name, 
-        `group`.description, 
+        `groups`.group_id, 
+        `groups`.group_name, 
+        `groups`.description, 
         member.member_id, 
         member.email,
         member.full_name
     FROM 
-        `group`
+        `groups`
             INNER JOIN member 
-                ON `group`.leader_id = member.member_id
+                ON `groups`.leader_id = member.member_id
     WHERE 
-        `group`.group_name = #{name}
+        `groups`.group_name = #{name}
   </select>
   
   <delete id="deleteGroupMemberMappingByMemberId" parameterType="int">
