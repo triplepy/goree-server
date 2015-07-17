@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.dbunit.dataset.IDataSet;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,6 +39,7 @@ public class DBUnitOperatorTest {
     
     @Test
     public void test() throws Exception {
+
         IDataSet dataset = IDataSetFactory.fromXml("src/test/resources/testdataset/dbunitoperator.xml");
         DBUnitOperator.cleanInsert(dataset);
 
