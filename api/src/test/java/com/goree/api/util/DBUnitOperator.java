@@ -11,6 +11,8 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
+import scala.util.parsing.combinator.testing.Tester;
+
 public class DBUnitOperator {
 	
 	// 코드 냄새가 나지만 오늘 너무 머리를 많이 써서 일단 동작 되는 상태로 커밋을 한다.
@@ -39,7 +41,6 @@ public class DBUnitOperator {
     }
     
     public static void cleanInsert(IDataSet dataset) {
-        
         IDatabaseTester tester = new DataSourceDatabaseTester(dataSource);
         IDatabaseConnection conn = null;
         try {
@@ -57,5 +58,24 @@ public class DBUnitOperator {
             }
         }
         
+    }
+    
+    public static void deleteAll(IDataSet dataset){
+    	IDatabaseTester tester = new DataSourceDatabaseTester(dataSource);
+    	IDatabaseConnection conn = null;
+    	try{
+    		conn = tester.getConnection();
+    		DatabaseOperation.DELETE_ALL.execute(conn, dataset);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
