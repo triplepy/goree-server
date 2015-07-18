@@ -33,9 +33,9 @@
         tag.tag_name,
         tag.provided,
         (SELECT
-		    (SELECT COUNT(member_id) FROM member_has_tag WHERE tag_id = #{tag.id}) 
+		    (SELECT COUNT(member_id) FROM member_has_tag WHERE tag_id = tag.tag_id) 
 		    + 
-		    (SELECT COUNT(group_id) FROM group_has_tag WHERE tag_id = #{tag.id})
+		    (SELECT COUNT(group_id) FROM group_has_tag WHERE tag_id = tag.tag_id)
 		FROM DUAL) AS count
     FROM 
         tag WHERE tag_name LIKE CONCAT(#{startWords}, '%')
