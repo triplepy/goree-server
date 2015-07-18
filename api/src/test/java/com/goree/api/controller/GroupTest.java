@@ -3,45 +3,29 @@ package com.goree.api.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.dbunit.dataset.IDataSet;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.goree.api.Application;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.mapper.MemberMapper;
-import com.goree.api.util.DBUnitOperator;
-import com.goree.api.util.IDataSetFactory;
+import com.goree.api.util.TestWithDBUnit;
 
-import scala.annotation.meta.getter;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { Application.class })
-public class GroupTest {
+public class GroupTest extends TestWithDBUnit {
 	@Autowired
 	private GroupController groupController;
 
 	@Autowired
-	private DataSource dataSource;
-
-	@Autowired
 	private MemberMapper memberMapper;
 
-	@Before
-	public void setUp() {
-		DBUnitOperator.setDataSource(dataSource);
-		IDataSet dataset = IDataSetFactory.fromXml("src/test/resources/testdataset/groupt_test_setup.xml");
-		DBUnitOperator.cleanInsert(dataset);
+	
+	@Override
+	public String getDatasetFilePath() {
+		return "src/test/resources/testdataset/group_test_setup.xml";
 	}
-
+	
+	
 	@Test
 	public void findGroupsJoined() throws Exception {
 		Member member = new Member();
@@ -91,5 +75,7 @@ public class GroupTest {
 		
 		Assert.assertTrue(groups.size() > 0);
 	}
+
+
 
 }
