@@ -3,7 +3,6 @@ package com.goree.api.mapper;
 import java.util.List;
 
 import com.goree.api.domain.Tag;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public interface TagMapper {
 
