@@ -5,6 +5,7 @@
     <id column="member_id" property="id" />
     <result column="email" property="email" />
     <result column="full_name" property="fullName" />
+    <result column="nickname" property="nickname" />
     <result column="facebook" property="facebook" />
     <result column="twitter" property="twitter" />
     <result column="kakaotalk" property="kakaotalk" />
@@ -15,9 +16,9 @@
   
   <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
     INSERT INTO 
-        member (email, password, full_name, facebook, twitter, kakaotalk, age, gender, phone) 
+        member (email, password, full_name, nickname, facebook, twitter, kakaotalk, job, age, gender, phone) 
     VALUES
-        (#{email},#{password},#{fullName},#{facebook},#{twitter},#{kakaotalk},#{age},#{gender},#{phone})
+        (#{email},#{password},#{fullName},#{nickname}, #{facebook},#{twitter},#{kakaotalk},#{job}, #{age},#{gender},#{phone})
   </insert>
   <select id="selectMemberByEmail" parameterType="string" resultMap="Member">
     SELECT * FROM member WHERE email = #{email}

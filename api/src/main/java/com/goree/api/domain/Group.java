@@ -13,5 +13,6 @@ public class Group {
     private String name;
     private String description;
     private List<Member> members;
+    private int memberCount;
     
 }

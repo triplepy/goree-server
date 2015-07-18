@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(exclude="count")
+@EqualsAndHashCode(exclude={"count", "provided"})
 public class Tag {
 	private int id;
 	private String tagName;

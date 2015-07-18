@@ -12,9 +12,11 @@ public class Member {
     private String email;
     private String password;
     private String fullName;
+    private String nickname;
     private String facebook;
     private String twitter;
     private String kakaotalk;
+    private String job;
     private int age;
     private Gender gender;
     private String phone;

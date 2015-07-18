@@ -67,6 +67,7 @@ public class GroupTest extends TestWithDBUnit {
 		Group actual = groupController.findGroupByName(expected.getName());
 
 		Assert.assertEquals(expected, actual);
+		Assert.assertEquals(1, actual.getMemberCount());
 	}
 
 	@Test
@@ -75,7 +76,5 @@ public class GroupTest extends TestWithDBUnit {
 		
 		Assert.assertTrue(groups.size() > 0);
 	}
-
-
 
 }

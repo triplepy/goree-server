@@ -5,6 +5,7 @@
     <id column="group_id" property="id" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
+    <result column="member_count" property="memberCount" />
     <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
@@ -67,7 +68,8 @@
         `groups`.description, 
         member.member_id, 
         member.email,
-        member.full_name
+        member.full_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
     FROM 
         `groups`
             INNER JOIN member 

@@ -7,40 +7,34 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.goree.api.Application;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Member.Gender;
 import com.goree.api.domain.Tag;
+import com.goree.api.util.TestWithDBUnit;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes={Application.class})
-@Transactional
-public class MemberTest {
+
+public class MemberTest extends TestWithDBUnit{
 
     @Autowired
     private MemberController memberController;
     @Autowired
     private GroupController groupController;
-
-    private Member testMember;
     
+    private Member testMember;
+
+    @Override
+    public String getDatasetFilePath() {
+        return "src/test/resources/testdataset/member_test_setup.xml";
+    }
+    
+    @Override
     @Before
     public void setUp() {
-        Member member = new Member();
-        member.setEmail("test1@gmail.com");
-        member.setPassword("qlalfqjsgh");
-        member.setFullName("Wonyoung Ju");
-        member.setAge(22);
-        member.setGender(Gender.M);
-        member.setPhone("010-8826-0173");
-        testMember = memberController.registerMember(member);
+        super.setUp();
+        testMember = memberController.findMemberAll().get(0);
     }
     
     @Test
@@ -57,8 +51,10 @@ public class MemberTest {
         expected.setPassword("qlalfqjsgh");
         expected.setFullName("Wonyoung Ju");
         expected.setAge(22);
+        expected.setNickname("nickname");
         expected.setGender(Gender.M);
         expected.setPhone("010-8826-0173");
+        expected.setJob("programmer");
         Tag tag = new Tag();
         tag.setTagName("memberTest");
         expected.setTags(Arrays.asList(tag));
@@ -90,4 +86,6 @@ public class MemberTest {
         boolean joined = joinedGroups.contains(toBeJoined);
         Assert.assertTrue(joined);
     }
+
+
 }

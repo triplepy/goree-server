@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+  <member member_id="1" email="arst@arst.com" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
+  <member member_id="2" email="arst@arst2.com" password="arstarst" full_name="arstarstar" nickname="arstarst2" age="20" gender="M"/>
+  <member member_id="3" email="arst@arst3.com" password="arstarst" full_name="arstarstar" nickname="arstarst3" age="20" gender="M"/>
+  
+  <tag tag_id="3" tag_name="Search3" />
+  <tag tag_id="4" tag_name="Search4" />
+  <tag tag_id="5" tag_name="Search5" />
+  <tag tag_id="1" tag_name="Search1" />
+  <tag tag_id="2" tag_name="Search2" />
+  
+  <member_has_tag tag_id="3" member_id="1" />
+  <member_has_tag tag_id="3" member_id="2" />
+  <member_has_tag tag_id="3" member_id="3" />
+  
+  <member_has_tag tag_id="4" member_id="1" />
+  <member_has_tag tag_id="4" member_id="3" />
+  
+  <member_has_tag tag_id="5" member_id="2" />
+  <member_has_tag tag_id="5" member_id="3" />
+  
+  <member_has_tag tag_id="1" member_id="2" />
+</dataset>
