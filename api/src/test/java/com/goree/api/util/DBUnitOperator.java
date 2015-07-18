@@ -51,7 +51,7 @@ public class DBUnitOperator {
             conn = tester.getConnection();
             operation.execute(conn, dataset);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (conn != null) {

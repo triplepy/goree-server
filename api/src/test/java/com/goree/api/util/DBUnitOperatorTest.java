@@ -46,7 +46,7 @@ public class DBUnitOperatorTest {
 
         Group expected = new Group();
         expected.setId(1);
-        expected.setName("name");
+        expected.setName("Hello");
         
         if (resultSet.next()){
             Assert.assertEquals(expected.getId(), resultSet.getInt("id"));
