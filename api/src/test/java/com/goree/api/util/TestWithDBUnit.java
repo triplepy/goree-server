@@ -24,6 +24,8 @@ public abstract class TestWithDBUnit {
 	
 	@After
 	public void tearDown() {
+	    IDataSet dataset = IDataSetFactory.fromXml(getDatasetFilePath());
+        operator.deleteAll(dataset);
 	}
 	
 	public abstract String getDatasetFilePath();
