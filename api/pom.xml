@@ -104,11 +104,14 @@
             <directory>src/main/resources/${env}</directory>
         </resource>
     </resources>
+    <outputDirectory>target/classes</outputDirectory>
     <testResources>
         <testResource>
             <directory>src/test/resources/${env}</directory>
         </testResource>
     </testResources>
+	<testSourceDirectory>src/test/java</testSourceDirectory>
+    <testOutputDirectory>target/test-classes</testOutputDirectory>
   </build>
   <profiles>
     <profile>
