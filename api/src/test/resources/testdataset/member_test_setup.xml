@@ -2,7 +2,7 @@
 <dataset>
   <member member_id="1" email="arst@arst.com" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
   <member member_id="2" email="asdf@arst.com" password="arstarst" full_name="arstarstar" nickname="asdf" age="20" gender="M"/>
-  <groups group_id="1" leader_id="1" group_name="abcbacba"  description="artsarstars"  />
+  <groups group_id="1" leader_id="2" group_name="abcbacba"  description="artsarstars"  />
   <group_has_member />
   <member_has_tag />
 </dataset>
