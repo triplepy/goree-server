@@ -4,6 +4,6 @@
   <member member_id="2" email="asdf@arst.com" password="arstarst" full_name="arstarstar" nickname="asdf" age="20" gender="M"/>
   <groups group_id="1" leader_id="2" group_name="abcbacba"  description="artsarstars"  />
   <group_has_member />
-  <member_has_tag />
   <tag />
+  <member_has_tag />
 </dataset>
