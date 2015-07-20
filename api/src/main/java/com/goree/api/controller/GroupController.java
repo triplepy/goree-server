@@ -13,33 +13,33 @@ import com.goree.api.domain.Member;
 import com.goree.api.service.GroupService;
 
 @RestController
-@RequestMapping("/group/")
+@RequestMapping("/group")
 public class GroupController {
     
     @Autowired
     private GroupService groupService;
     
-    @RequestMapping(value="", method=RequestMethod.GET)
+    @RequestMapping(value="/", method=RequestMethod.GET)
     public List<Group> findGroupAll() {
         return groupService.findGroupAll();
     }
 
-    @RequestMapping(value="", method=RequestMethod.POST)
+    @RequestMapping(value="/", method=RequestMethod.POST)
     public Group makingGroup(Group group) {
         return groupService.makingGroup(group);
     }
 
-    @RequestMapping(value="joined", method=RequestMethod.GET)
+    @RequestMapping(value="/joined", method=RequestMethod.GET)
     public List<Group> findGroupsJoined(Member member) {
         return groupService.findRegistedGroupsByMember(member);
     }
 
-    @RequestMapping(value="id/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
     public Group findGroupById(@PathVariable int id) {
         return groupService.findGroupById(id);
     }
 
-    @RequestMapping(value="name/{name}", method=RequestMethod.GET)
+    @RequestMapping(value="/name/{name}", method=RequestMethod.GET)
     public Group findGroupByName(@PathVariable String name) {
         return groupService.findGroupByName(name);
     }
