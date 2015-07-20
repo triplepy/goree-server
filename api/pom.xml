@@ -130,18 +130,10 @@
         <version>2.5.1</version>
         <configuration>
           <skip>${cobertura.skip}</skip>
-          <formats>
+           <formats>
              <format>xml</format>
-          </formats>
-       </configuration>
-       <executions>
-         <execution>
-           <phase>package</phase>
-             <goals>
-               <goal>cobertura</goal>
-             </goals>
-         </execution>
-       </executions>
+           </formats>
+         </configuration>
        </plugin>
     </plugins>
     <resources>
