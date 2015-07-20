@@ -40,6 +40,7 @@
     FROM 
         tag WHERE tag_name LIKE CONCAT(#{startWords}, '%')
     ORDER BY 
-        count DESC
+        count DESC,
+        tag.tag_name ASC
   </select>
 </mapper>
