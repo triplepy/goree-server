@@ -55,13 +55,6 @@ public class TagSearchTest extends TestWithDBUnit{
     
     @Test
     public void searchTagsByStartWordOrdered() {
-        expecteds.sort(new Comparator<Tag>() {
-            @Override
-            public int compare(Tag o1, Tag o2) {
-                return o2.getCount() - o1.getCount();
-            }
-        });
-        
         List<Tag> actuals = tagController.searchTagsByStartWord("Search");
         for(int i = 0 ; i < expecteds.size(); i++){
             Assert.assertEquals(expecteds.get(i), actuals.get(i));
