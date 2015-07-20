@@ -135,6 +135,8 @@
            </formats>
            <instrumentation>
            	 <excludes>
+           	    <exclude>**/Application.class</exclude>
+           	    <exclude>**/exception/*.class</exclude> 
            	 	<exclude>**/domain/*.class</exclude>
            	 </excludes>
            </instrumentation>
