@@ -116,7 +116,7 @@
       	<artifactId>maven-surefire-plugin</artifactId>
       	<version>2.11</version>
       	<configuration>
-      	  <skipTests>true</skipTests>
+      	  <skipTests>${skipTests}</skipTests>
       	</configuration>
       </plugin>
       <plugin>
@@ -124,7 +124,7 @@
         <artifactId>cobertura-maven-plugin</artifactId>
         <version>2.5.1</version>
         <configuration>
-          <skip>true</skip>
+          <skip>${cobertura.skip}</skip>
           <formats>
              <format>xml</format>
           </formats>
@@ -170,13 +170,17 @@
         </properties>
     </profile>
     <profile>
-        <id>server-test</id>
-        <properties>
-            <env>server-test</env>
-        </properties>
+      <id>server-test</id>
+      <properties>
+      	<skipTests>false</skipTests>
+      	<cobertura.skip>false</cobertura.skip>
+        <env>server-test</env>
+      </properties>
     </profile>
   </profiles>
   <properties>
     <env>local</env>
+    <skipTests>true</skipTests>
+    <cobertura.skip>true</cobertura.skip>
   </properties>
 </project>
