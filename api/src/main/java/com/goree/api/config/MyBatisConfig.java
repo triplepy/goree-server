@@ -31,7 +31,7 @@ public class MyBatisConfig {
                 new PathMatchingResourcePatternResolver();
         try {
             return patternResolver.getResources(
-                    "classpath:src/main/resources/mapper/**/*.xml");
+                    "classpath:mapper/**/*.xml");
         } catch (IOException e) {
             throw new ConfigException(e);
         }
