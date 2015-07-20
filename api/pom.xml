@@ -141,7 +141,12 @@
             <env>server</env>
         </properties>
     </profile>
-    
+    <profile>
+        <id>server-test</id>
+        <properties>
+            <env>server-test</env>
+        </properties>
+    </profile>
   </profiles>
   <properties>
     <env>local</env>
