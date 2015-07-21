@@ -12,7 +12,7 @@ import com.goree.api.domain.Member;
 import com.goree.api.service.MemberService;
 
 @RestController
-@RequestMapping("/member/")
+@RequestMapping("/member")
 public class MemberController {
     @Autowired
     private MemberService memberService;
@@ -27,7 +27,7 @@ public class MemberController {
         return memberService.findMemberAll();
     }
 
-    @RequestMapping(value="id/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
     public void deleteMemberById(@PathVariable int id) {
         memberService.deleteMemberById(id);
     }
