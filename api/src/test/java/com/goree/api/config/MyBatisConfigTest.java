@@ -1,4 +1,4 @@
-package com.goree.api.sample;
+package com.goree.api.config;
 
 import javax.sql.DataSource;
 
@@ -15,6 +15,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.goree.api.Application;
+import com.goree.api.sample.FooService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
