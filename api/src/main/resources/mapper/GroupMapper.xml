@@ -18,7 +18,8 @@
         resultMap="Group">
     SELECT 
         `groups`.group_id, 
-        `groups`.group_name
+        `groups`.group_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
     FROM 
         `groups` 
             INNER JOIN group_has_member 
@@ -39,7 +40,8 @@
         `groups`.description, 
         member.member_id, 
         member.email,
-        member.full_name
+        member.full_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = #{id}) as member_count
     FROM 
         `groups`
             INNER JOIN member 
@@ -54,7 +56,8 @@
         `groups`.description, 
         member.member_id, 
         member.email,
-        member.full_name
+        member.full_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
     FROM 
         `groups`
             INNER JOIN member 

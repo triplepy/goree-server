@@ -35,6 +35,7 @@ public class GroupTest extends TestWithDBUnit {
 		
 		Assert.assertTrue(joinedGroups.size() == 1);
 		Assert.assertTrue(joinedGroups.get(0).getId() == 1);
+		Assert.assertTrue(joinedGroups.get(0).getMemberCount() == 1);
 	}
 
 	@Test
@@ -51,6 +52,7 @@ public class GroupTest extends TestWithDBUnit {
 		Assert.assertEquals(expected.getName(), actual.getName());
 		Assert.assertEquals(expected.getDescription(), actual.getDescription());
 		Assert.assertEquals(expected.getLeader(), actual.getLeader());
+		Assert.assertEquals(expected.getMemberCount(), actual.getMemberCount());
 	}
 
 	@Test
@@ -59,6 +61,7 @@ public class GroupTest extends TestWithDBUnit {
 		Group actual = groupController.findGroupById(expected.getId());
 		
 		Assert.assertEquals(expected, actual);
+		Assert.assertEquals(1, actual.getMemberCount());
 	}
 
 	@Test
@@ -75,6 +78,7 @@ public class GroupTest extends TestWithDBUnit {
 		List<Group> groups = groupController.findGroupAll();
 		
 		Assert.assertTrue(groups.size() > 0);
+		Assert.assertTrue(groups.get(0).getMemberCount() == 1);
 	}
 
 }
