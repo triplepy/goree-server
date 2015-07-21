@@ -24,9 +24,7 @@ public class GroupService {
         return makedGroup;
     }
     public Group findGroupById(int id) {
-        Group group = new Group();
-        group.setId(id);
-        return group;
+        return groupMapper.selectGroupById(id);
     }
     public List<Group> findGroupAll() {
         return groupMapper.selectGroupAll();
