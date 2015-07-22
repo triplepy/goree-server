@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.MeetingMapper">
+  <resultMap type="com.goree.api.domain.Meeting" id="Meeting">
+    <id column="meeting_id" property="id" />
+    <result column="meeting_name" property="name" />
+    <result column="meeting_desc" property="description" />
+    <association property="promoter" resultMap="com.goree.api.mapper.MemberMapper.Member" />
+    <association property="place" resultMap="com.goree.api.mapper.PlaceMapper.Place" />
+  </resultMap>
+  
+  <insert id="insertMeeting" parameterType="com.goree.api.domain.Meeting">
+    INSERT INTO 
+        meeting (group_id, date, promoter_id, place_id) 
+    VALUES 
+        (#{group.id}, #{date}, #{promoter.id}, #{place.id})
+  </insert>
+  
+  <select id="findMeetingByItself" parameterType="com.goree.api.domain.Meeting" resultMap="Meeting">
+    SELECT 
+        meeting.meeting_id,
+        meeting.meeting_name,
+        meeting.place_
+    FROM 
+        meeting
+    WHERE
+        
+  </select>
+</mapper>
