@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class Meeting {
     private int id;
+    private String title;
     private Group group;
     private Place place;
     private Member promoter;

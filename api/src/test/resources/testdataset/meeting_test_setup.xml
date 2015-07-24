@@ -2,5 +2,5 @@
 <dataset>
   <member member_id="1" email="meeting Test" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
   <groups group_id="1" leader_id="1" group_name="meeting_test"  description="artsarstars"  />
-  
+  <meeting/>
 </dataset>

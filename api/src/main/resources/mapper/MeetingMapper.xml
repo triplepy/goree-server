@@ -3,27 +3,48 @@
 <mapper namespace="com.goree.api.mapper.MeetingMapper">
   <resultMap type="com.goree.api.domain.Meeting" id="Meeting">
     <id column="meeting_id" property="id" />
-    <result column="meeting_name" property="name" />
+    <result column="meeting_title" property="title" />
     <result column="meeting_desc" property="description" />
+    <result column="date" property="date" />
+    <association property="group" javaType="com.goree.api.domain.Group" >
+        <id column="group_id" property="id" />
+        <result column="group_name" property="name" />
+    </association>
     <association property="promoter" resultMap="com.goree.api.mapper.MemberMapper.Member" />
     <association property="place" resultMap="com.goree.api.mapper.PlaceMapper.Place" />
   </resultMap>
   
   <insert id="insertMeeting" parameterType="com.goree.api.domain.Meeting">
     INSERT INTO 
-        meeting (group_id, date, promoter_id, place_id) 
+        meeting (meeting_title, meeting_desc , group_id, date, promoter_id, place_id) 
     VALUES 
-        (#{group.id}, #{date}, #{promoter.id}, #{place.id})
+        (#{title}, #{description}, #{group.id}, #{date}, #{promoter.id}, #{place.id})
   </insert>
   
   <select id="findMeetingByItself" parameterType="com.goree.api.domain.Meeting" resultMap="Meeting">
     SELECT 
         meeting.meeting_id,
-        meeting.meeting_name,
-        meeting.place_
+        meeting.meeting_title,
+        meeting.date,
+        member.member_id,
+        member.nickname,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
     FROM 
-        meeting
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
     WHERE
+        meeting.meeting_title = #{title} AND
+        meeting.group_id = #{group.id} AND
+        meeting.date = #{date} AND
+        member.member_id = #{promoter.id} AND
+        place.place_id = #{place.id}        
+    ORDER BY meeting.meeting_id DESC
+    LIMIT 1
+        
         
   </select>
 </mapper>
