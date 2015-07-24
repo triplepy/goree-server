@@ -63,5 +63,36 @@ public class MeetingTest extends TestWithDBUnit {
 
         Assert.assertNotNull(actual);
     }
+    
+    @Test
+    public void findMeetingById() {
+        int meetingId = 1;
+        Meeting expected = new Meeting();
+        expected.setId(1);
+        expected.setTitle("title");
+        Group group = new Group();
+        group.setId(1);
+        group.setName("meeting_test");
+        expected.setGroup(group);
+        Place place = new Place();
+        place.setId(1);
+        place.setName("place name");
+        place.setAddress("place address");
+        place.setXCoordinate(new BigDecimal("36.017194"));
+        place.setYCoordinate(new BigDecimal("128.6978236"));
+        expected.setPlace(place);
+        Member promoter = new Member();
+        promoter.setId(1);
+        promoter.setNickname("arstarst");
+        expected.setPromoter(promoter);
+        Date meetingDate = Date.from(
+                LocalDate.of(
+                        2015, Month.OCTOBER, 23).atTime(0, 0)
+                         .atZone(ZoneId.systemDefault()).toInstant());
+        expected.setDate(meetingDate);
+        
+        Meeting actual = meetingController.findMeetingById(meetingId);
+        Assert.assertEquals(expected, actual);
+    }
 
 }

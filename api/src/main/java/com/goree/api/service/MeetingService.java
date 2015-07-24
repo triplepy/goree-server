@@ -30,4 +30,8 @@ public class MeetingService {
         return meetingMapper.findMeetingByItself(meeting);
     }
 
+    public Meeting findMeetingById(int meetingId) {
+        return meetingMapper.findMeetingById(meetingId);
+    }
+
 }

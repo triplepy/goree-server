@@ -5,4 +5,5 @@ import com.goree.api.domain.Meeting;
 public interface MeetingMapper {
     public void insertMeeting(Meeting meeting);
     public Meeting findMeetingByItself(Meeting meeting);
+    public Meeting findMeetingById(int id);
 }

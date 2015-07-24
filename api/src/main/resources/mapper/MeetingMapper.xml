@@ -26,8 +26,11 @@
         meeting.meeting_id,
         meeting.meeting_title,
         meeting.date,
+        meeting.meeting_desc, 
         member.member_id,
         member.nickname,
+        groups.group_id,
+        groups.group_name,
         place.place_id,
         place.place_name,
         place.address,
@@ -36,6 +39,7 @@
     FROM 
         meeting INNER JOIN member ON meeting.promoter_id = member.member_id
             INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
     WHERE
         meeting.meeting_title = #{title} AND
         meeting.group_id = #{group.id} AND
@@ -44,7 +48,27 @@
         place.place_id = #{place.id}        
     ORDER BY meeting.meeting_id DESC
     LIMIT 1
-        
-        
+  </select>
+  <select id="findMeetingById" parameterType="int" resultMap="Meeting">
+    SELECT 
+        meeting.meeting_id,
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc, 
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
+    FROM 
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
+    WHERE
+        meeting.meeting_id = #{id}      
   </select>
 </mapper>

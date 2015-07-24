@@ -15,4 +15,8 @@ public class MeetingController {
         return meetingService.createMeeting(meeting);
     }
 
+    public Meeting findMeetingById(int meetingId) {
+        return meetingService.findMeetingById(meetingId);
+    }
+
 }
