@@ -1,21 +1,20 @@
 package com.goree.api.controller;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
-import java.util.Date;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Place;
 import com.goree.api.util.TestWithDBUnit;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class MeetingTest extends TestWithDBUnit {
 
@@ -24,9 +23,11 @@ public class MeetingTest extends TestWithDBUnit {
 
     @Autowired
     private GroupController groupController;
-    
+
     @Autowired
     private MemberController memberController;
+
+
 
     @Override
     public String getDatasetFilePath() {
@@ -94,5 +95,6 @@ public class MeetingTest extends TestWithDBUnit {
         Meeting actual = meetingController.findMeetingById(meetingId);
         Assert.assertEquals(expected, actual);
     }
+
 
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.AttendanceMapper">
+  <resultMap type="com.goree.api.domain.Attendance" id="Attendance">
+    <result column="attendance" property="status" />
+    <association javaType="com.goree.api.domain.Meeting" property="meeting">
+      <id column="meeting_id" property="id" />
+      <result column="meeting_title" property="title" />
+    </association>
+    <association javaType="com.goree.api.domain.Member" property="member" >
+      <id column="member_id" property="id" />
+      <result column="nickname" property="nickname" />
+    </association>
+  </resultMap>
+
+  <select id="selectAttendanceByMemberAndMeeting" resultMap="Attendance" >
+    SELECT
+      member.member_id,
+      member.nickname,
+      meeting.meeting_id,
+      meeting.meeting_title,
+      meeting_has_member.attendance
+    FROM meeting_has_member
+      INNER JOIN member ON meeting_has_member.member_id = member.member_id
+        INNER JOIN meeting ON meeting_has_member.meeting_id = meeting.meeting_id
+    WHERE
+      meeting_has_member.member_id = #{param1} AND
+      meeting_has_member.meeting_id = #{param2}
+
+  </select>
+
+  <insert id="insertMeetingHasMember" >
+    INSERT INTO
+      meeting_has_member (member_id,meeting_id, attendance)
+    VALUES
+      (#{param1},#{param2},#{param3})
+  </insert>
+
+
+</mapper>
