@@ -1,12 +1,14 @@
 package com.goree.api.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-@Data
-@EqualsAndHashCode(of={"id"})
+@Getter
+@Setter
+@ToString
 public class Member {
     private int id;
     private String email;
@@ -26,5 +28,14 @@ public class Member {
         M, F
     }
     
-    
+    @Override
+    public boolean equals(Object otherObj) {
+        if (!(otherObj instanceof Member))
+            return false;
+
+        Member other = (Member)otherObj;
+        return getEmail().equals(other.getEmail())
+                && getFullName().equals(other.getFullName())
+                && getNickname().equals(other.getNickname());
+    }
 }
