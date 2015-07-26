@@ -26,6 +26,9 @@
   <select id="selectMemberAll" resultMap="Member">
     SELECT * FROM member
   </select>
+  <select id="selectMemberById" parameterType="int" resultMap="Member">
+    SELECT * FROM member WHERE member_id = #{id}
+  </select>
   <delete id="deleteMemberById" parameterType="int">
     DELETE FROM member WHERE member_id = #{id}
   </delete>

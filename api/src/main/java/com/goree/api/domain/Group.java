@@ -1,12 +1,15 @@
 package com.goree.api.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Data
-@EqualsAndHashCode(of={"id"})
+@Getter
+@Setter
+@ToString
 public class Group {
     private int id;
     private Member leader;
@@ -14,5 +17,15 @@ public class Group {
     private String description;
     private List<Member> members;
     private int memberCount;
-    
+
+    public boolean equals(Object other){
+        if(!(other instanceof Group))
+            return false;
+        Group group = (Group)other;
+
+        return
+                group.getLeader() == null ? getLeader() == null : group.getLeader().getId() == getLeader().getId()
+             && group.getName().equals(getName());
+
+    }
 }
