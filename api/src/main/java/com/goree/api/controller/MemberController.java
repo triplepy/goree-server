@@ -1,15 +1,14 @@
 package com.goree.api.controller;
 
-import java.util.List;
-
+import com.goree.api.domain.Member;
+import com.goree.api.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goree.api.domain.Member;
-import com.goree.api.service.MemberService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -30,5 +29,9 @@ public class MemberController {
     @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
     public void deleteMemberById(@PathVariable int id) {
         memberService.deleteMemberById(id);
+    }
+
+    public Member findMemberById(int id) {
+        return memberService.findMemberById(id);
     }
 }

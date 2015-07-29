@@ -34,8 +34,8 @@ public class Member {
             return false;
 
         Member other = (Member)otherObj;
-        return getEmail().equals(other.getEmail())
-                && getFullName().equals(other.getFullName())
-                && getNickname().equals(other.getNickname());
+        return getEmail() == null ? other.getEmail() == null : getEmail().equals(other.getEmail()) &&
+                getFullName() == null ? other.getFullName() == null : getFullName().equals(other.getFullName()) &&
+                getNickname() == null ? other.getNickname() == null : getNickname().equals(other.getNickname());
     }
 }

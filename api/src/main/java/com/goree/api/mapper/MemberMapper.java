@@ -1,8 +1,8 @@
 package com.goree.api.mapper;
 
-import java.util.List;
-
 import com.goree.api.domain.Member;
+
+import java.util.List;
 
 public interface MemberMapper {
 
@@ -15,4 +15,6 @@ public interface MemberMapper {
     void deleteMemberById(int id);
 
     void insertMemberHasTag(int memberId, int tagId);
+
+    Member selectMemberById(int id);
 }
