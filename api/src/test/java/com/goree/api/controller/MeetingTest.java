@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
+
 public class MeetingTest extends TestWithDBUnit {
 
     @Autowired
@@ -61,7 +66,7 @@ public class MeetingTest extends TestWithDBUnit {
         expected.setGroup(groupOfExpected);
         Date meetingDate = Date.from(
                 LocalDate.of(
-                        2015, Month.OCTOBER, 23).atTime(0, 0)
+                        2015, Month.JULY, 28).atTime(0, 0)
                          .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         Member promoter = memberController.findMemberAll().get(0);
@@ -83,7 +88,7 @@ public class MeetingTest extends TestWithDBUnit {
         int meetingId = 1;
         Meeting expected = new Meeting();
         expected.setId(1);
-        expected.setTitle("title");
+        expected.setTitle("title1");
         Group group = new Group();
         group.setId(1);
         group.setName("meeting_test");
@@ -101,12 +106,18 @@ public class MeetingTest extends TestWithDBUnit {
         expected.setPromoter(promoter);
         Date meetingDate = Date.from(
                 LocalDate.of(
-                        2015, Month.OCTOBER, 23).atTime(0, 0)
-                         .atZone(ZoneId.systemDefault()).toInstant());
+                        2015, Month.JULY, 28).atTime(0, 0)
+                        .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         
         Meeting actual = meetingController.findMeetingById(meetingId);
-        Assert.assertEquals(expected, actual);
+
+        assertThat(actual.getId(), is(expected.getId()));
+        assertThat(actual.getDate(), is(expected.getDate()));
+        assertThat(actual.getGroup(), is(not(nullValue())));
+        assertThat(actual.getPlace(), is(not(nullValue())));
+        assertThat(actual.getPromoter(), is(not(nullValue())));
+        assertThat(actual.getTitle(), is(expected.getTitle()));
     }
 
     @Test

@@ -37,4 +37,8 @@ public class MeetingController {
     public List<Meeting> commingUpMeetingsOfMember(Member member) {
         return meetingService.commingUpMeetingsOfMember(member);
     }
+
+    public List<Meeting> doneMeetingsOfMember(Member member) {
+        return meetingService.doneMeetingsOfMember(member);
+    }
 }

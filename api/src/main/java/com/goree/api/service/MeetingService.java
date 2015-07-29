@@ -57,6 +57,11 @@ public class MeetingService {
 
     public List<Meeting> commingUpMeetingsOfMember(Member member) {
         List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
-        return meetingMapper.selectCommingUpMeetingsOfMember(groupsJoined);
+        return meetingMapper.selectCommingUpMeetingsOfGroups(groupsJoined);
+    }
+
+    public List<Meeting> doneMeetingsOfMember(Member member) {
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        return meetingMapper.selectDoneMeetingsOfGroups(groupsJoined);
     }
 }

@@ -95,7 +95,8 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
             expecteds.sort(new Comparator<Meeting>() {
                 @Override
                 public int compare(Meeting o1, Meeting o2) {
-                    return o2.getDate().compareTo(o1.getDate());
+                    // ASC
+                    return o1.getDate().compareTo(o2.getDate());
                 }
             });
         } catch (DataSetException e) {
@@ -107,6 +108,56 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
         // then
         for (int i=0; i<commingUpMeetings.size(); i++) {
             Meeting actual = commingUpMeetings.get(i);
+            Meeting expected = expecteds.get(i);
+            assertThat(actual.getId(), is(expected.getId()));
+            assertThat(actual.getDate(), is(expected.getDate()));
+            assertThat(actual.getGroup(), is(not(nullValue())));
+            assertThat(actual.getPlace(), is(not(nullValue())));
+            assertThat(actual.getPromoter(), is(not(nullValue())));
+            assertThat(actual.getTitle(), is(expected.getTitle()));
+        }
+    }
+
+    @Test
+    public void doneMeetings() throws Exception {
+        // given
+        int memberId = 1;
+        Member member = new Member();
+        member.setId(memberId);
+        List<Meeting> expecteds = new ArrayList<>();
+
+        IDataSet dataSet = IDataSetFactory.fromXml(getDatasetFilePath());
+
+        int row = 0;
+        try {
+            ITable itable = dataSet.getTable("meeting");
+
+            Meeting meeting = new Meeting();
+            meeting.setId(Integer.parseInt((String)itable.getValue(row, "meeting_id")));
+
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date to = transFormat.parse(((String)itable.getValue(row, "date")));
+            meeting.setDate(to);
+
+            meeting.setDescription((String) itable.getValue(row, "meeting_desc"));
+            meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(row, "group_id"))));
+            meeting.setTitle((String) itable.getValue(row, "meeting_title"));
+            meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(row, "place_id"))));
+            meeting.setPromoter(memberController.findMemberById(Integer.parseInt((String)itable.getValue(row,"promoter_id"))));
+            expecteds.add(meeting);
+
+
+
+
+        } catch (DataSetException e) {
+            throw new RuntimeException(e);
+        }
+        // when
+        List<Meeting> doneMeetings = meetingController.doneMeetingsOfMember(member);
+
+        // then
+        for (int i=0; i<doneMeetings.size(); i++) {
+            Meeting actual = doneMeetings.get(i);
             Meeting expected = expecteds.get(i);
             assertThat(actual.getId(), is(expected.getId()));
             assertThat(actual.getDate(), is(expected.getDate()));
