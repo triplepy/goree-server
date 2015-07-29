@@ -161,25 +161,4 @@ public class MeetingTest extends TestWithDBUnit {
 
     }
 
-//    @Test
-//    public void commingUpMeetings() {
-//        // given
-//        int memberId = 1;
-//
-//        // when
-//        List<Meeting> expecteds = meetingController.findMeetingsByMemberId(memberId);
-//        expecteds.sort(new Comparator<Meeting>() {
-//            @Override
-//            public int compare(Meeting o1, Meeting o2) {
-//                return 0;
-//            }
-//        });
-//        List<Meeting> actuals = new ArrayList<>();
-//
-//        // then
-//        Assert.assertTrue(actuals.containsAll(expecteds));
-//        Assert.assertTrue(expecteds.containsAll(actuals));
-//    }
-
-
 }

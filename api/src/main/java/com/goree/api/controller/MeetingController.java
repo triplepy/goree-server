@@ -2,6 +2,7 @@ package com.goree.api.controller;
 
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
+import com.goree.api.domain.Member;
 import com.goree.api.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,5 +32,9 @@ public class MeetingController {
 
     public List<Meeting> findMeetingsByMemberId(int memberId) {
         return meetingService.findMeetingsByMemberId(memberId);
+    }
+
+    public List<Meeting> commingUpMeetingsOfMember(Member member) {
+        return meetingService.commingUpMeetingsOfMember(member);
     }
 }

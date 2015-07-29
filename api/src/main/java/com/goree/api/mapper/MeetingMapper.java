@@ -11,4 +11,5 @@ public interface MeetingMapper {
     Meeting findMeetingById(int id);
     List<Meeting> selectMeetingByGroupId(int groupId);
     List<Meeting> selectMeetingsByGroups(List<Group> groups);
+    List<Meeting> selectCommingUpMeetingsOfMember(List<Group> member);
 }
