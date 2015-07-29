@@ -4,17 +4,25 @@ import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Place;
+import com.goree.api.util.DBUnitOperator;
+import com.goree.api.util.IDataSetFactory;
 import com.goree.api.util.TestWithDBUnit;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MeetingTest extends TestWithDBUnit {
 
@@ -27,6 +35,11 @@ public class MeetingTest extends TestWithDBUnit {
     @Autowired
     private MemberController memberController;
 
+    @Autowired
+    private PlaceController placeController;
+
+    @Autowired
+    private DBUnitOperator dbUnitOperator;
 
 
     @Override
@@ -95,6 +108,78 @@ public class MeetingTest extends TestWithDBUnit {
         Meeting actual = meetingController.findMeetingById(meetingId);
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void findMeetingsByGroupId() throws Exception{
+        List<Meeting> expecteds = new ArrayList<>();
+
+        IDataSet dataSet = IDataSetFactory.fromXml(getDatasetFilePath());
+        try {
+            ITable itable = dataSet.getTable("meeting");
+            for(int i = 0; i < itable.getRowCount() ; i++){
+                Meeting meeting = new Meeting();
+                meeting.setId(Integer.parseInt((String)itable.getValue(i, "meeting_id")));
+
+                SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date to = transFormat.parse(((String)itable.getValue(i, "date")));
+                meeting.setDate(to);
+
+                meeting.setDescription((String) itable.getValue(i, "meeting_desc"));
+                meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
+                meeting.setTitle((String) itable.getValue(i, "meeting_title"));
+                meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
+                meeting.setPromoter(memberController.findMemberById(Integer.parseInt((String)itable.getValue(i,"promoter_id"))));
+                expecteds.add(meeting);
+            }
+        } catch (DataSetException e) {
+            throw new RuntimeException(e);
+        }
+
+        int groupId = 1;
+        List<Meeting> actuals = meetingController.findMeetingsByGroupId(groupId);
+
+        Assert.assertTrue(actuals.containsAll(expecteds));
+        Assert.assertTrue(expecteds.containsAll(actuals));
+    }
+
+    @Test
+    public void findMeetingsByGroups() throws Exception {
+        // given
+        List<Group> groups = groupController.findGroupAll();
+
+        // when
+        List<Meeting> meetings = meetingController.findMeetingsByGroups(groups);
+
+        // then
+        meetings.forEach(meeting -> {
+            Group groupOfMeeting = meeting.getGroup();
+            int groupId = groupOfMeeting.getId();
+            boolean isContains = groups.stream().anyMatch(group -> groupId == group.getId());
+            Assert.assertTrue(isContains);
+        });
+
+
+    }
+
+//    @Test
+//    public void commingUpMeetings() {
+//        // given
+//        int memberId = 1;
+//
+//        // when
+//        List<Meeting> expecteds = meetingController.findMeetingsByMemberId(memberId);
+//        expecteds.sort(new Comparator<Meeting>() {
+//            @Override
+//            public int compare(Meeting o1, Meeting o2) {
+//                return 0;
+//            }
+//        });
+//        List<Meeting> actuals = new ArrayList<>();
+//
+//        // then
+//        Assert.assertTrue(actuals.containsAll(expecteds));
+//        Assert.assertTrue(expecteds.containsAll(actuals));
+//    }
 
 
 }
