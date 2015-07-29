@@ -9,7 +9,7 @@
             <id column="note_id" property="id" />
             <result column="note_content" property="content" />
         </association>
-        <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="writer">
+        <association javaType="com.goree.api.domain.Member" property="writer">
             <id column="member_id" property="id" />
             <result column="nickname" property="nickname" />
         </association>
@@ -34,5 +34,51 @@
 
     </select>
 
+    <select id="selectNoteCommentsByNoteId" resultMap="NoteComment" >
+        SELECT
+          note_comment.note_comment_id,
+          note_comment.note_comment_content,
+          note_comment.note_comment_create_date,
+          member.member_id,
+          member.nickname,
+          note.note_id,
+          note.note_content
+        FROM
+          note_comment INNER JOIN member
+            ON note_comment.note_comment_writer_id = member.member_id
+              INNER JOIN note
+                ON note_comment.note_id = note.note_id
+        WHERE
+          note_comment.note_id = #{param1}
+
+    </select>
+
+    <insert id="insertNoteComment" parameterType="com.goree.api.domain.NoteComment" >
+        INSERT INTO
+          note_comment (note_id, note_comment_writer_id, note_comment_content)
+        VALUES
+          (#{note.id},#{writer.id},#{content})
+    </insert>
+
+    <select id="selectNoteCommentLastOneByNoteId" resultMap="NoteComment" >
+        SELECT
+          note_comment.note_comment_id,
+          note_comment.note_comment_content,
+          note_comment.note_comment_create_date,
+          member.member_id,
+          member.nickname,
+          note.note_id,
+          note.note_content
+        FROM
+          note_comment INNER JOIN member
+            ON note_comment.note_comment_writer_id = member.member_id
+              INNER JOIN note
+                ON note_comment.note_id = note.note_id
+        WHERE
+          note_comment.note_id = #{param1}
+          ORDER BY note_comment.note_comment_id DESC
+           LIMIT 1
+
+    </select>
 
 </mapper>

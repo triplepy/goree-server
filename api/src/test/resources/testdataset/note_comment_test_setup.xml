@@ -5,4 +5,5 @@
     <groups group_id="1" leader_id="2" group_name="abcbacba"  description="artsarstars"  />
     <note note_id="1" group_id="1" note_writer_id="1" note_content="NoteCommentTest" />
     <note_comment note_comment_id="1" note_id="1" note_comment_writer_id="2" note_comment_content="NoteComcomcomcomcocm" />
+    <note_comment note_comment_id="2" note_id="1" note_comment_writer_id="1" note_comment_content="noteComcom" />
 </dataset>
