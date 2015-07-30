@@ -14,4 +14,9 @@ public class NoteService {
     public Note findNoteById(int id) {
         return noteMapper.selectNoteById(id);
     }
+
+    public Note writeNote(Note note) {
+        noteMapper.insertNote(note);
+        return noteMapper.selectLastNoteByGroupId(note.getGroup().getId());
+    }
 }

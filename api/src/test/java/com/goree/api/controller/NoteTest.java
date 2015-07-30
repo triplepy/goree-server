@@ -8,6 +8,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNot.not;
+
 
 public class NoteTest extends TestWithDBUnit{
     @Autowired
@@ -38,6 +43,25 @@ public class NoteTest extends TestWithDBUnit{
         Note actual = noteController.findNoteById(expected.getId());
 
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void writeNote(){
+        Note expected = new Note();
+        expected.setContent("arstarstarst");
+
+        Group group = groupController.findGroupById(1);
+        expected.setGroup(group);
+
+        Member member = memberController.findMemberAll().get(1);
+        expected.setNoteWriter(member);
+
+        Note actual = noteController.writeNote(expected);
+
+        Assert.assertEquals(expected, actual);
+        assertThat(actual.getGroup(),is(not(nullValue())));
+        assertThat(actual.getNoteWriter(), is(not(nullValue())));
+        assertThat(actual.getCreateDate(), is(not(nullValue())));
     }
 
 }

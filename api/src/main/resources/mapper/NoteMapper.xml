@@ -35,8 +35,35 @@
      note.note_id = #{id}
   </select>
 
+  <insert id="insertNote" parameterType="com.goree.api.domain.Note">
+    INSERT INTO
+      note ( group_id, note_writer_id, note_content)
+    VALUES
+      ( #{group.id}, #{noteWriter.id}, #{content})
 
+  </insert>
 
+  <select id="selectLastNoteByGroupId" resultMap="Note" >
+      SELECT
+        note.note_id,
+        note.note_content,
+        note.note_create_date,
+        groups.group_id,
+        groups.group_name,
+        groups.description,
+        member.member_id,
+        member.nickname
+      FROM
+        note INNER JOIN groups
+          on note.group_id = groups.group_id
+            INNER JOIN member
+              on note.note_writer_id = member.member_id
+      WHERE
+        note.group_id = #{param1}
+      ORDER BY note_id DESC
+        LIMIT 1
+
+  </select>
 
 
 </mapper>

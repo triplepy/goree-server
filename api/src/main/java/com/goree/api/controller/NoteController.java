@@ -14,4 +14,8 @@ public class NoteController {
     public Note findNoteById(int id) {
         return noteService.findNoteById(id);
     }
+
+    public Note writeNote(Note note) {
+        return noteService.writeNote(note);
+    }
 }
