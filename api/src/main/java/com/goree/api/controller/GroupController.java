@@ -35,7 +35,7 @@ public class GroupController {
     }
 
     @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
-    public Group findGroupById(@PathVariable int id) {
+    public Group findGroupById(@PathVariable long id) {
         return groupService.findGroupById(id);
     }
 
@@ -44,7 +44,7 @@ public class GroupController {
         return groupService.findGroupByName(name);
     }
 
-    public void joinMember(int groupId, int memberId) {
+    public void joinMember(long groupId, long memberId) {
         groupService.joinMember(groupId, memberId);
     }
 

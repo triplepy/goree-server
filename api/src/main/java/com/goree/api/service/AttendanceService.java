@@ -12,7 +12,7 @@ public class AttendanceService {
     @Autowired
     private AttendanceMapper attendanceMapper;
 
-    public Attendance findAttendanceByMemberAndMeeting(int memberId, int meetingId) {
+    public Attendance findAttendanceByMemberAndMeeting(long memberId, long meetingId) {
         Attendance result = attendanceMapper.selectAttendanceByMemberAndMeeting(memberId, meetingId);
         if(result == null){
             result =  Attendance.noResponse(memberId, meetingId);
@@ -20,7 +20,7 @@ public class AttendanceService {
         return result;
     }
 
-    public void mapMeetingAndAttendance(int memberId, int meetingId, Attendance.Status status) {
+    public void mapMeetingAndAttendance(long memberId, long meetingId, Attendance.Status status) {
         attendanceMapper.insertMeetingHasMember(memberId, meetingId, status);
     }
 }

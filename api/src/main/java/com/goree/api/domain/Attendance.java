@@ -28,7 +28,7 @@ public class Attendance {
                 attendance.getStatus() == getStatus();
     }
 
-    public static Attendance noResponse(int memberId, int meetingId) {
+    public static Attendance noResponse(long memberId, long meetingId) {
         Attendance noResponse = new Attendance();
         Member member = new Member();
         member.setId(memberId);

@@ -4,9 +4,9 @@ import com.goree.api.domain.Note;
 
 public interface NoteMapper {
 
-    Note selectNoteById(int id);
+    Note selectNoteById(long id);
 
     void insertNote(Note note);
 
-    Note selectLastNoteByGroupId(int groupId);
+    Note selectLastNoteByGroupId(long groupId);
 }

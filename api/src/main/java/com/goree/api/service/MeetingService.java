@@ -35,11 +35,11 @@ public class MeetingService {
         return meetingMapper.findMeetingByItself(meeting);
     }
 
-    public Meeting findMeetingById(int meetingId) {
+    public Meeting findMeetingById(long meetingId) {
         return meetingMapper.findMeetingById(meetingId);
     }
 
-    public List<Meeting> findMeetingByGroupId(int groupId) {
+    public List<Meeting> findMeetingByGroupId(long groupId) {
         return meetingMapper.selectMeetingByGroupId(groupId);
     }
 
@@ -47,7 +47,7 @@ public class MeetingService {
         return meetingMapper.selectMeetingsByGroups(groups);
     }
 
-    public List<Meeting> findMeetingsByMemberId(int memberId) {
+    public List<Meeting> findMeetingsByMemberId(long memberId) {
         Member member = new Member();
         member.setId(memberId);
 

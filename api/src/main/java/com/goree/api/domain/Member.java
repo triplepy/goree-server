@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @ToString
 public class Member {
-    private int id;
+    private long id;
     private String email;
     private String password;
     private String fullName;

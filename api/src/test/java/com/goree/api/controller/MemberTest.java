@@ -78,7 +78,7 @@ public class MemberTest extends TestWithDBUnit{
     @Test
     public void joinMemberToGroup() {
         Group toBeJoined = groupController.findGroupAll().get(0);
-        int toBeJoinedGroupId = toBeJoined.getId();
+        long toBeJoinedGroupId = toBeJoined.getId();
         groupController.joinMember(toBeJoinedGroupId, testMember.getId());
         
         List<Group> joinedGroups = groupController.findGroupsJoined(testMember);

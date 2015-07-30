@@ -12,13 +12,13 @@ public interface GroupMapper {
 
     void insertGroup(Group group);
     
-    Group selectGroupById(int id);
+    Group selectGroupById(long id);
     
     List<Group> selectGroupAll();
     
     Group selectGroupByName(String name);
     
-    void deleteGroupMemberMappingByMemberId(int id);
+    void deleteGroupMemberMappingByMemberId(long id);
     
-    void insertToGroupHasMember(int groupId, int memberId);
+    void insertToGroupHasMember(long groupId, long memberId);
 }

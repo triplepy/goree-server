@@ -6,7 +6,7 @@ import com.goree.api.domain.Attendance;
 
 public interface AttendanceMapper {
 
-    Attendance selectAttendanceByMemberAndMeeting(int memberId, int meetingId);
+    Attendance selectAttendanceByMemberAndMeeting(long memberId, long meetingId);
 
-    void insertMeetingHasMember(int memberId, int meetingId, Attendance.Status status);
+    void insertMeetingHasMember(long memberId, long meetingId, Attendance.Status status);
 }

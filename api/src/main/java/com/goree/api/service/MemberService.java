@@ -46,12 +46,12 @@ public class MemberService {
         return memberMapper.selectMemberAll();
     }
 
-    public void deleteMemberById(int id) {
+    public void deleteMemberById(long id) {
         memberMapper.deleteMemberById(id);
         groupMapper.deleteGroupMemberMappingByMemberId(id);
     }
 
-    public Member findMemberById(int id) {
+    public Member findMemberById(long id) {
         return memberMapper.selectMemberById(id);
     }
 }

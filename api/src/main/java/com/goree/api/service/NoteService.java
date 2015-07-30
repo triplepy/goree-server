@@ -11,7 +11,7 @@ public class NoteService {
     private NoteMapper noteMapper;
 
 
-    public Note findNoteById(int id) {
+    public Note findNoteById(long id) {
         return noteMapper.selectNoteById(id);
     }
 

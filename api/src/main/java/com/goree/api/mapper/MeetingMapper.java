@@ -8,8 +8,8 @@ import java.util.List;
 public interface MeetingMapper {
     void insertMeeting(Meeting meeting);
     Meeting findMeetingByItself(Meeting meeting);
-    Meeting findMeetingById(int id);
-    List<Meeting> selectMeetingByGroupId(int groupId);
+    Meeting findMeetingById(long id);
+    List<Meeting> selectMeetingByGroupId(long groupId);
     List<Meeting> selectMeetingsByGroups(List<Group> groups);
     List<Meeting> selectCommingUpMeetingsOfGroups(List<Group> groupsJoined);
     List<Meeting> selectDoneMeetingsOfGroups(List<Group> groupsJoined);

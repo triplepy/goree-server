@@ -12,11 +12,11 @@ public class AttendanceController {
     @Autowired
     private AttendanceService attendanceService;
 
-    public Attendance findAttendanceByMemberAndMeeting(int memberId, int meetingId) {
+    public Attendance findAttendanceByMemberAndMeeting(long memberId, long meetingId) {
         return attendanceService.findAttendanceByMemberAndMeeting(memberId, meetingId);
     }
 
-    public void mapMeetingAndAttendance(int memberId, int meetingId, Attendance.Status status) {
+    public void mapMeetingAndAttendance(long memberId, long meetingId, Attendance.Status status) {
         attendanceService.mapMeetingAndAttendance(memberId, meetingId, status);
     }
 }

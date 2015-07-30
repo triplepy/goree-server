@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.PlaceMapper">
   <resultMap type="com.goree.api.domain.Place" id="Place">
-    <id column="place_id" property="id" />
+    <id column="place_id" property="id" javaType="long" />
     <result column="place_name" property="name" />
     <result column="address" property="address" />
     <result column="x_coordinate" property="xCoordinate" />
     <result column="y_coordinate" property="yCoordinate" />
   </resultMap>
-  <select id="findPlaceById" parameterType="int" resultMap="Place">
+  <select id="findPlaceById" parameterType="long" resultMap="Place">
     SELECT * FROM place WHERE place_id = #{id}
   </select>
   

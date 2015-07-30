@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(exclude={"count", "provided"})
 public class Tag {
-	private int id;
+	private long id;
 	private String tagName;
 	char provided;
 	int count;

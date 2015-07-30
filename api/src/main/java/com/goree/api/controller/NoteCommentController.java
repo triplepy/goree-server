@@ -13,11 +13,11 @@ public class NoteCommentController {
     private NoteCommentService noteCommentService;
 
 
-    public NoteComment findNoteCommentById(int id) {
+    public NoteComment findNoteCommentById(long id) {
         return noteCommentService.findNoteCommentById(id);
     }
 
-    public List<NoteComment> findNoteCommentsById(int noteId) {
+    public List<NoteComment> findNoteCommentsById(long noteId) {
         return noteCommentService.findNoteCommentsById(noteId);
     }
 

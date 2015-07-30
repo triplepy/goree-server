@@ -12,11 +12,11 @@ public class NoteCommentService {
     @Autowired
     private NoteCommentMapper noteCommentMapper;
 
-    public NoteComment findNoteCommentById(int id) {
+    public NoteComment findNoteCommentById(long id) {
         return noteCommentMapper.selectNoteCommentById(id);
     }
 
-    public List<NoteComment> findNoteCommentsById(int noteId) {
+    public List<NoteComment> findNoteCommentsById(long noteId) {
         return noteCommentMapper.selectNoteCommentsByNoteId(noteId);
     }
 

@@ -23,7 +23,7 @@ public class TagService {
 		return tagMapper.selectTagByName(tagName);
 	}
 
-	public Tag findTagById(int id) {
+	public Tag findTagById(long id) {
 		return tagMapper.selectTagById(id);
 	}
 

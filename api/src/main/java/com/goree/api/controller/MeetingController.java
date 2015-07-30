@@ -18,11 +18,11 @@ public class MeetingController {
         return meetingService.createMeeting(meeting);
     }
 
-    public Meeting findMeetingById(int meetingId) {
+    public Meeting findMeetingById(long meetingId) {
         return meetingService.findMeetingById(meetingId);
     }
 
-    public List<Meeting> findMeetingsByGroupId(int groupId) {
+    public List<Meeting> findMeetingsByGroupId(long groupId) {
         return meetingService.findMeetingByGroupId(groupId);
     }
 
@@ -30,7 +30,7 @@ public class MeetingController {
         return meetingService.findMeetingsByGroups(groups);
     }
 
-    public List<Meeting> findMeetingsByMemberId(int memberId) {
+    public List<Meeting> findMeetingsByMemberId(long memberId) {
         return meetingService.findMeetingsByMemberId(memberId);
     }
 

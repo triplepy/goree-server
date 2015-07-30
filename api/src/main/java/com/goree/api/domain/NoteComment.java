@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class NoteComment {
-    private int id;
+    private long id;
     private Note note;
     private Member writer;
     private String content;

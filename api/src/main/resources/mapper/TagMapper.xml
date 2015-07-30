@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.TagMapper">
   <resultMap type="com.goree.api.domain.Tag" id="Tag">
-    <id column="tag_id" property="id" />
+    <id column="tag_id" property="id" javaType="long" />
     <result column="tag_name" property="tagName" />
     <result column="provided" property="provided" />
   </resultMap>
@@ -23,7 +23,7 @@
     SELECT * FROM tag WHERE tag_name = #{tagName}
   </select>
   
-  <select id="selectTagById" parameterType="int" resultMap="Tag">
+  <select id="selectTagById" parameterType="long" resultMap="Tag">
     SELECT * FROM tag WHERE tag_id = #{id}
   </select>
   

@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Meeting {
-    private int id;
+    private long id;
     private String title;
     private Group group;
     private Place place;

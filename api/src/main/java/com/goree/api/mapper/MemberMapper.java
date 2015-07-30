@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface MemberMapper {
 
-    int insertMember(Member member);
+    void insertMember(Member member);
 
     Member selectMemberByEmail(String email);
 
     List<Member> selectMemberAll();
 
-    void deleteMemberById(int id);
+    void deleteMemberById(long id);
 
-    void insertMemberHasTag(int memberId, int tagId);
+    void insertMemberHasTag(long memberId, long tagId);
 
-    Member selectMemberById(int id);
+    Member selectMemberById(long id);
 }

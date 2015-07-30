@@ -146,7 +146,7 @@ public class MeetingTest extends TestWithDBUnit {
             throw new RuntimeException(e);
         }
 
-        int groupId = 1;
+        long groupId = 1;
         List<Meeting> actuals = meetingController.findMeetingsByGroupId(groupId);
 
         Assert.assertTrue(actuals.containsAll(expecteds));
@@ -164,7 +164,7 @@ public class MeetingTest extends TestWithDBUnit {
         // then
         meetings.forEach(meeting -> {
             Group groupOfMeeting = meeting.getGroup();
-            int groupId = groupOfMeeting.getId();
+            long groupId = groupOfMeeting.getId();
             boolean isContains = groups.stream().anyMatch(group -> groupId == group.getId());
             Assert.assertTrue(isContains);
         });

@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.GroupMapper">
   <resultMap type="com.goree.api.domain.Group" id="GroupWithLeaderNestedResult">
-    <id column="group_id" property="id" />
+    <id column="group_id" property="id" javaType="long" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
     <result column="member_count" property="memberCount" />
     <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithLeaderNestedSelect">
-      <id column="group_id" property="id" />
+      <id column="group_id" property="id" javaType="long" />
       <result column="group_name" property="name" />
       <result column="description" property="description" />
       <result column="member_count" property="memberCount" />
-      <association select="com.goree.api.mapper.MemberMapper.selectMemberById" column="leader_id" property="leader"  />
+      <association select="com.goree.api.mapper.MemberMapper.selectMemberById" column="leader_id" property="leader"   />
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
-    <id column="group_id" property="id" />
+    <id column="group_id" property="id" javaType="long" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
     <collection property="member" resultMap="Member" />
@@ -41,7 +41,7 @@
     INSERT INTO `groups`(group_name, leader_id,description) 
          values (#{name}, #{leader.id},#{description})
   </insert>
-  <select id="selectGroupById" parameterType="int" resultMap="GroupWithLeaderNestedResult">
+  <select id="selectGroupById" parameterType="long" resultMap="GroupWithLeaderNestedResult">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
@@ -90,7 +90,7 @@
         `groups`.group_name = #{name}
   </select>
   
-  <delete id="deleteGroupMemberMappingByMemberId" parameterType="int">
+  <delete id="deleteGroupMemberMappingByMemberId" parameterType="long">
     DELETE FROM group_has_member WHERE member_id = #{id}
   </delete>
   

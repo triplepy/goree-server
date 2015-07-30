@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class Note {
-    private int id;
+    private long id;
     private Group group;
     private Member noteWriter;
     private String content;

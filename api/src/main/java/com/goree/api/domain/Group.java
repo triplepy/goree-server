@@ -11,12 +11,12 @@ import java.util.List;
 @Setter
 @ToString
 public class Group {
-    private int id;
+    private long id;
     private Member leader;
     private String name;
     private String description;
     private List<Member> members;
-    private int memberCount;
+    private long memberCount;
 
     public boolean equals(Object other){
         if(!(other instanceof Group))

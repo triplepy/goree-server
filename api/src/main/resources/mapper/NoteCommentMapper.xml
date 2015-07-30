@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.NoteCommentMapper">
     <resultMap type="com.goree.api.domain.NoteComment" id="NoteComment">
-        <id column="note_comment_id" property="id" />
+        <id column="note_comment_id" property="id" javaType="long" />
         <result column="note_comment_content" property="content" />
         <result column="note_comment_create_date" property="createDate" />
         <association javaType="com.goree.api.domain.Note" property="note" >
-            <id column="note_id" property="id" />
+            <id column="note_id" property="id" javaType="long" />
             <result column="note_content" property="content" />
         </association>
         <association javaType="com.goree.api.domain.Member" property="writer">
-            <id column="member_id" property="id" />
+            <id column="member_id" property="id" javaType="long" />
             <result column="nickname" property="nickname" />
         </association>
     </resultMap>

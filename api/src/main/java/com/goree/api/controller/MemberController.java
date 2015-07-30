@@ -27,11 +27,11 @@ public class MemberController {
     }
 
     @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
-    public void deleteMemberById(@PathVariable int id) {
+    public void deleteMemberById(@PathVariable long id) {
         memberService.deleteMemberById(id);
     }
 
-    public Member findMemberById(int id) {
+    public Member findMemberById(long id) {
         return memberService.findMemberById(id);
     }
 }

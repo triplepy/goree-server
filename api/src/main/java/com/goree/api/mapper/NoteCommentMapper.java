@@ -6,11 +6,11 @@ import com.goree.api.domain.NoteComment;
 import java.util.List;
 
 public interface NoteCommentMapper {
-    NoteComment selectNoteCommentById(int id);
+    NoteComment selectNoteCommentById(long id);
 
-    List<NoteComment> selectNoteCommentsByNoteId(int noteId);
+    List<NoteComment> selectNoteCommentsByNoteId(long noteId);
 
     void insertNoteComment(NoteComment noteComment);
 
-    NoteComment selectNoteCommentLastOneByNoteId(int noteId);
+    NoteComment selectNoteCommentLastOneByNoteId(long noteId);
 }

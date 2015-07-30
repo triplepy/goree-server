@@ -11,7 +11,7 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    public Note findNoteById(int id) {
+    public Note findNoteById(long id) {
         return noteService.findNoteById(id);
     }
 
