@@ -1,7 +1,7 @@
 package com.goree.api.config;
 
-import javax.sql.DataSource;
-
+import com.goree.api.Application;
+import com.goree.api.sample.FooService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Assert;
@@ -14,8 +14,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.goree.api.Application;
-import com.goree.api.sample.FooService;
+import javax.sql.DataSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
@@ -69,6 +68,4 @@ public class MyBatisConfigTest {
     public void transactionManagerRegistered() {
         Assert.assertNotNull(transactionManager);
     }
-    
-    // TODO test about configurations for mybatis-config.xml(SqlSessionFactory on javaconfig)
 }
