@@ -25,6 +25,9 @@ public class FacebookServiceTest {
         // given
         String expectedUserId = "1434948110166610";
 
+        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
+        AuthTokenContext.token(longLivedToken);
+
         // when
         User user = facebookService.retrieveUserProfile();
 

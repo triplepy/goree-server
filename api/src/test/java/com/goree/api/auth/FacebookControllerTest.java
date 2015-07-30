@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,9 +41,12 @@ public class FacebookControllerTest {
     public void retrieveUserProfile() throws Exception {
         // given
         String expectedUserId = "1434948110166610";
+        AuthTokenContext.token(null);
+        assertThat(AuthTokenContext.token(), is(nullValue()));
+        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
 
         // when then
-        mockMvc.perform(get("/auth/user"))
+        mockMvc.perform(get("/auth/user").header("AuthToken", longLivedToken))
                 .andExpect(jsonPath("$.id", is(expectedUserId)));
     }
 }

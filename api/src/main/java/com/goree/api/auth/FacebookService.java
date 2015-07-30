@@ -16,8 +16,7 @@ public class FacebookService {
     private FacebookSettings settings;
 
     public User retrieveUserProfile() {
-        // TODO fake implementation
-        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
+        String longLivedToken = AuthTokenContext.token();
         FacebookClient fbClient = new DefaultFacebookClient(longLivedToken, settings.appSecret(), Version.VERSION_2_4);
         return fbClient.fetchObject("me", User.class);
     }
