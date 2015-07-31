@@ -99,4 +99,26 @@
     VALUES (#{param1}, #{param2})
   </insert>
 
+  <select id="selectGroupsByTagOrderByMemberCount" parameterType="com.goree.api.domain.Tag" resultMap="GroupWithLeaderNestedResult">
+    SELECT
+        `groups`.group_id,
+        `groups`.group_name,
+        `groups`.description,
+        member.member_id,
+        member.email,
+        member.full_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
+    FROM
+        `groups`
+            INNER JOIN member
+                ON `groups`.leader_id = member.member_id
+                   INNER JOIN group_has_tag
+                     ON groups.group_id = group_has_tag.group_id
+                       INNER JOIN tag
+                         ON group_has_tag.tag_id = tag.tag_id
+    WHERE
+      tag.tag_name = #{name}
+    ORDER BY member_count DESC
+  </select>
+
 </mapper>

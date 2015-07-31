@@ -55,7 +55,7 @@ public class MemberTest extends TestWithDBUnit{
         expected.setPhone("010-8826-0173");
         expected.setJob("programmer");
         Tag tag = new Tag();
-        tag.setTagName("memberTest");
+        tag.setName("memberTest");
         expected.setTags(Arrays.asList(tag));
         Member registered = memberController.registerMember(expected);
         Assert.assertNotNull(registered);

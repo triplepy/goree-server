@@ -34,7 +34,7 @@ public class MemberService {
             } catch (DuplicateKeyException e){ }
             
            for(Tag tag : member.getTags()){
-               Tag retrievedTag = tagMapper.selectTagByName(tag.getTagName());
+               Tag retrievedTag = tagMapper.selectTagByName(tag.getName());
                memberMapper.insertMemberHasTag(registered.getId(), retrievedTag.getId());
            }
         }

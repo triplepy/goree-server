@@ -1,8 +1,8 @@
 package com.goree.api.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.goree.api.domain.Tag;
+import com.goree.api.util.IDataSetFactory;
+import com.goree.api.util.TestWithDBUnit;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
@@ -11,9 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.goree.api.domain.Tag;
-import com.goree.api.util.IDataSetFactory;
-import com.goree.api.util.TestWithDBUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TagSearchTest extends TestWithDBUnit{
     @Autowired
@@ -38,7 +37,7 @@ public class TagSearchTest extends TestWithDBUnit{
             for(int i = 0; i < itable.getRowCount() ; i++){
                 Tag tag = new Tag();
                 tag.setId(Integer.parseInt((String)itable.getValue(i, "tag_id")));
-                tag.setTagName((String)itable.getValue(i, "tag_name"));
+                tag.setName((String) itable.getValue(i, "tag_name"));
                 expecteds.add(tag);
             }
         } catch (DataSetException e) {

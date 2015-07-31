@@ -1,16 +1,16 @@
 package com.goree.api.controller;
 
-import java.util.List;
-
+import com.goree.api.domain.Group;
+import com.goree.api.domain.Member;
+import com.goree.api.domain.Tag;
+import com.goree.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goree.api.domain.Group;
-import com.goree.api.domain.Member;
-import com.goree.api.service.GroupService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/group")
@@ -48,4 +48,7 @@ public class GroupController {
         groupService.joinMember(groupId, memberId);
     }
 
+    public List<Group> findGroupsByTagOrderByMemberCount(Tag tag) {
+        return groupService.findGroupsByTagOrderByMemberCount(tag);
+    }
 }

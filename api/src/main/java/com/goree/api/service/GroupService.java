@@ -1,14 +1,14 @@
 package com.goree.api.service;
 
-import java.util.List;
-
+import com.goree.api.domain.Group;
+import com.goree.api.domain.Member;
+import com.goree.api.domain.Tag;
+import com.goree.api.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.goree.api.domain.Group;
-import com.goree.api.domain.Member;
-import com.goree.api.mapper.GroupMapper;
+import java.util.List;
 
 @Service
 @Transactional
@@ -34,5 +34,9 @@ public class GroupService {
     }
     public void joinMember(long groupId, long memberId) {
         groupMapper.insertToGroupHasMember(groupId, memberId);
+    }
+
+    public List<Group> findGroupsByTagOrderByMemberCount(Tag tag) {
+        return groupMapper.selectGroupsByTagOrderByMemberCount(tag);
     }
 }

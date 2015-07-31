@@ -3,24 +3,24 @@
 <mapper namespace="com.goree.api.mapper.TagMapper">
   <resultMap type="com.goree.api.domain.Tag" id="Tag">
     <id column="tag_id" property="id" javaType="long" />
-    <result column="tag_name" property="tagName" />
+    <result column="tag_name" property="name" />
     <result column="provided" property="provided" />
   </resultMap>
   
   <insert id="insertTag" parameterType="com.goree.api.domain.Tag">
-    INSERT INTO tag (tag_name) VALUES(#{tagName})
+    INSERT INTO tag (tag_name) VALUES(#{name})
   </insert>
   
   <insert id="insertTags">
     INSERT INTO tag (tag_name) VALUES 
     <foreach item="item" collection="list" separator=",">
-        (#{item.tagName})
+        (#{item.name})
     </foreach>
   
   </insert>
   
   <select id="selectTagByName" parameterType="string" resultMap="Tag">
-    SELECT * FROM tag WHERE tag_name = #{tagName}
+    SELECT * FROM tag WHERE tag_name = #{name}
   </select>
   
   <select id="selectTagById" parameterType="long" resultMap="Tag">
