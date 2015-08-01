@@ -12,7 +12,7 @@ public interface TagMapper {
 
 	Tag selectTagByName(String tagName);
 
-	Tag selectTagById(int id);
+	Tag selectTagById(long id);
 
 	List<Tag> selectTagByStartWord(String startWords);
 }

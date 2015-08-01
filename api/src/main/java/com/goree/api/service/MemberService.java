@@ -1,17 +1,16 @@
 package com.goree.api.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
 import com.goree.api.mapper.MemberMapper;
 import com.goree.api.mapper.TagMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,7 +34,7 @@ public class MemberService {
             } catch (DuplicateKeyException e){ }
             
            for(Tag tag : member.getTags()){
-               Tag retrievedTag = tagMapper.selectTagByName(tag.getTagName());
+               Tag retrievedTag = tagMapper.selectTagByName(tag.getName());
                memberMapper.insertMemberHasTag(registered.getId(), retrievedTag.getId());
            }
         }
@@ -47,9 +46,12 @@ public class MemberService {
         return memberMapper.selectMemberAll();
     }
 
-    public void deleteMemberById(int id) {
+    public void deleteMemberById(long id) {
         memberMapper.deleteMemberById(id);
         groupMapper.deleteGroupMemberMappingByMemberId(id);
     }
 
+    public Member findMemberById(long id) {
+        return memberMapper.selectMemberById(id);
+    }
 }

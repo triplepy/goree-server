@@ -2,28 +2,186 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.MeetingMapper">
   <resultMap type="com.goree.api.domain.Meeting" id="Meeting">
-    <id column="meeting_id" property="id" />
-    <result column="meeting_name" property="name" />
+    <id column="meeting_id" property="id" javaType="long" />
+    <result column="meeting_title" property="title" />
     <result column="meeting_desc" property="description" />
+    <result column="date" property="date" />
+    <association property="group" javaType="com.goree.api.domain.Group" >
+        <id column="group_id" property="id" javaType="long" />
+        <result column="group_name" property="name" />
+    </association>
     <association property="promoter" resultMap="com.goree.api.mapper.MemberMapper.Member" />
     <association property="place" resultMap="com.goree.api.mapper.PlaceMapper.Place" />
   </resultMap>
   
   <insert id="insertMeeting" parameterType="com.goree.api.domain.Meeting">
     INSERT INTO 
-        meeting (group_id, date, promoter_id, place_id) 
+        meeting (meeting_title, meeting_desc , group_id, date, promoter_id, place_id) 
     VALUES 
-        (#{group.id}, #{date}, #{promoter.id}, #{place.id})
+        (#{title}, #{description}, #{group.id}, #{date}, #{promoter.id}, #{place.id})
   </insert>
   
   <select id="findMeetingByItself" parameterType="com.goree.api.domain.Meeting" resultMap="Meeting">
     SELECT 
         meeting.meeting_id,
-        meeting.meeting_name,
-        meeting.place_
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc, 
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
     FROM 
-        meeting
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
     WHERE
-        
+        meeting.meeting_title = #{title} AND
+        meeting.group_id = #{group.id} AND
+        meeting.date = #{date} AND
+        member.member_id = #{promoter.id} AND
+        place.place_id = #{place.id}        
+    ORDER BY meeting.meeting_id DESC
+    LIMIT 1
+  </select>
+  <select id="findMeetingById" parameterType="long" resultMap="Meeting">
+    SELECT 
+        meeting.meeting_id,
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc, 
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
+    FROM 
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
+    WHERE
+        meeting.meeting_id = #{id}      
+  </select>
+  <select id="selectMeetingByGroupId" parameterType="long" resultMap="Meeting">
+    SELECT
+        meeting.meeting_id,
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc,
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
+    FROM
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
+    WHERE
+        meeting.group_id = #{groupId}
+    ORDER BY
+        meeting.date DESC
+  </select>
+  <select id="selectMeetingsByGroups" parameterType="list" resultMap="Meeting">
+    SELECT
+        meeting.meeting_id,
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc,
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
+    FROM
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+              INNER JOIN groups ON groups.group_id = meeting.group_id
+    WHERE
+      meeting.group_id IN (
+        <foreach collection="list" item="item" separator="," >
+           #{item.id}
+        </foreach>
+      )
+    ORDER BY
+        meeting.date DESC
+  </select>
+  <select id="selectCommingUpMeetingsOfGroups" parameterType="list" resultMap="Meeting" >
+      SELECT
+        meeting.meeting_id,
+        meeting.meeting_title,
+        meeting.date,
+        meeting.meeting_desc,
+        member.member_id,
+        member.nickname,
+        groups.group_id,
+        groups.group_name,
+        place.place_id,
+        place.place_name,
+        place.address,
+        place.x_coordinate,
+        place.y_coordinate
+      FROM
+        meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+          INNER JOIN place ON meeting.place_id = place.place_id
+            INNER JOIN groups ON groups.group_id = meeting.group_id
+      WHERE
+        meeting.date >= NOW() AND
+        meeting.group_id IN (
+          <foreach collection="list" item="item" separator="," >
+            #{item.id}
+          </foreach>
+         )
+      ORDER BY
+        meeting.date ASC
+  </select>
+  <select id="selectDoneMeetingsOfGroups" parameterType="list" resultMap="Meeting">
+      SELECT
+          meeting.meeting_id,
+          meeting.meeting_title,
+          meeting.date,
+          meeting.meeting_desc,
+          member.member_id,
+          member.nickname,
+          groups.group_id,
+          groups.group_name,
+          place.place_id,
+          place.place_name,
+          place.address,
+          place.x_coordinate,
+          place.y_coordinate
+      FROM
+          meeting INNER JOIN member ON meeting.promoter_id = member.member_id
+            INNER JOIN place ON meeting.place_id = place.place_id
+            INNER JOIN groups ON groups.group_id = meeting.group_id
+      WHERE
+          <![CDATA[
+             meeting.date < NOW()
+          ]]>
+          AND
+          meeting.group_id IN (
+          <foreach collection="list" item="item" separator="," >
+              #{item.id}
+          </foreach>
+          )
+      ORDER BY
+          meeting.date DESC
   </select>
 </mapper>

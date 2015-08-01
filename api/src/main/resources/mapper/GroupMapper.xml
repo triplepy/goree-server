@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.GroupMapper">
-  <resultMap type="com.goree.api.domain.Group" id="Group">
-    <id column="group_id" property="id" />
+  <resultMap type="com.goree.api.domain.Group" id="GroupWithLeaderNestedResult">
+    <id column="group_id" property="id" javaType="long" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
     <result column="member_count" property="memberCount" />
     <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
   </resultMap>
+  <resultMap type="com.goree.api.domain.Group" id="GroupWithLeaderNestedSelect">
+      <id column="group_id" property="id" javaType="long" />
+      <result column="group_name" property="name" />
+      <result column="description" property="description" />
+      <result column="member_count" property="memberCount" />
+      <association select="com.goree.api.mapper.MemberMapper.selectMemberById" column="leader_id" property="leader"   />
+  </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
-    <id column="group_id" property="id" />
+    <id column="group_id" property="id" javaType="long" />
     <result column="group_name" property="name" />
     <result column="description" property="description" />
     <collection property="member" resultMap="Member" />
   </resultMap>
-  <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member" 
-        resultMap="Group">
+  <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member"
+        resultMap="GroupWithLeaderNestedSelect">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name,
-        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count,
+        groups.leader_id
     FROM 
         `groups` 
             INNER JOIN group_has_member 
@@ -33,7 +41,7 @@
     INSERT INTO `groups`(group_name, leader_id,description) 
          values (#{name}, #{leader.id},#{description})
   </insert>
-  <select id="selectGroupById" parameterType="int" resultMap="Group">
+  <select id="selectGroupById" parameterType="long" resultMap="GroupWithLeaderNestedResult">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
@@ -49,7 +57,7 @@
     WHERE 
         `groups`.group_id = #{id}
   </select>
-  <select id="selectGroupAll" resultMap="Group">
+  <select id="selectGroupAll" resultMap="GroupWithLeaderNestedResult">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
@@ -64,7 +72,7 @@
                 ON `groups`.leader_id = member.member_id
   </select>
 
-  <select id="selectGroupByName" parameterType="string" resultMap="Group">
+  <select id="selectGroupByName" parameterType="string" resultMap="GroupWithLeaderNestedResult">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
@@ -72,6 +80,7 @@
         member.member_id, 
         member.email,
         member.full_name,
+        member.nickname,
         (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
     FROM 
         `groups`
@@ -81,7 +90,7 @@
         `groups`.group_name = #{name}
   </select>
   
-  <delete id="deleteGroupMemberMappingByMemberId" parameterType="int">
+  <delete id="deleteGroupMemberMappingByMemberId" parameterType="long">
     DELETE FROM group_has_member WHERE member_id = #{id}
   </delete>
   
@@ -89,5 +98,27 @@
     INSERT INTO group_has_member (group_id, member_id)
     VALUES (#{param1}, #{param2})
   </insert>
+
+  <select id="selectGroupsByTagOrderByMemberCount" parameterType="com.goree.api.domain.Tag" resultMap="GroupWithLeaderNestedResult">
+    SELECT
+        `groups`.group_id,
+        `groups`.group_name,
+        `groups`.description,
+        member.member_id,
+        member.email,
+        member.full_name,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
+    FROM
+        `groups`
+            INNER JOIN member
+                ON `groups`.leader_id = member.member_id
+                   INNER JOIN group_has_tag
+                     ON groups.group_id = group_has_tag.group_id
+                       INNER JOIN tag
+                         ON group_has_tag.tag_id = tag.tag_id
+    WHERE
+      tag.tag_name = #{name}
+    ORDER BY member_count DESC
+  </select>
 
 </mapper>

@@ -1,9 +1,10 @@
 package com.goree.api.mapper;
 
-import java.util.List;
-
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
+import com.goree.api.domain.Tag;
+
+import java.util.List;
 
 public interface GroupMapper {
 
@@ -12,13 +13,15 @@ public interface GroupMapper {
 
     void insertGroup(Group group);
     
-    Group selectGroupById(int id);
+    Group selectGroupById(long id);
     
     List<Group> selectGroupAll();
     
     Group selectGroupByName(String name);
     
-    void deleteGroupMemberMappingByMemberId(int id);
+    void deleteGroupMemberMappingByMemberId(long id);
     
-    void insertToGroupHasMember(int groupId, int memberId);
+    void insertToGroupHasMember(long groupId, long memberId);
+
+    List<Group> selectGroupsByTagOrderByMemberCount(Tag tag);
 }

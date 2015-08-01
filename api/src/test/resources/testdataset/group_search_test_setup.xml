@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <member member_id="1" email="arst@arst.com1" password="arstarst" full_name="arstarstar" nickname="arstarst1" age="20" gender="M"/>
+  <member member_id="2" email="arst@arst.com2" password="arstarst" full_name="arstarstar" nickname="arstarst2" age="20" gender="M"/>
+  <member member_id="3" email="arst@arst.com3" password="arstarst" full_name="arstarstar" nickname="arstarst3" age="20" gender="M"/>
+
+  <groups group_id="1" leader_id="1" group_name="abcbacba"  description="artsarstars"  />
+  <groups group_id="3" leader_id="1" group_name="abcbacba3"  description="artsarstars3"  />
+  <groups group_id="4" leader_id="1" group_name="abcbacba4"  description="artsarstars4"  />
+  <groups group_id="2" leader_id="1" group_name="abcbacba2"  description="artsarstars2"  />
+
+
+  <group_has_member group_id="1"  member_id="1" />
+  <group_has_member group_id="1"  member_id="2" />
+  <group_has_member group_id="1"  member_id="3" />
+
+  <group_has_member group_id="3"  member_id="1" />
+  <group_has_member group_id="3"  member_id="2" />
+
+  <group_has_member group_id="4"  member_id="1" />
+
+  <!-- group2는 멤버가 0명. -->
+
+  <tag tag_id="1" tag_name="test_tag" />
+
+  <group_has_tag group_id="1" tag_id="1" />
+  <group_has_tag group_id="2" tag_id="1" />
+  <group_has_tag group_id="3" tag_id="1" />
+  <group_has_tag group_id="4" tag_id="1" />
+</dataset>

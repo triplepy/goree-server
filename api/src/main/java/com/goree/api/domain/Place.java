@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 public class Place {
-    private int id;
+    private long id;
     private String name;
     private String address;
     private BigDecimal xCoordinate;

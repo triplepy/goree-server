@@ -22,7 +22,7 @@ public class TagController {
 		return tagService.findTagByName(tagName);
 	}
 
-	public Tag findTagById(int id) {
+	public Tag findTagById(long id) {
 		return tagService.findTagById(id);
 	}
 

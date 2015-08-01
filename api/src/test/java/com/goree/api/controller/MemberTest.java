@@ -1,19 +1,18 @@
 package com.goree.api.controller;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Member.Gender;
 import com.goree.api.domain.Tag;
 import com.goree.api.util.TestWithDBUnit;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 
 public class MemberTest extends TestWithDBUnit{
@@ -56,7 +55,7 @@ public class MemberTest extends TestWithDBUnit{
         expected.setPhone("010-8826-0173");
         expected.setJob("programmer");
         Tag tag = new Tag();
-        tag.setTagName("memberTest");
+        tag.setName("memberTest");
         expected.setTags(Arrays.asList(tag));
         Member registered = memberController.registerMember(expected);
         Assert.assertNotNull(registered);
@@ -79,7 +78,7 @@ public class MemberTest extends TestWithDBUnit{
     @Test
     public void joinMemberToGroup() {
         Group toBeJoined = groupController.findGroupAll().get(0);
-        int toBeJoinedGroupId = toBeJoined.getId();
+        long toBeJoinedGroupId = toBeJoined.getId();
         groupController.joinMember(toBeJoinedGroupId, testMember.getId());
         
         List<Group> joinedGroups = groupController.findGroupsJoined(testMember);
@@ -87,5 +86,20 @@ public class MemberTest extends TestWithDBUnit{
         Assert.assertTrue(joined);
     }
 
+    @Test
+    public void findMemberById() {
+        Member expected = new Member();
+        expected.setId(1);
+        expected.setEmail("arst@arst.com");
+        expected.setPassword("arstarst");
+        expected.setFullName("arstarstar");
+        expected.setAge(20);
+        expected.setNickname("arstarst");
+        expected.setGender(Gender.M);
+        Member actual = memberController.findMemberById(expected.getId());
+
+        Assert.assertEquals(expected.getEmail(), actual.getEmail());
+        Assert.assertEquals(expected.getNickname() , actual.getNickname());
+    }
 
 }

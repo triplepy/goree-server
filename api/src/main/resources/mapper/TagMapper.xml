@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.goree.api.mapper.TagMapper">
   <resultMap type="com.goree.api.domain.Tag" id="Tag">
-    <id column="tag_id" property="id" />
-    <result column="tag_name" property="tagName" />
+    <id column="tag_id" property="id" javaType="long" />
+    <result column="tag_name" property="name" />
     <result column="provided" property="provided" />
   </resultMap>
   
   <insert id="insertTag" parameterType="com.goree.api.domain.Tag">
-    INSERT INTO tag (tag_name) VALUES(#{tagName})
+    INSERT INTO tag (tag_name) VALUES(#{name})
   </insert>
   
   <insert id="insertTags">
     INSERT INTO tag (tag_name) VALUES 
     <foreach item="item" collection="list" separator=",">
-        (#{item.tagName})
+        (#{item.name})
     </foreach>
   
   </insert>
   
   <select id="selectTagByName" parameterType="string" resultMap="Tag">
-    SELECT * FROM tag WHERE tag_name = #{tagName}
+    SELECT * FROM tag WHERE tag_name = #{name}
   </select>
   
-  <select id="selectTagById" parameterType="int" resultMap="Tag">
+  <select id="selectTagById" parameterType="long" resultMap="Tag">
     SELECT * FROM tag WHERE tag_id = #{id}
   </select>
   

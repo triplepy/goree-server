@@ -11,7 +11,7 @@ public class PlaceController {
     @Autowired
     private PlaceService placeService;
     
-    public Place findPlaceById(int id) {
+    public Place findPlaceById(long id) {
         return placeService.findPlaceById(id);
     }
 

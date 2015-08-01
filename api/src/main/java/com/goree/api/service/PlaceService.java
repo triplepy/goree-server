@@ -12,7 +12,7 @@ public class PlaceService {
     private PlaceMapper placeMapper;
     
     
-    public Place findPlaceById(int id) {
+    public Place findPlaceById(long id) {
         return placeMapper.findPlaceById(id);
     }
 
