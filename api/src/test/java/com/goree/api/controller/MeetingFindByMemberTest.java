@@ -88,7 +88,7 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
                 meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
                 meeting.setTitle((String) itable.getValue(i, "meeting_title"));
                 meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
-                meeting.setPromoter(memberController.findMemberById(Integer.parseInt((String)itable.getValue(i,"promoter_id"))));
+                meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(i,"promoter_id"))));
                 expecteds.add(meeting);
             }
 
@@ -143,7 +143,7 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
             meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(row, "group_id"))));
             meeting.setTitle((String) itable.getValue(row, "meeting_title"));
             meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(row, "place_id"))));
-            meeting.setPromoter(memberController.findMemberById(Integer.parseInt((String)itable.getValue(row,"promoter_id"))));
+            meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(row,"promoter_id"))));
             expecteds.add(meeting);
 
 

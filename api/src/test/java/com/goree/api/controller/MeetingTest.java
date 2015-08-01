@@ -139,7 +139,7 @@ public class MeetingTest extends TestWithDBUnit {
                 meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
                 meeting.setTitle((String) itable.getValue(i, "meeting_title"));
                 meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
-                meeting.setPromoter(memberController.findMemberById(Integer.parseInt((String)itable.getValue(i,"promoter_id"))));
+                meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(i,"promoter_id"))));
                 expecteds.add(meeting);
             }
         } catch (DataSetException e) {
