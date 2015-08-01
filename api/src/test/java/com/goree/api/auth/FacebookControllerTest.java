@@ -41,8 +41,8 @@ public class FacebookControllerTest {
     public void retrieveUserProfile() throws Exception {
         // given
         String expectedUserId = "1434948110166610";
-        AuthTokenContext.token(null);
-        assertThat(AuthTokenContext.token(), is(nullValue()));
+        AuthContext.token(null);
+        assertThat(AuthContext.token(), is(nullValue()));
 
         // when then
         mockMvc.perform(get("/auth/user").header("AuthToken", settings.longLivedTokenForTest()))

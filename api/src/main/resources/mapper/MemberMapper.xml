@@ -7,6 +7,7 @@
     <result column="full_name" property="fullName" />
     <result column="nickname" property="nickname" />
     <result column="facebook" property="facebook" />
+    <result column="facebook_user_id" property="facebookUserId" />
     <result column="twitter" property="twitter" />
     <result column="kakaotalk" property="kakaotalk" />
     <result column="age" property="age" />
@@ -28,6 +29,9 @@
   </select>
   <select id="selectMemberById" parameterType="long" resultMap="Member">
     SELECT * FROM member WHERE member_id = #{id}
+  </select>
+  <select id="selectMemberByFacebookUserId" parameterType="string" resultMap="Member">
+    SELECT * FROM member WHERE facebook_user_id = #{id}
   </select>
   <delete id="deleteMemberById" parameterType="long">
     DELETE FROM member WHERE member_id = #{id}

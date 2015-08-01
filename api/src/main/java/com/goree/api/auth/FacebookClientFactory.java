@@ -20,6 +20,6 @@ public class FacebookClientFactory {
     }
 
     public FacebookClient createFacebookClient() {
-        return usingTokenAs(AuthTokenContext.token());
+        return usingTokenAs(AuthContext.token());
     }
 }

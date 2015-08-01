@@ -1,5 +1,8 @@
 package com.goree.api.auth;
 
+import com.goree.api.domain.Member;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,11 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by 원영 on 2015-07-31.
  */
-public class AuthTokenRegisterInterceptor implements HandlerInterceptor {
+@Component
+public class AuthInterceptor implements HandlerInterceptor {
+    @Autowired
+    private AuthService authService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String tokenRecieved = request.getHeader("AuthToken");
-        AuthTokenContext.token(tokenRecieved);
+        AuthContext.token(tokenRecieved);
+
+        Member member = authService.findMemberLoggedIn();
+        AuthContext.memberInfo(member);
+
         return true;
     }
 

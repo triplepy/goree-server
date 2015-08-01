@@ -17,4 +17,6 @@ public interface MemberMapper {
     void insertMemberHasTag(long memberId, long tagId);
 
     Member selectMemberById(long id);
+
+    Member selectMemberByFacebookUserId(String id);
 }
