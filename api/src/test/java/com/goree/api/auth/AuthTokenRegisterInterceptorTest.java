@@ -27,6 +27,9 @@ public class AuthTokenRegisterInterceptorTest {
     @Autowired
     private WebApplicationContext webAppContext;
 
+    @Autowired
+    private FacebookSettings settings;
+
     private MockMvc mockMvc;
 
     @Before
@@ -39,10 +42,9 @@ public class AuthTokenRegisterInterceptorTest {
         // given
         AuthTokenContext.token(null);
         assertThat(AuthTokenContext.token(), is(nullValue()));
-        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
 
         // when
-        mockMvc.perform(get("/auth/user").header("AuthToken", longLivedToken))
+        mockMvc.perform(get("/auth/user").header("AuthToken", settings.longLivedTokenForTest()))
                 .andExpect(status().isOk());
         // then
         assertThat(AuthTokenContext.token(), is(not(nullValue())));

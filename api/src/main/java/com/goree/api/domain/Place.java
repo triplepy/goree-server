@@ -1,9 +1,8 @@
 package com.goree.api.domain;
 
-import java.math.BigDecimal;
-
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.math.BigDecimal;
 
 @Data
 public class Place {

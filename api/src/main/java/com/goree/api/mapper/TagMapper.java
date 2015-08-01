@@ -1,8 +1,8 @@
 package com.goree.api.mapper;
 
-import java.util.List;
-
 import com.goree.api.domain.Tag;
+
+import java.util.List;
 
 public interface TagMapper {
 

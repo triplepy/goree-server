@@ -1,10 +1,9 @@
 package com.goree.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.goree.api.domain.Place;
 import com.goree.api.mapper.PlaceMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PlaceService {

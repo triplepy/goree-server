@@ -25,10 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class FacebookControllerTest {
     @Autowired
-    private FacebookService facebookService;
+    private WebApplicationContext webAppContext;
 
     @Autowired
-    private WebApplicationContext webAppContext;
+    private FacebookSettings settings;
 
     private MockMvc mockMvc;
 
@@ -43,10 +43,9 @@ public class FacebookControllerTest {
         String expectedUserId = "1434948110166610";
         AuthTokenContext.token(null);
         assertThat(AuthTokenContext.token(), is(nullValue()));
-        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
 
         // when then
-        mockMvc.perform(get("/auth/user").header("AuthToken", longLivedToken))
+        mockMvc.perform(get("/auth/user").header("AuthToken", settings.longLivedTokenForTest()))
                 .andExpect(jsonPath("$.id", is(expectedUserId)));
     }
 }

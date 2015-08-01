@@ -8,8 +8,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * Created by 원영 on 2015-07-28.
@@ -23,10 +23,16 @@ public class FacebookSettingsTest {
 
     @Test
     public void retrieveSettings() {
+        // given
+        String expectedAppId = "878498855553723";
+        String expectedAppSecret = "13d264f3ac0c7559c651afab6d544289";
+
+        // when
         String appId = settings.appId();
         String appSecret = settings.appSecret();
 
-        assertThat(appId, is("878498855553723"));
-        assertThat(appSecret, is("13d264f3ac0c7559c651afab6d544289"));
+        // then
+        assertThat(appId, is(expectedAppId));
+        assertThat(appSecret, is(expectedAppSecret));
     }
 }

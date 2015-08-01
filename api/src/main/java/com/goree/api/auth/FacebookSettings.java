@@ -12,6 +12,8 @@ public class FacebookSettings {
     private String appId;
     @Value("${facebook.app-secret}")
     private String appSecret;
+    @Value("${facebook.long-lived-token-for-test}")
+    private String longLivedTokenForTest;
 
     public String appId() {
         return appId;
@@ -19,5 +21,9 @@ public class FacebookSettings {
 
     public String appSecret() {
         return appSecret;
+    }
+
+    public String longLivedTokenForTest() {
+        return longLivedTokenForTest;
     }
 }

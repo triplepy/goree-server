@@ -1,12 +1,11 @@
 package com.goree.api.controller;
 
-import java.util.List;
-
+import com.goree.api.domain.Tag;
+import com.goree.api.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.goree.api.domain.Tag;
-import com.goree.api.service.TagService;
+import java.util.List;
 
 @RestController
 public class TagController {

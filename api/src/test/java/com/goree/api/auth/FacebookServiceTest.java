@@ -20,13 +20,15 @@ public class FacebookServiceTest {
     @Autowired
     private FacebookService facebookService;
 
+    @Autowired
+    private FacebookSettings settings;
+
     @Test
     public void retrieveUserProfile() {
         // given
         String expectedUserId = "1434948110166610";
 
-        String longLivedToken = "CAAMeZCXQ4irsBAB9febXPNBWBmJUYMqZAJ7aXKraZCf1OcqDJ98JvGpOxZBS0FGZBFVOPXVbiXbxxvxfXZA4z9Kw5xsacuSGufDBsYYMbIhazZB0Iv7cuGu8eZBuJ0I04PAJMFjGtgjIIAB9roaObJv00h8jS7QjPzQyYnXhEq4eaWaKRhkNzdQZBjAL71nnLAckZD";
-        AuthTokenContext.token(longLivedToken);
+        AuthTokenContext.token(settings.longLivedTokenForTest());
 
         // when
         User user = facebookService.retrieveUserProfile();
