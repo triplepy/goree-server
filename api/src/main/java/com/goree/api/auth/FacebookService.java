@@ -1,8 +1,6 @@
 package com.goree.api.auth;
 
-import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.Version;
 import com.restfb.types.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FacebookService {
     @Autowired
-    private FacebookSettings settings;
+    private FacebookClientFactory facebookClientFactory;
 
     public User retrieveUserProfile() {
-        String longLivedToken = AuthTokenContext.token();
-        FacebookClient fbClient = new DefaultFacebookClient(longLivedToken, settings.appSecret(), Version.VERSION_2_4);
+        FacebookClient fbClient = facebookClientFactory.createFacebookClient();
         return fbClient.fetchObject("me", User.class);
     }
 }
