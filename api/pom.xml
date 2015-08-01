@@ -17,7 +17,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
       <version>1.2.5.RELEASE</version>
-	</dependency>
+  </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -44,9 +44,9 @@
       <version>1.2.5.RELEASE</version>
     </dependency>
     <dependency>
-	  <groupId>org.springframework.boot</groupId>
-	  <artifactId>spring-boot-starter-aop</artifactId>
-	  <version>1.2.5.RELEASE</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+      <version>1.2.5.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -64,10 +64,10 @@
       <version>1.2</version>
     </dependency>
     <dependency>
-	  <groupId>org.projectlombok</groupId>
-	  <artifactId>lombok</artifactId>
-	  <version>1.16.4</version>
-	  <scope>provided</scope>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.16.4</version>
+    <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.dbunit</groupId>
@@ -81,14 +81,24 @@
       <version>3.4</version>
     </dependency>
     <dependency>
-    	<groupId>commons-io</groupId>
-    	<artifactId>commons-io</artifactId>
-    	<version>2.1</version>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.1</version>
     </dependency>
     <dependency>
-    	<groupId>commons-dbcp</groupId>
-    	<artifactId>commons-dbcp</artifactId>
-    	<version>1.4</version>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.restfb</groupId>
+      <artifactId>restfb</artifactId>
+      <version>1.14.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
@@ -129,12 +139,12 @@
           </executions>
       </plugin>
       <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-      	<artifactId>maven-surefire-plugin</artifactId>
-      	<version>2.18.1</version>
-      	<configuration>
-      	  <skipTests>${skipTests}</skipTests>
-      	</configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+        <configuration>
+          <skipTests>${skipTests}</skipTests>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -146,11 +156,11 @@
              <format>xml</format>
            </formats>
            <instrumentation>
-           	 <excludes>
-           	    <exclude>**/Application.class</exclude>
-           	    <exclude>**/exception/*.class</exclude> 
-           	 	<exclude>**/domain/*.class</exclude>
-           	 </excludes>
+              <excludes>
+                 <exclude>**/Application.class</exclude>
+                 <exclude>**/exception/*.class</exclude> 
+                <exclude>**/domain/*.class</exclude>
+              </excludes>
            </instrumentation>
          </configuration>
        </plugin>
@@ -169,7 +179,7 @@
             <directory>src/test/resources/${env}</directory>
         </testResource>
     </testResources>
-	<testSourceDirectory>src/test/java</testSourceDirectory>
+  <testSourceDirectory>src/test/java</testSourceDirectory>
     <testOutputDirectory>target/test-classes</testOutputDirectory>
   </build>
   <profiles>
@@ -188,8 +198,8 @@
     <profile>
       <id>server-test</id>
       <properties>
-      	<skipTests>false</skipTests>
-      	<cobertura.skip>false</cobertura.skip>
+        <skipTests>false</skipTests>
+        <cobertura.skip>false</cobertura.skip>
         <env>server-test</env>
       </properties>
     </profile>

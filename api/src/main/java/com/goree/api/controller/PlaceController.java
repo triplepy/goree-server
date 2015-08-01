@@ -1,10 +1,9 @@
 package com.goree.api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.goree.api.domain.Place;
 import com.goree.api.service.PlaceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PlaceController {

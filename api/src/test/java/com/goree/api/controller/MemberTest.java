@@ -4,6 +4,7 @@ import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Member.Gender;
 import com.goree.api.domain.Tag;
+import com.goree.api.service.MemberService;
 import com.goree.api.util.TestWithDBUnit;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
 
 public class MemberTest extends TestWithDBUnit{
 
@@ -23,6 +27,9 @@ public class MemberTest extends TestWithDBUnit{
     private GroupController groupController;
     
     private Member testMember;
+
+    @Autowired
+    private MemberService memberService;
 
     @Override
     public String getDatasetFilePath() {
@@ -99,7 +106,16 @@ public class MemberTest extends TestWithDBUnit{
         Member actual = memberController.findMemberById(expected.getId());
 
         Assert.assertEquals(expected.getEmail(), actual.getEmail());
-        Assert.assertEquals(expected.getNickname() , actual.getNickname());
+        Assert.assertEquals(expected.getNickname(), actual.getNickname());
+    }
+
+    @Test
+    public void findMemberByFacebookUserId() {
+        Member expected = memberController.findMemberById(1L);
+        Member actual = memberService.findMemberByFacebookUserId("12345");
+
+        assertThat(actual.getId(), is(expected.getId()));
+        assertThat(actual.getEmail(), is(expected.getEmail()));
     }
 
 }

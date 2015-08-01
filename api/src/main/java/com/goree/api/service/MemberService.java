@@ -54,4 +54,8 @@ public class MemberService {
     public Member findMemberById(long id) {
         return memberMapper.selectMemberById(id);
     }
+
+    public Member findMemberByFacebookUserId(String facebookUserId) {
+        return memberMapper.selectMemberByFacebookUserId(facebookUserId);
+    }
 }

@@ -16,6 +16,7 @@ public class Member {
     private String fullName;
     private String nickname;
     private String facebook;
+    private String facebookUserId;
     private String twitter;
     private String kakaotalk;
     private String job;

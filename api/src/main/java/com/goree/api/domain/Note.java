@@ -1,6 +1,5 @@
 package com.goree.api.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
