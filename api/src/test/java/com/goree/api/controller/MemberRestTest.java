@@ -5,8 +5,8 @@ import com.google.gson.Gson;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 
+import com.goree.api.util.RestTestWithDBUnit;
 import org.junit.Test;
-import com.goree.api.util.
 
 import java.util.Arrays;
 import java.util.Date;
