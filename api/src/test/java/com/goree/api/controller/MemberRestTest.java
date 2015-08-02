@@ -4,17 +4,9 @@ package com.goree.api.controller;
 import com.google.gson.Gson;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
-import com.goree.api.util.TestWithDBUnit;
-import org.junit.Before;
+
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import com.goree.api.util.
 
 import java.util.Arrays;
 import java.util.Date;
@@ -24,20 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebIntegrationTest({"server.port=28080"})
-public class MemberRestTest extends TestWithDBUnit {
 
-    @Autowired
-    private WebApplicationContext wac;
-
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setUp() {
-        super.setUp();
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-    }
+public class MemberRestTest extends RestTestWithDBUnit {
 
     @Override
     public String getDatasetFilePath() {
@@ -45,22 +25,6 @@ public class MemberRestTest extends TestWithDBUnit {
     }
 
 
-    public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder) throws Exception{
-            return this.mockMvc.perform(requestBuilder.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-
-
-    }
-
-    public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder,String jsonData) throws Exception{
-        return this.mockMvc.perform(requestBuilder
-                .contentType(MediaType.parseMediaType("application/json;charset=UTF-8")).content(jsonData)
-                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-                .andDo(print())
-                .andExpect(status().isOk());
-
-    }
     @Test
     public void findMemberAll() throws Exception {
         performSet(get("/member"))
