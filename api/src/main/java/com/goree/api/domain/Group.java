@@ -17,6 +17,7 @@ public class Group {
     private String description;
     private List<Member> members;
     private long memberCount;
+    private String imagePath;
 
     public boolean equals(Object other){
         if(!(other instanceof Group))

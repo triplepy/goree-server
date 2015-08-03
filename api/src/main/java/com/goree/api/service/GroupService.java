@@ -7,7 +7,10 @@ import com.goree.api.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,5 +41,19 @@ public class GroupService {
 
     public List<Group> findGroupsByTagOrderByMemberCount(Tag tag) {
         return groupMapper.selectGroupsByTagOrderByMemberCount(tag);
+    }
+
+    public Group updateImage(MultipartFile file, long id) {
+        if (!file.isEmpty()){
+            String fileName = new Date().getTime() + file.getOriginalFilename();
+            try {
+                File imagePath = new File("/goree/static/" + fileName);
+                file.transferTo(imagePath);
+                groupMapper.updateImagePath(id, fileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return findGroupById(id);
     }
 }

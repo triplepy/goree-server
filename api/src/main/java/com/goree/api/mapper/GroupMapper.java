@@ -24,4 +24,6 @@ public interface GroupMapper {
     void insertToGroupHasMember(long groupId, long memberId);
 
     List<Group> selectGroupsByTagOrderByMemberCount(Tag tag);
+
+    void updateImagePath(long id, String fileName);
 }

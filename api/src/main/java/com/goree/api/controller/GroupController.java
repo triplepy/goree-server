@@ -5,10 +5,8 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,10 +22,16 @@ public class GroupController {
         return groupService.findGroupAll();
     }
 
-    @RequestMapping(value="/", method=RequestMethod.POST)
-    public Group makingGroup(Group group) {
+    @RequestMapping(value="/", method=RequestMethod.POST, consumes="multipart/form-data")
+    public Group makingGroup(@RequestBody Group group) {
         return groupService.makingGroup(group);
     }
+
+    @RequestMapping(value="/id/{id}/updateImage", method=RequestMethod.POST,consumes="multipart/form-data")
+    public Group updateImage(@RequestPart MultipartFile file, @PathVariable long id){
+        return groupService.updateImage(file,id);
+    }
+
 
     @RequestMapping(value="/joined", method=RequestMethod.GET)
     public List<Group> findGroupsJoined(Member member) {

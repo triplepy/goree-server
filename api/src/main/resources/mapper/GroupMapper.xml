@@ -6,7 +6,8 @@
     <result column="group_name" property="name" />
     <result column="description" property="description" />
     <result column="member_count" property="memberCount" />
-    <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
+    <result column="cover_img_url" property="imagePath" />
+         <association resultMap="com.goree.api.mapper.MemberMapper.Member" property="leader" />
   </resultMap>
   <resultMap type="com.goree.api.domain.Group" id="GroupWithLeaderNestedSelect">
       <id column="group_id" property="id" javaType="long" />
@@ -45,7 +46,8 @@
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
-        `groups`.description, 
+        `groups`.description,
+        groups.cover_img_url,
         member.member_id, 
         member.email,
         member.full_name,
@@ -61,7 +63,8 @@
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
-        `groups`.description, 
+        `groups`.description,
+         groups.cover_img_url,
         member.member_id, 
         member.email,
         member.full_name,
@@ -76,7 +79,8 @@
     SELECT 
         `groups`.group_id, 
         `groups`.group_name, 
-        `groups`.description, 
+        `groups`.description,
+         groups.cover_img_url,
         member.member_id, 
         member.email,
         member.full_name,
@@ -120,5 +124,10 @@
       tag.tag_name = #{name}
     ORDER BY member_count DESC
   </select>
+  <update id="updateImagePath" >
+      UPDATE groups
+      SET cover_img_url = #{param2}
+      WHERE group_id = #{param1}
 
+  </update>
 </mapper>

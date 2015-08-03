@@ -23,7 +23,7 @@ abstract public class RestTestWithDBUnit extends TestWithDBUnit {
     private WebApplicationContext wac;
 
 
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -42,6 +42,15 @@ abstract public class RestTestWithDBUnit extends TestWithDBUnit {
     public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder,String jsonData) throws Exception{
         return this.mockMvc.perform(requestBuilder
                 .contentType(MediaType.parseMediaType("application/json;charset=UTF-8")).content(jsonData)
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder,byte[] contentData) throws Exception{
+        return this.mockMvc.perform(requestBuilder
+                .contentType(MediaType.parseMediaType("application/json;charset=UTF-8")).content(contentData)
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andDo(print())
                 .andExpect(status().isOk());
