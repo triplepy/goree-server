@@ -17,12 +17,12 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
     
-    @RequestMapping(value="/", method=RequestMethod.GET)
+    @RequestMapping(value="", method=RequestMethod.GET)
     public List<Group> findGroupAll() {
         return groupService.findGroupAll();
     }
 
-    @RequestMapping(value="/", method=RequestMethod.POST, consumes="multipart/form-data")
+    @RequestMapping(value="", method=RequestMethod.POST)
     public Group makingGroup(@RequestBody Group group) {
         return groupService.makingGroup(group);
     }
