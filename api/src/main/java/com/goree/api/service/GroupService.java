@@ -5,6 +5,7 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,9 @@ import java.util.List;
 @Service
 @Transactional
 public class GroupService {
+    @Value("${file.upload.path}")
+    private String staticPath;
+
     @Autowired
     private GroupMapper groupMapper; 
     public List<Group> findRegistedGroupsByMember(Member member) {
@@ -47,9 +51,14 @@ public class GroupService {
         if (!file.isEmpty()){
             String fileName = new Date().getTime() + file.getOriginalFilename();
             try {
-                File imagePath = new File("/goree/static/" + fileName);
-                file.transferTo(imagePath);
-                groupMapper.updateImagePath(id, fileName);
+                if(staticPath != null) {
+                    File imagePath = new File(staticPath + fileName);
+                    file.transferTo(imagePath);
+                    groupMapper.updateImagePath(id, fileName);
+                } else {
+                    return null;
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
