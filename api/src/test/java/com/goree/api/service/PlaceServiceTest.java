@@ -1,17 +1,16 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
-import java.math.BigDecimal;
-
+import com.goree.api.domain.Place;
+import com.goree.api.util.TestWithDBUnit;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.goree.api.domain.Place;
-import com.goree.api.util.TestWithDBUnit;
+import java.math.BigDecimal;
 
-public class PlaceTest extends TestWithDBUnit{
+public class PlaceServiceTest extends TestWithDBUnit{
     @Autowired
-    private PlaceController placeController;
+    private PlaceService placeService;
 
     @Override
     public String getDatasetFilePath() {
@@ -27,7 +26,7 @@ public class PlaceTest extends TestWithDBUnit{
         expected.setXCoordinate(new BigDecimal("36.017194"));
         expected.setYCoordinate(new BigDecimal("128.6978236"));
     
-        Place actual = placeController.findPlaceById(1);
+        Place actual = placeService.findPlaceById(1);
         
         Assert.assertEquals(expected, actual);
         Assert.assertEquals(expected.getName(),actual.getName());
@@ -43,7 +42,7 @@ public class PlaceTest extends TestWithDBUnit{
         expected.setXCoordinate(new BigDecimal("36.017194"));
         expected.setYCoordinate(new BigDecimal("128.6978236"));
         
-        Place actual = placeController.createPlace(expected);
+        Place actual = placeService.createPlace(expected);
         
         Assert.assertEquals(expected, actual);
     }
@@ -56,7 +55,7 @@ public class PlaceTest extends TestWithDBUnit{
         expected.setXCoordinate(new BigDecimal("36.017194"));
         expected.setYCoordinate(new BigDecimal("128.6978236"));
         
-        Place actual = placeController.findPlaceByItself(expected);
+        Place actual = placeService.findPlaceByItself(expected);
         Assert.assertEquals(expected, actual);
     }
 }

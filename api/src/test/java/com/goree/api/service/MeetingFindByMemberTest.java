@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 
 import com.goree.api.domain.Group;
@@ -22,21 +22,21 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class MeetingFindByMemberTest extends TestWithDBUnit{
 
     @Autowired
-    private GroupController groupController;
+    private GroupService groupService;
 
     @Autowired
-    private MemberController memberController;
+    private MemberService memberService;
 
     @Autowired
-    private PlaceController placeController;
+    private PlaceService placeService;
 
     @Autowired
-    private MeetingController meetingController;
+    private MeetingService meetingService;
 
 
 
@@ -53,8 +53,8 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
         Member member = new Member();
         member.setId(memberId);
 
-        List<Group> groupsJoined = groupController.findGroupsJoined(member);
-        List<Meeting> meetingsOfMember = meetingController.findMeetingsByMemberId(memberId);
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        List<Meeting> meetingsOfMember = meetingService.findMeetingsByMemberId(memberId);
         meetingsOfMember.stream().forEach(meeting -> {
             Group group = meeting.getGroup();
             Assert.assertTrue(groupsJoined.stream().anyMatch(g -> g.getId() == group.getId()));
@@ -85,10 +85,10 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
                 meeting.setDate(to);
 
                 meeting.setDescription((String) itable.getValue(i, "meeting_desc"));
-                meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
+                meeting.setGroup(groupService.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
                 meeting.setTitle((String) itable.getValue(i, "meeting_title"));
-                meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
-                meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(i,"promoter_id"))));
+                meeting.setPlace(placeService.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
+                meeting.setPromoter(memberService.findMemberById(Long.parseLong((String) itable.getValue(i, "promoter_id"))));
                 expecteds.add(meeting);
             }
 
@@ -103,7 +103,7 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
             throw new RuntimeException(e);
         }
         // when
-        List<Meeting> commingUpMeetings = meetingController.commingUpMeetingsOfMember(member);
+        List<Meeting> commingUpMeetings = meetingService.commingUpMeetingsOfMember(member);
 
         // then
         for (int i=0; i<commingUpMeetings.size(); i++) {
@@ -140,10 +140,10 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
             meeting.setDate(to);
 
             meeting.setDescription((String) itable.getValue(row, "meeting_desc"));
-            meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(row, "group_id"))));
+            meeting.setGroup(groupService.findGroupById(Integer.parseInt((String) itable.getValue(row, "group_id"))));
             meeting.setTitle((String) itable.getValue(row, "meeting_title"));
-            meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(row, "place_id"))));
-            meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(row,"promoter_id"))));
+            meeting.setPlace(placeService.findPlaceById(Integer.parseInt((String) itable.getValue(row, "place_id"))));
+            meeting.setPromoter(memberService.findMemberById(Long.parseLong((String) itable.getValue(row, "promoter_id"))));
             expecteds.add(meeting);
 
 
@@ -153,7 +153,7 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
             throw new RuntimeException(e);
         }
         // when
-        List<Meeting> doneMeetings = meetingController.doneMeetingsOfMember(member);
+        List<Meeting> doneMeetings = meetingService.doneMeetingsOfMember(member);
 
         // then
         for (int i=0; i<doneMeetings.size(); i++) {

@@ -1,10 +1,9 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Place;
-import com.goree.api.util.DBUnitOperator;
 import com.goree.api.util.IDataSetFactory;
 import com.goree.api.util.TestWithDBUnit;
 import org.dbunit.dataset.DataSetException;
@@ -27,24 +26,21 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
-public class MeetingTest extends TestWithDBUnit {
-
-    @Autowired
-    private MeetingController meetingController;
+public class MeetingServiceTest extends TestWithDBUnit {
 
     @Autowired
-    private GroupController groupController;
+    private MeetingService meetingService;
 
     @Autowired
-    private MemberController memberController;
+    private GroupService groupService;
 
     @Autowired
-    private PlaceController placeController;
+    private MemberService memberService;
 
     @Autowired
-    private DBUnitOperator dbUnitOperator;
+    private PlaceService placeService;
 
 
     @Override
@@ -62,14 +58,14 @@ public class MeetingTest extends TestWithDBUnit {
         Meeting expected = new Meeting();
         expected.setTitle("createMeetingBBBBB");
         expected.setDescription("etsnsaeitetaenharsithaneitnatre");
-        Group groupOfExpected = groupController.findGroupByName("meeting_test");
+        Group groupOfExpected = groupService.findGroupByName("meeting_test");
         expected.setGroup(groupOfExpected);
         Date meetingDate = Date.from(
                 LocalDate.of(
                         2015, Month.JULY, 28).atTime(0, 0)
                          .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
-        Member promoter = memberController.findMemberAll().get(0);
+        Member promoter = memberService.findMemberAll().get(0);
         expected.setPromoter(promoter);
         Place place = new Place();
         place.setName("Place the createMeeting");
@@ -78,7 +74,7 @@ public class MeetingTest extends TestWithDBUnit {
         place.setYCoordinate(new BigDecimal("128.6978236"));
         expected.setPlace(place);
 
-        Meeting actual = meetingController.createMeeting(expected);
+        Meeting actual = meetingService.createMeeting(expected);
 
         Assert.assertNotNull(actual);
     }
@@ -110,7 +106,7 @@ public class MeetingTest extends TestWithDBUnit {
                         .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         
-        Meeting actual = meetingController.findMeetingById(meetingId);
+        Meeting actual = meetingService.findMeetingById(meetingId);
 
         assertThat(actual.getId(), is(expected.getId()));
         assertThat(actual.getDate(), is(expected.getDate()));
@@ -136,10 +132,10 @@ public class MeetingTest extends TestWithDBUnit {
                 meeting.setDate(to);
 
                 meeting.setDescription((String) itable.getValue(i, "meeting_desc"));
-                meeting.setGroup(groupController.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
+                meeting.setGroup(groupService.findGroupById(Integer.parseInt((String) itable.getValue(i, "group_id"))));
                 meeting.setTitle((String) itable.getValue(i, "meeting_title"));
-                meeting.setPlace(placeController.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
-                meeting.setPromoter(memberController.findMemberById(Long.parseLong((String)itable.getValue(i,"promoter_id"))));
+                meeting.setPlace(placeService.findPlaceById(Integer.parseInt((String) itable.getValue(i, "place_id"))));
+                meeting.setPromoter(memberService.findMemberById(Long.parseLong((String) itable.getValue(i, "promoter_id"))));
                 expecteds.add(meeting);
             }
         } catch (DataSetException e) {
@@ -147,7 +143,7 @@ public class MeetingTest extends TestWithDBUnit {
         }
 
         long groupId = 1;
-        List<Meeting> actuals = meetingController.findMeetingsByGroupId(groupId);
+        List<Meeting> actuals = meetingService.findMeetingsByGroupId(groupId);
 
         Assert.assertTrue(actuals.containsAll(expecteds));
         Assert.assertTrue(expecteds.containsAll(actuals));
@@ -156,10 +152,10 @@ public class MeetingTest extends TestWithDBUnit {
     @Test
     public void findMeetingsByGroups() throws Exception {
         // given
-        List<Group> groups = groupController.findGroupAll();
+        List<Group> groups = groupService.findGroupAll();
 
         // when
-        List<Meeting> meetings = meetingController.findMeetingsByGroups(groups);
+        List<Meeting> meetings = meetingService.findMeetingsByGroups(groups);
 
         // then
         meetings.forEach(meeting -> {

@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Note;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NoteCommentTest extends TestWithDBUnit{
+public class NoteCommentServiceTest extends TestWithDBUnit{
 
     @Autowired
-    private NoteCommentController noteCommentController;
+    private NoteCommentService noteCommentService;
 
     @Autowired
-    private MemberController memberController;
+    private MemberService memberService;
 
     @Override
     public String getDatasetFilePath() {
@@ -35,7 +35,7 @@ public class NoteCommentTest extends TestWithDBUnit{
 
         Note note = new Note();
         note.setId(1);
-        note.setContent("NoteCommentTest");
+        note.setContent("NoteCommentServiceTest");
 
 
 
@@ -80,7 +80,7 @@ public class NoteCommentTest extends TestWithDBUnit{
     public void findNoteCommentById() {
         NoteComment expected = noteComments.get(0);
 
-        NoteComment actual = noteCommentController.findNoteCommentById(expected.getId());
+        NoteComment actual = noteCommentService.findNoteCommentById(expected.getId());
 
         Assert.assertEquals(expected, actual);
         Assert.assertNotNull(actual.getCreateDate());
@@ -91,7 +91,7 @@ public class NoteCommentTest extends TestWithDBUnit{
     public void findNoteCommentsByNoteId(){
         List<NoteComment> expecteds = noteComments;
 
-        List<NoteComment> actuals = noteCommentController.findNoteCommentsById(1);
+        List<NoteComment> actuals = noteCommentService.findNoteCommentsById(1);
 
         Assert.assertTrue(expecteds.containsAll(actuals));
     }
@@ -102,7 +102,7 @@ public class NoteCommentTest extends TestWithDBUnit{
         NoteComment expected = new NoteComment();
         expected.setContent("writeNoteComment");
 
-        Member writer = memberController.findMemberAll().get(0);
+        Member writer = memberService.findMemberAll().get(0);
         expected.setWriter(writer);
 
         Note note = new Note();
@@ -110,7 +110,7 @@ public class NoteCommentTest extends TestWithDBUnit{
         expected.setNote(note);
 
 
-        NoteComment actual = noteCommentController.writeNoteComment(expected);
+        NoteComment actual = noteCommentService.writeNoteComment(expected);
 
         Assert.assertEquals(expected, actual);
         Assert.assertNotNull(actual.getCreateDate());

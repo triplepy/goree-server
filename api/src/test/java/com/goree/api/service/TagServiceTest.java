@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 import com.goree.api.Application;
 import com.goree.api.domain.Tag;
@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { Application.class })
 @Transactional
-public class TagTest {
+public class TagServiceTest {
     @Autowired
-    private TagController tagController;
+    private TagService tagService;
     
 	private Tag expected;
 
@@ -26,7 +26,7 @@ public class TagTest {
 		expected.setName("Go!ree");
 
 		// 테스트의 목적에만 집중할 수 있도록, 로직을 간단하게 하기위해 expected를 공통으로 사용한다.
-		expected = tagController.creatingTag(expected);
+		expected = tagService.creatingTag(expected);
 
 	}
 
@@ -37,50 +37,21 @@ public class TagTest {
 		Tag expected = new Tag();
 		expected.setName("creatingTest");
 
-		Tag actual = tagController.creatingTag(expected);
+		Tag actual = tagService.creatingTag(expected);
 		Assert.assertEquals(expected.getName(), actual.getName());
 	}
 
 	@Test
 	public void findTagByName() {
-		Tag actual = tagController.findTagByName(expected.getName());
+		Tag actual = tagService.findTagByName(expected.getName());
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void findTagById() {
-		Tag actual = tagController.findTagById(expected.getId());
+		Tag actual = tagService.findTagById(expected.getId());
 		Assert.assertEquals(expected, actual);
 	}
 
-
-	
-	
-//	@Test
-//	public void insertTagListByJoinUser() {
-//	    List<Tag> expects = new ArrayList<>();
-//
-//	    String insertValueByUser = "#abc #abcd #abcde #adsarrst";
-//	    String[] values = insretValueByUser.split(" ");
-//	    for (String value : values) {
-//	        value.replace("#", "");
-//	    }
-//
-//	        
-//	    for (int i = 0 ; i < values.length() ; i++) {
-//	        Tag item = new Tag();
-//	        item.setName(values[i]);
-//	        expects.add(item);
-//	    }
-//	    
-//	    List<Tag> actuals = tagController.insertTagListByJoinUser(insertValueByUser);   
-//	    
-//	    for(int i = 0 ; i < actuals.size(); i++ ) {
-//	        Assert.assertEquals(expects.get(i).getName(), actuals.get(i).getName());
-//	    }
-//
-//	}
-
-	
 
 }

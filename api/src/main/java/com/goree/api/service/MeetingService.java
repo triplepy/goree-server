@@ -39,7 +39,7 @@ public class MeetingService {
         return meetingMapper.findMeetingById(meetingId);
     }
 
-    public List<Meeting> findMeetingByGroupId(long groupId) {
+    public List<Meeting> findMeetingsByGroupId(long groupId) {
         return meetingMapper.selectMeetingByGroupId(groupId);
     }
 

@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 import com.goree.api.domain.Tag;
 import com.goree.api.util.IDataSetFactory;
@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagSearchTest extends TestWithDBUnit{
+public class TagSearchServiceTest extends TestWithDBUnit{
     @Autowired
-    private TagController tagController;
+    private TagService tagService;
     
     private List<Tag> expecteds;
 
@@ -47,13 +47,13 @@ public class TagSearchTest extends TestWithDBUnit{
     
     @Test
     public void searchTagsByStartWord() throws Exception{
-        List<Tag> actuals = tagController.searchTagsByStartWord("Search");
+        List<Tag> actuals = tagService.searchTagsByStartWord("Search");
         Assert.assertTrue(actuals.containsAll(expecteds));
     }
     
     @Test
     public void searchTagsByStartWordOrdered() {
-        List<Tag> actuals = tagController.searchTagsByStartWord("Search");
+        List<Tag> actuals = tagService.searchTagsByStartWord("Search");
         for(int i = 0 ; i < expecteds.size(); i++){
             Assert.assertEquals(expecteds.get(i), actuals.get(i));
         }

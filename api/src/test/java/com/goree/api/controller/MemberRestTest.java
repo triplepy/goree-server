@@ -4,7 +4,6 @@ package com.goree.api.controller;
 import com.google.gson.Gson;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
-
 import com.goree.api.util.RestTestWithDBUnit;
 import org.junit.Test;
 
@@ -13,8 +12,8 @@ import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 public class MemberRestTest extends RestTestWithDBUnit {

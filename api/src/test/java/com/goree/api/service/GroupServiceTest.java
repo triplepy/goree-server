@@ -1,20 +1,19 @@
-package com.goree.api.controller;
-
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+package com.goree.api.service;
 
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.mapper.MemberMapper;
 import com.goree.api.util.TestWithDBUnit;
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class GroupTest extends TestWithDBUnit {
+import java.util.Date;
+import java.util.List;
+
+public class GroupServiceTest extends TestWithDBUnit {
 	@Autowired
-	private GroupController groupController;
+	private GroupService groupService;
 
 	@Autowired
 	private MemberMapper memberMapper;
@@ -31,7 +30,7 @@ public class GroupTest extends TestWithDBUnit {
 		Member member = new Member();
 		member.setId(1);
 
-		List<Group> joinedGroups = groupController.findGroupsJoined(member);
+		List<Group> joinedGroups = groupService.findRegistedGroupsByMember(member);
 		
 		Assert.assertTrue(joinedGroups.size() == 1);
 		Assert.assertTrue(joinedGroups.get(0).getId() == 1);
@@ -47,7 +46,7 @@ public class GroupTest extends TestWithDBUnit {
 		expected.setDescription("It is description");
 		expected.setLeader(leader);
 
-		Group actual = groupController.makingGroup(expected);
+		Group actual = groupService.makingGroup(expected);
 
 		Assert.assertEquals(expected.getName(), actual.getName());
 		Assert.assertEquals(expected.getDescription(), actual.getDescription());
@@ -57,8 +56,8 @@ public class GroupTest extends TestWithDBUnit {
 
 	@Test
 	public void findGroupById() {
-		Group expected = groupController.findGroupAll().get(0);
-		Group actual = groupController.findGroupById(expected.getId());
+		Group expected = groupService.findGroupAll().get(0);
+		Group actual = groupService.findGroupById(expected.getId());
 		
 		Assert.assertEquals(expected, actual);
 		Assert.assertEquals(1, actual.getMemberCount());
@@ -66,8 +65,8 @@ public class GroupTest extends TestWithDBUnit {
 
 	@Test
 	public void findGroupByName() {
-		Group expected = groupController.findGroupAll().get(0);
-		Group actual = groupController.findGroupByName(expected.getName());
+		Group expected = groupService.findGroupAll().get(0);
+		Group actual = groupService.findGroupByName(expected.getName());
 
 		Assert.assertEquals(expected, actual);
 		Assert.assertEquals(1, actual.getMemberCount());
@@ -75,7 +74,7 @@ public class GroupTest extends TestWithDBUnit {
 
 	@Test
 	public void findGroupAll() {
-		List<Group> groups = groupController.findGroupAll();
+		List<Group> groups = groupService.findGroupAll();
 		
 		Assert.assertTrue(groups.size() > 0);
 		Assert.assertTrue(groups.get(0).getMemberCount() == 1);

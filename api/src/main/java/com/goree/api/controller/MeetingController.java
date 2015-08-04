@@ -23,7 +23,7 @@ public class MeetingController {
     }
 
     public List<Meeting> findMeetingsByGroupId(long groupId) {
-        return meetingService.findMeetingByGroupId(groupId);
+        return meetingService.findMeetingsByGroupId(groupId);
     }
 
     public List<Meeting> findMeetingsByGroups(List<Group> groups) {

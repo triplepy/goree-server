@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 
 import com.goree.api.domain.Attendance;
@@ -9,16 +9,16 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AttendanceTest extends TestWithDBUnit{
+public class AttendanceServiceTest extends TestWithDBUnit{
 
     @Autowired
-    private AttendanceController attendanceController;
+    private AttendanceService attendanceService;
 
     @Autowired
-    private MemberController memberController;
+    private MemberService memberService;
 
     @Autowired
-    private MeetingController meetingController;
+    private MeetingService meetingService;
 
     @Override
     public String getDatasetFilePath() {
@@ -29,19 +29,19 @@ public class AttendanceTest extends TestWithDBUnit{
     public void mapMeetingAndAttendance(){
         Attendance expected = new Attendance();
 
-        Meeting meeting = meetingController.findMeetingById(1);
+        Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberController.findMemberAll().get(2);
+        Member member = memberService.findMemberAll().get(2);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.N);
 
 
 
-        attendanceController.mapMeetingAndAttendance(expected.getMember().getId(),expected.getMeeting().getId(), expected.getStatus());
+        attendanceService.mapMeetingAndAttendance(expected.getMember().getId(), expected.getMeeting().getId(), expected.getStatus());
 
-        Attendance actual = attendanceController.findAttendanceByMemberAndMeeting(member.getId(), meeting.getId());
+        Attendance actual = attendanceService.findAttendanceByMemberAndMeeting(member.getId(), meeting.getId());
 
 
         Assert.assertEquals(expected, actual);
@@ -51,15 +51,15 @@ public class AttendanceTest extends TestWithDBUnit{
     public void getMyAttendanceInfoIsN() {
         Attendance expected = new Attendance();
 
-        Meeting meeting = meetingController.findMeetingById(1);
+        Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberController.findMemberAll().get(0);
+        Member member = memberService.findMemberAll().get(0);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.N);
 
-        Attendance actual = attendanceController.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
+        Attendance actual = attendanceService.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
 
 
 
@@ -71,15 +71,15 @@ public class AttendanceTest extends TestWithDBUnit{
     public void getMyAttendanceInfoIsY() {
         Attendance expected = new Attendance();
 
-        Meeting meeting = meetingController.findMeetingById(1);
+        Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberController.findMemberAll().get(1);
+        Member member = memberService.findMemberAll().get(1);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.Y);
 
-        Attendance actual = attendanceController.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
+        Attendance actual = attendanceService.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
 
 
         Assert.assertEquals(expected,actual);
@@ -89,15 +89,15 @@ public class AttendanceTest extends TestWithDBUnit{
     public void getMyAttendanceInfoIsX() {
         Attendance expected = new Attendance();
 
-        Meeting meeting = meetingController.findMeetingById(1);
+        Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberController.findMemberAll().get(2);
+        Member member = memberService.findMemberAll().get(2);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.X);
 
-        Attendance actual = attendanceController.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
+        Attendance actual = attendanceService.findAttendanceByMemberAndMeeting(member.getId(),meeting.getId());
 
 
         Assert.assertEquals(expected,actual);

@@ -1,4 +1,4 @@
-package com.goree.api.controller;
+package com.goree.api.service;
 
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
@@ -8,20 +8,21 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNot.not;
 
 
-public class NoteTest extends TestWithDBUnit{
+public class NoteServiceTest extends TestWithDBUnit{
     @Autowired
-    private NoteController noteController;
+    private NoteService noteService;
 
     @Autowired
-    private GroupController groupController;
+    private GroupService groupService;
 
     @Autowired
-    private MemberController memberController;
+    private MemberService memberService;
 
     @Override
     public String getDatasetFilePath() {
@@ -33,13 +34,13 @@ public class NoteTest extends TestWithDBUnit{
         Note expected = new Note();
         expected.setId(1);
         expected.setContent("findNoteById");
-        Group group = groupController.findGroupById(1);
+        Group group = groupService.findGroupById(1);
         expected.setGroup(group);
-        Member member = memberController.findMemberAll().get(1);
+        Member member = memberService.findMemberAll().get(1);
 
         expected.setNoteWriter(member);
         expected.setContent("findNoteById");
-        Note actual = noteController.findNoteById(expected.getId());
+        Note actual = noteService.findNoteById(expected.getId());
 
         Assert.assertEquals(expected, actual);
     }
@@ -49,13 +50,13 @@ public class NoteTest extends TestWithDBUnit{
         Note expected = new Note();
         expected.setContent("arstarstarst");
 
-        Group group = groupController.findGroupById(1);
+        Group group = groupService.findGroupById(1);
         expected.setGroup(group);
 
-        Member member = memberController.findMemberAll().get(1);
+        Member member = memberService.findMemberAll().get(1);
         expected.setNoteWriter(member);
 
-        Note actual = noteController.writeNote(expected);
+        Note actual = noteService.writeNote(expected);
 
         Assert.assertEquals(expected, actual);
         assertThat(actual.getGroup(),is(not(nullValue())));
