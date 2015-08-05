@@ -1,7 +1,6 @@
 package com.goree.api.controller;
 
 import com.goree.api.domain.Group;
-import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,9 @@ public class GroupController {
     }
 
 
-    @RequestMapping(value="/joined", method=RequestMethod.GET)
-    public List<Group> findGroupsJoined(Member member) {
-        return groupService.findRegistedGroupsByMember(member);
+    @RequestMapping(value= "/joined/member/id/{memberId}", method=RequestMethod.GET)
+    public List<Group> findGroupsJoined(@PathVariable long memberId) {
+        return groupService.findRegistedGroupsByMember(memberId);
     }
 
     @RequestMapping(value="/id/{id}", method=RequestMethod.GET)

@@ -6,15 +6,23 @@ import com.goree.api.mapper.GroupMapper;
 import com.goree.api.mapper.MemberMapper;
 import com.goree.api.mapper.TagMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 @Service
 @Transactional
 public class MemberService {
+
+    @Value("${file.upload.path}")
+    private String staticPath;
+
     @Autowired
     private MemberMapper memberMapper;
     
@@ -57,5 +65,25 @@ public class MemberService {
 
     public Member findMemberByFacebookUserId(String facebookUserId) {
         return memberMapper.selectMemberByFacebookUserId(facebookUserId);
+    }
+
+    public Member updateImage(long id, MultipartFile multipartFile) {
+        if (!multipartFile.isEmpty()){
+            String fileName = new Date().getTime() + multipartFile.getOriginalFilename();
+            try {
+                if(staticPath != null) {
+                    File imagePath = new File(staticPath + fileName);
+                    multipartFile.transferTo(imagePath);
+                    memberMapper.updateImagePath(id, fileName);
+                } else {
+                    return null;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return findMemberById(id);
+
     }
 }

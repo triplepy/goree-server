@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 public class MemberServiceTest extends TestWithDBUnit{
@@ -75,7 +75,7 @@ public class MemberServiceTest extends TestWithDBUnit{
         Assert.assertTrue(deleted);
         
         List<Group> groupsHasDeletedMember = 
-                groupService.findRegistedGroupsByMember(testMember);
+                groupService.findRegistedGroupsByMember(testMember.getId());
         Assert.assertTrue(groupsHasDeletedMember.isEmpty());
     }
     
@@ -85,7 +85,7 @@ public class MemberServiceTest extends TestWithDBUnit{
         long toBeJoinedGroupId = toBeJoined.getId();
         groupService.joinMember(toBeJoinedGroupId, testMember.getId());
         
-        List<Group> joinedGroups = groupService.findRegistedGroupsByMember(testMember);
+        List<Group> joinedGroups = groupService.findRegistedGroupsByMember(testMember.getId());
         boolean joined = joinedGroups.contains(toBeJoined);
         Assert.assertTrue(joined);
     }

@@ -1,7 +1,6 @@
 package com.goree.api.service;
 
 import com.goree.api.domain.Group;
-import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,8 @@ public class GroupService {
 
     @Autowired
     private GroupMapper groupMapper; 
-    public List<Group> findRegistedGroupsByMember(Member member) {
-        return groupMapper.selectGroupsByMemberId(member);
+    public List<Group> findRegistedGroupsByMember(long memberId) {
+        return groupMapper.selectGroupsByMemberId(memberId);
     }
     public Group makingGroup(Group group) {
         groupMapper.insertGroup(group);

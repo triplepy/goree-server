@@ -51,17 +51,17 @@ public class MeetingService {
         Member member = new Member();
         member.setId(memberId);
 
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(memberId);
         return findMeetingsByGroups(groupsJoined);
     }
 
     public List<Meeting> commingUpMeetingsOfMember(Member member) {
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member.getId());
         return meetingMapper.selectCommingUpMeetingsOfGroups(groupsJoined);
     }
 
     public List<Meeting> doneMeetingsOfMember(Member member) {
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member.getId());
         return meetingMapper.selectDoneMeetingsOfGroups(groupsJoined);
     }
 }

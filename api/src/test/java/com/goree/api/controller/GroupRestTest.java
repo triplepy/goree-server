@@ -2,7 +2,6 @@ package com.goree.api.controller;
 
 
 import com.google.gson.Gson;
-import com.goree.api.auth.FacebookSettings;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Member;
 import com.goree.api.mapper.MemberMapper;
@@ -15,8 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Date;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
@@ -24,9 +23,6 @@ public class GroupRestTest extends RestTestWithDBUnit{
 
     @Autowired
     private MemberMapper memberMapper;
-
-    @Autowired
-    private FacebookSettings settings;
 
     @Override
     public String getDatasetFilePath() {
@@ -45,7 +41,10 @@ public class GroupRestTest extends RestTestWithDBUnit{
 
         String jsonData = new Gson().toJson(expected);
 
-        performSet(post("/group"),jsonData)
+        System.out.println(jsonData);
+
+
+        performSet(post("/group"), jsonData)
             .andExpect(jsonPath("$.name").value(expected.getName()))
             .andExpect(jsonPath("$.description").value(expected.getDescription()))
             .andExpect(jsonPath("$.leader.email").value(expected.getLeader().getEmail()));
@@ -68,5 +67,48 @@ public class GroupRestTest extends RestTestWithDBUnit{
 
     }
 
+    @Test
+    public void findGroupAll() throws Exception {
+        performSet(get("/group"))
+                .andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$.[0].leader.id").value(1))
+                .andExpect(jsonPath("$.[0].name").value("abcbacba"))
+                .andExpect(jsonPath("$.[0].description").value("artsarstars"));
+
+    }
+
+    @Test
+    public void findGroupsJoined() throws Exception {
+        int memberId = 1;
+
+        performSet(get("/group/joined/member/id/"+memberId))
+                .andExpect(jsonPath("$.[0].id").value(1))
+                .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    public void findGroupById() throws Exception {
+        int groupId = 1;
+        performSet(get("/group/id/"+ groupId))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.leader.id").value(1))
+                .andExpect(jsonPath("$.name").value("abcbacba"))
+                .andExpect(jsonPath("$.description").value("artsarstars"))
+                .andExpect(jsonPath("$.memberCount").value(1));
+    }
+
+    @Test
+    public void findGroupByName() throws Exception {
+        String groupName = "abcbacba";
+
+        performSet(get("/group/name/" + groupName))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.leader.id").value(1))
+                .andExpect(jsonPath("$.name").value("abcbacba"))
+                .andExpect(jsonPath("$.description").value("artsarstars"))
+                .andExpect(jsonPath("$.memberCount").value(1));
+    }
+
+    
 
 }

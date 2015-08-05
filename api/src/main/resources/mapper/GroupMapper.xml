@@ -22,8 +22,7 @@
     <result column="description" property="description" />
     <collection property="member" resultMap="Member" />
   </resultMap>
-  <select id="selectGroupsByMemberId" parameterType="com.goree.api.domain.Member"
-        resultMap="GroupWithLeaderNestedSelect">
+  <select id="selectGroupsByMemberId" resultMap="GroupWithLeaderNestedSelect">
     SELECT 
         `groups`.group_id, 
         `groups`.group_name,
@@ -36,7 +35,7 @@
             INNER JOIN member 
                 ON group_has_member.member_id = member.member_id
     WHERE 
-        member.member_id = #{id}
+        member.member_id = #{param1}
   </select>
   <insert id="insertGroup" parameterType="com.goree.api.domain.Group">
     INSERT INTO `groups`(group_name, leader_id,description) 

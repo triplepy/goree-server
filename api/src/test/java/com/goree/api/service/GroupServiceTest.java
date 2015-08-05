@@ -30,7 +30,7 @@ public class GroupServiceTest extends TestWithDBUnit {
 		Member member = new Member();
 		member.setId(1);
 
-		List<Group> joinedGroups = groupService.findRegistedGroupsByMember(member);
+		List<Group> joinedGroups = groupService.findRegistedGroupsByMember(member.getId());
 		
 		Assert.assertTrue(joinedGroups.size() == 1);
 		Assert.assertTrue(joinedGroups.get(0).getId() == 1);

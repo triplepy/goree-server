@@ -53,7 +53,7 @@ public class MeetingFindByMemberTest extends TestWithDBUnit{
         Member member = new Member();
         member.setId(memberId);
 
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member);
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member.getId());
         List<Meeting> meetingsOfMember = meetingService.findMeetingsByMemberId(memberId);
         meetingsOfMember.stream().forEach(meeting -> {
             Group group = meeting.getGroup();
