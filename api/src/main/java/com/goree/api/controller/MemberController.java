@@ -12,22 +12,48 @@ import java.util.List;
 public class MemberController {
     @Autowired
     private MemberService memberService;
-    
+
+    /**
+     *
+     * @api {post} /member Register Member
+     * @apiGroup Member
+     * @apiParam (Member) {json} User-info for to register
+     * @apiParamExample {json} Request-Example:
+     * {"email":"arstarst@nate.com","password":"qlalfqjsgh","fullName":"Wonyoung Ju","nickname":"nickname","job":"programmer","age":22,"gender":"M","phone":"010-1234-0173","tags":[{"name":"memberTest"]}
+     * @apiDescription 회원의 정보를 받아서 등록한다(회원가입)
+     */
     @RequestMapping(value="", method=RequestMethod.POST)
     public Member registerMember(@RequestBody Member member) {
         return memberService.registerMember(member);
     }
 
+    /**
+     * @api {get} /member Find all of member
+     * @apiGroup Member
+     * @apiDescription 가입된 모든 멤버의 리스트를 가져온다.
+     */
     @RequestMapping(value="", method=RequestMethod.GET)
     public List<Member> findMemberAll() {
         return memberService.findMemberAll();
     }
 
+    /**
+     * @api {delete} /member/id/:id Delete Member By ID
+     * @apiGroup Member
+     * @apiParam (Member) {number} [User Id]
+     * @apiDescription 멤버의 id(시퀀스)를 받아서 해당 멤버를 삭제한다.
+     */
     @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
     public void deleteMemberById(@PathVariable long id) {
         memberService.deleteMemberById(id);
     }
 
+    /**
+     * @api {get} /member/id/:id Get Member Info
+     * @apiGroup Member
+     * @apiParam (Member) {number} [User Id]
+     * @apiDescription 해당 id(시퀀스)를 가진 회원의 정보를 가져온다.
+     */
     @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
     public Member findMemberById(@PathVariable long id) {
         return memberService.findMemberById(id);
