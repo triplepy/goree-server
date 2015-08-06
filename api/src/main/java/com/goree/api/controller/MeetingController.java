@@ -15,31 +15,66 @@ import java.util.List;
 public class MeetingController {
     @Autowired
     private MeetingService meetingService;
-    
+
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Meeting createMeeting(Meeting meeting) {
         return meetingService.createMeeting(meeting);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Meeting findMeetingById(long meetingId) {
         return meetingService.findMeetingById(meetingId);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<Meeting> findMeetingsByGroupId(long groupId) {
         return meetingService.findMeetingsByGroupId(groupId);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<Meeting> findMeetingsByGroups(List<Group> groups) {
         return meetingService.findMeetingsByGroups(groups);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<Meeting> findMeetingsByMemberId(long memberId) {
         return meetingService.findMeetingsByMemberId(memberId);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<Meeting> commingUpMeetingsOfMember(Member member) {
         return meetingService.commingUpMeetingsOfMember(member);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<Meeting> doneMeetingsOfMember(Member member) {
         return meetingService.doneMeetingsOfMember(member);
     }

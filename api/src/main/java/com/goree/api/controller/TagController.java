@@ -15,18 +15,38 @@ public class TagController {
 	@Autowired
 	private TagService tagService;
 
+	/**
+	 * @api
+	 * @apiGroup
+	 * @apiDescription
+	 */
 	public Tag creatingTag(Tag tag) {
 		return tagService.creatingTag(tag);
 	}
 
+	/**
+	 * @api
+	 * @apiGroup
+	 * @apiDescription
+	 */
 	public Tag findTagByName(String tagName) {
 		return tagService.findTagByName(tagName);
 	}
 
+	/**
+	 * @api
+	 * @apiGroup
+	 * @apiDescription
+	 */
 	public Tag findTagById(long id) {
 		return tagService.findTagById(id);
 	}
 
+	/**
+	 * @api
+	 * @apiGroup
+	 * @apiDescription
+	 */
 	public List<Tag> searchTagsByStartWord(String startWord) {
 		return tagService.searchTagsByStartWord(startWord);
 	}

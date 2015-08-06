@@ -15,14 +15,29 @@ public class NoteCommentController {
     private NoteCommentService noteCommentService;
 
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public NoteComment findNoteCommentById(long id) {
         return noteCommentService.findNoteCommentById(id);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public List<NoteComment> findNoteCommentsById(long noteId) {
         return noteCommentService.findNoteCommentsById(noteId);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public NoteComment writeNoteComment(NoteComment noteComment) {
         return noteCommentService.writeNoteComment(noteComment);
     }

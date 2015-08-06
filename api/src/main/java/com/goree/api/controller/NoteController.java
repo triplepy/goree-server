@@ -13,10 +13,20 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Note findNoteById(long id) {
         return noteService.findNoteById(id);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Note writeNote(Note note) {
         return noteService.writeNote(note);
     }

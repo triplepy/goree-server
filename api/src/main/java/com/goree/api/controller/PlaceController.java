@@ -11,15 +11,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlaceController {
     @Autowired
     private PlaceService placeService;
-    
+
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Place findPlaceById(long id) {
         return placeService.findPlaceById(id);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Place createPlace(Place place) {
         return placeService.createPlace(place);
     }
 
+    /**
+     * @api
+     * @apiGroup
+     * @apiDescription
+     */
     public Place findPlaceByItself(Place place) {
         return placeService.findPlaceByItself(place);
     }
