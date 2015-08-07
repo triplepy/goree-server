@@ -13,6 +13,7 @@
     <result column="age" property="age" />
     <result column="gender" property="gender" />
     <result column="phone" property="phone" />
+    <result column="profile_img_url" property="imagePath" />
   </resultMap>
   
   <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
@@ -40,4 +41,13 @@
     INSERT INTO member_has_tag (member_id, tag_id) 
     VALUES (#{param1}, #{param2})
   </insert>
+
+
+
+
+  <update id="updateImagePath" >
+      UPDATE member
+      SET profile_img_url = #{param2}
+      WHERE member_id = #{param1}
+  </update>
 </mapper>

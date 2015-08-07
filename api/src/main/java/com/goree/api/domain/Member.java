@@ -24,7 +24,8 @@ public class Member {
     private Gender gender;
     private String phone;
     private List<Tag> tags;
-    
+    private String imagePath;
+
     public enum Gender {
         M, F
     }

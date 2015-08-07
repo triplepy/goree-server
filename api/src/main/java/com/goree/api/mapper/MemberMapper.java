@@ -19,4 +19,6 @@ public interface MemberMapper {
     Member selectMemberById(long id);
 
     Member selectMemberByFacebookUserId(String id);
+
+    void updateImagePath(long id, String fileName);
 }

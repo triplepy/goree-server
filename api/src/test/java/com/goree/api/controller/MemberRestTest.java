@@ -6,14 +6,20 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.util.RestTestWithDBUnit;
 import org.junit.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 public class MemberRestTest extends RestTestWithDBUnit {
@@ -92,6 +98,22 @@ public class MemberRestTest extends RestTestWithDBUnit {
                 .andExpect(jsonPath("$.gender").value(expected.getGender().name()))
                 .andExpect(jsonPath("$.phone").value(expected.getPhone()))
                 .andExpect(jsonPath("$.job").value(expected.getJob()));
+
+    }
+
+    @Test
+    public void updateMemberImage() throws Exception {
+        long memberId = 1L;
+
+        File file = new File("src/test/resources/static/Image_upload_test.jpg");
+        FileInputStream fis = new FileInputStream(file);
+        MockMultipartFile multipartFile = new MockMultipartFile("file", file.getName(),null,fis);
+
+
+        performSet(fileUpload("/member/id/"+ memberId + "/updateImage").file(multipartFile))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.imagePath").value(notNullValue()));
+
 
     }
 

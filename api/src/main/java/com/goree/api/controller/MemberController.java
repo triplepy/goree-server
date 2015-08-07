@@ -4,6 +4,7 @@ import com.goree.api.domain.Member;
 import com.goree.api.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,6 +41,18 @@ public class MemberController {
     }
 
     /**
+     * @api {post} /member/id/:id/updateImage Update profile image
+     * @apiName Update profile image
+     * @apiGroup Member
+     * @apiParam (File) {file} imageFile
+     * @apiDescription 가입된 모든 멤버의 리스트를 가져온다.
+     */
+    @RequestMapping(value="/id/{memberId}/updateImage", method=RequestMethod.POST, consumes="multipart/form-data")
+    public Member updateImage(@RequestPart MultipartFile file, @PathVariable long memberId) {
+        return memberService.updateImage(memberId, file);
+    }
+
+    /**
      * @api {delete} /member/id/:id Delete Member By ID
      * @apiName Delete Member By ID
      * @apiGroup Member
@@ -62,4 +75,6 @@ public class MemberController {
     public Member findMemberById(@PathVariable long id) {
         return memberService.findMemberById(id);
     }
+
+
 }
