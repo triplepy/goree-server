@@ -16,6 +16,7 @@ public class MemberController {
     /**
      *
      * @api {post} /member Register Member
+     * @apiName Register Member
      * @apiGroup Member
      * @apiParam (Member) {json} User-info for to register
      * @apiParamExample {json} Request-Example:
@@ -29,6 +30,7 @@ public class MemberController {
 
     /**
      * @api {get} /member Find all of member
+     * @apiName Find all of member
      * @apiGroup Member
      * @apiDescription 가입된 모든 멤버의 리스트를 가져온다.
      */
@@ -39,6 +41,7 @@ public class MemberController {
 
     /**
      * @api {delete} /member/id/:id Delete Member By ID
+     * @apiName Delete Member By ID
      * @apiGroup Member
      * @apiParam (Member) {number} [User Id]
      * @apiDescription 멤버의 id(시퀀스)를 받아서 해당 멤버를 삭제한다.
@@ -50,6 +53,7 @@ public class MemberController {
 
     /**
      * @api {get} /member/id/:id Get Member Info
+     * @apiName Get Member Info
      * @apiGroup Member
      * @apiParam (Member) {number} [User Id]
      * @apiDescription 해당 id(시퀀스)를 가진 회원의 정보를 가져온다.
