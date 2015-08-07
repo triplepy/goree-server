@@ -36,5 +36,14 @@
       (#{param1},#{param2},#{param3})
   </insert>
 
+  <update id="updateMeetingHasMember" >
+    UPDATE
+      meeting_has_member
+    SET
+      attendance = #{param3}
+    WHERE
+      member_id = #{param1} AND
+      meeting_id = #{param2}
+  </update>
 
 </mapper>

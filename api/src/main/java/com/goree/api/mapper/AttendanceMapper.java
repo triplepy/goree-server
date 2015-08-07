@@ -9,4 +9,6 @@ public interface AttendanceMapper {
     Attendance selectAttendanceByMemberAndMeeting(long memberId, long meetingId);
 
     void insertMeetingHasMember(long memberId, long meetingId, Attendance.Status status);
+
+    void updateMeetingHasMember(long memberId, long meetingId, Attendance.Status status);
 }

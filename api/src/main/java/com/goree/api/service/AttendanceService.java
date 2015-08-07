@@ -21,6 +21,10 @@ public class AttendanceService {
     }
 
     public void mapMeetingAndAttendance(long memberId, long meetingId, Attendance.Status status) {
-        attendanceMapper.insertMeetingHasMember(memberId, meetingId, status);
+        Attendance.Status current = findAttendanceByMemberAndMeeting(memberId, meetingId).getStatus();
+        if (current.equals(Attendance.Status.X)) {
+            attendanceMapper.insertMeetingHasMember(memberId, meetingId, status);
+        } else attendanceMapper.updateMeetingHasMember(memberId,meetingId,status);
+
     }
 }
