@@ -46,6 +46,12 @@ public class GroupService {
         return groupMapper.selectGroupsByTagOrderByMemberCount(tag);
     }
 
+    public List<Group> findGroupsByTagOrderByMemberCount(String tagName) {
+        Tag tag = new Tag();
+        tag.setName(tagName);
+        return findGroupsByTagOrderByMemberCount(tag);
+    }
+
     public Group updateImage(MultipartFile file, long id) {
         if (!file.isEmpty()){
             String fileName = new Date().getTime() + file.getOriginalFilename();
@@ -64,4 +70,6 @@ public class GroupService {
         }
         return findGroupById(id);
     }
+
+
 }

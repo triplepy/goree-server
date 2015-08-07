@@ -15,11 +15,17 @@ public class GroupController {
     
     @Autowired
     private GroupService groupService;
-    
+
+    /**
+     * @api {get} /member Find all of Group
+     * @apiGroup Group
+     * @apiDescription 등록된 모든 그룹의 리스트를 가져온다.
+     */
     @RequestMapping(value="", method=RequestMethod.GET)
     public List<Group> findGroupAll() {
         return groupService.findGroupAll();
     }
+
 
     @RequestMapping(value="", method=RequestMethod.POST)
     public Group makingGroup(@RequestBody Group group) {
@@ -47,11 +53,13 @@ public class GroupController {
         return groupService.findGroupByName(name);
     }
 
-    public void joinMember(long groupId, long memberId) {
+    @RequestMapping(value = "/join/{groupId}/member/{memberId}", method=RequestMethod.GET)
+    public void joinMember(@PathVariable long groupId, @PathVariable long memberId) {
         groupService.joinMember(groupId, memberId);
     }
 
-    public List<Group> findGroupsByTagOrderByMemberCount(Tag tag) {
-        return groupService.findGroupsByTagOrderByMemberCount(tag);
+    @RequestMapping(value="/orderByMemberCount/tagName/{tagName}")
+    public List<Group> findGroupsByTagOrderByMemberCount(@PathVariable String tagName) {
+        return groupService.findGroupsByTagOrderByMemberCount(tagName);
     }
 }

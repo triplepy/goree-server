@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.IsNot.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -70,6 +71,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
     @Test
     public void findGroupAll() throws Exception {
         performSet(get("/group"))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$.[0].id").value(1))
                 .andExpect(jsonPath("$.[0].leader.id").value(1))
                 .andExpect(jsonPath("$.[0].name").value("abcbacba"))
@@ -109,6 +111,26 @@ public class GroupRestTest extends RestTestWithDBUnit{
                 .andExpect(jsonPath("$.memberCount").value(1));
     }
 
-    
+
+    @Test
+    public void joinMember() throws Exception {
+        int groupId = 1;
+        int memberId = 2;
+
+        performSet(get("/group/join/" + groupId + "/member/" + memberId));
+
+        int expectedMemberCount = 2;
+
+        performSet(get("/group/id/" + groupId))
+                .andExpect(jsonPath("$.id").value(groupId))
+                .andExpect(jsonPath("$.leader.id").value(1))
+                .andExpect(jsonPath("$.name").value("abcbacba"))
+                .andExpect(jsonPath("$.description").value("artsarstars"))
+                .andExpect(jsonPath("$.memberCount").value(expectedMemberCount));
+
+    }
+
+
+
 
 }
