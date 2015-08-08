@@ -75,21 +75,32 @@ public class MemberRestTest extends RestTestWithDBUnit {
     @Test
     public void registerMember() throws Exception {
         Member expected = new Member();
-        expected.setEmail("rpxhdnjsdud"+new Date().getTime()+"@nate.com");
+        expected.setEmail("arstarst@nate.com");
         expected.setPassword("qlalfqjsgh");
         expected.setFullName("Wonyoung Ju");
         expected.setAge(22);
         expected.setNickname("nickname");
         expected.setGender(Member.Gender.M);
-        expected.setPhone("010-8826-0173");
+        expected.setPhone("010-1234-0173");
         expected.setJob("programmer");
         Tag tag = new Tag();
         tag.setName("memberTest");
         expected.setTags(Arrays.asList(tag));
 
-        String json = new Gson().toJson(expected);
 
-
+        String json = "{" +
+                         "\"email\":\"arstarst@nate.com\"," +
+                         "\"password\":\"qlalfqjsgh\"," +
+                         "\"fullName\":\"Wonyoung Ju\"," +
+                         "\"nickname\":\"nickname\"," +
+                         "\"job\":\"programmer\"," +
+                         "\"age\":22," +
+                         "\"gender\":\"M\"," +
+                         "\"phone\":\"010-1234-0173\"," +
+                         "\"tags\": [" +
+                                 "{\"name\":\"memberTest\"}" +
+                          "]" +
+                      "}";
         performSet(post("/member"),json)
                 .andExpect(jsonPath("$.email").value(expected.getEmail()))
                 .andExpect(jsonPath("$.fullName").value(expected.getFullName()))

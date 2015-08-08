@@ -21,7 +21,7 @@ public class MemberController {
      * @apiGroup Member
      * @apiParam (Member) {json} User-info for to register
      * @apiParamExample {json} Request-Example:
-     * {"email":"arstarst@nate.com","password":"qlalfqjsgh","fullName":"Wonyoung Ju","nickname":"nickname","job":"programmer","age":22,"gender":"M","phone":"010-1234-0173","tags":[{"name":"memberTest"]}
+     * {"email":"arstarst@nate.com","password":"qlalfqjsgh","fullName":"Wonyoung Ju","nickname":"nickname","job":"programmer","age":22,"gender":"M","phone":"010-1234-0173","tags": [ {"name":"memberTest"} ] }
      * @apiDescription 회원의 정보를 받아서 등록한다(회원가입)
      */
     @RequestMapping(value="", method=RequestMethod.POST)
@@ -44,8 +44,9 @@ public class MemberController {
      * @api {post} /member/id/:id/updateImage Update profile image
      * @apiName Update profile image
      * @apiGroup Member
-     * @apiParam (File) {file} imageFile
-     * @apiDescription 가입된 모든 멤버의 리스트를 가져온다.
+     * @apiParam {file} imageFile for member profile
+     * @apiParam {number} member ID (sequence)
+     * @apiDescription Member ID에 해당되는 회원의 이미지를 등록혹은 변경한다.
      */
     @RequestMapping(value="/id/{memberId}/updateImage", method=RequestMethod.POST, consumes="multipart/form-data")
     public Member updateImage(@RequestPart MultipartFile file, @PathVariable long memberId) {
@@ -56,7 +57,7 @@ public class MemberController {
      * @api {delete} /member/id/:id Delete Member By ID
      * @apiName Delete Member By ID
      * @apiGroup Member
-     * @apiParam (Member) {number} [User Id]
+     * @apiParam {number} userId    User ID (sequence)
      * @apiDescription 멤버의 id(시퀀스)를 받아서 해당 멤버를 삭제한다.
      */
     @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
@@ -68,7 +69,7 @@ public class MemberController {
      * @api {get} /member/id/:id Get Member Info
      * @apiName Get Member Info
      * @apiGroup Member
-     * @apiParam (Member) {number} [User Id]
+     * @apiParam {number} User Id   User ID (sequence)
      * @apiDescription 해당 id(시퀀스)를 가진 회원의 정보를 가져온다.
      */
     @RequestMapping(value="/id/{id}", method=RequestMethod.GET)

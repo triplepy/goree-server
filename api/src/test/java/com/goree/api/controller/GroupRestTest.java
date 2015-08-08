@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.IsNot.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -117,7 +116,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
         int groupId = 1;
         int memberId = 2;
 
-        performSet(get("/group/join/" + groupId + "/member/" + memberId));
+        performSet(put("/group/join/" + groupId + "/member/" + memberId));
 
         int expectedMemberCount = 2;
 

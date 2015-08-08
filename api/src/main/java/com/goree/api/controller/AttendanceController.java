@@ -18,9 +18,9 @@ public class AttendanceController {
 
     /**
      * @api {get} /attendance/find/member/:memberId/meeting/:meetingId Find attendance
-     * @apiParam (Attendance) {number} [memberId] member's sequence number
-     * {number} [meetingId] meeting's sequence number
      * @apiGroup Attendance
+     * @apiParam {number} memberId   member's sequence number
+     * @apiParam {number} meetingId  meeting's sequence number
      * @apiDescription 미팅 ID값과 멤버 ID값을 이용해 미팅 참석여부를 가져온다.
      */
     @RequestMapping(value="/find/member/{memberId}/meeting/{meetingId}",method=RequestMethod.GET)
@@ -32,6 +32,9 @@ public class AttendanceController {
      * @api {post} /attendance/map/member/:memberId/meeting/:meetingId/status/:status Map Meeting and Attendance
      * @apiName Map Meeting and Attendance
      * @apiGroup Attendance
+     * @apiParam {number} memberId   member's sequence number
+     * @apiParam {number} meetingId  meeting's sequence number
+     * @apiParam {String="Y","N"} status     attendance status
      * @apiDescription 멤버 ID값과 미팅 ID값에 해당되는 참석여부 상태를 변경한다.
      */
     @RequestMapping(value="/map/member/{memberId}/meeting/{meetingId}/status/{status}", method=RequestMethod.POST )
