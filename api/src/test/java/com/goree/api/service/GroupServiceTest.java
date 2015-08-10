@@ -18,13 +18,11 @@ public class GroupServiceTest extends TestWithDBUnit {
 	@Autowired
 	private MemberMapper memberMapper;
 
-	
 	@Override
 	public String getDatasetFilePath() {
 		return "src/test/resources/testdataset/group_test_setup.xml";
 	}
-	
-	
+
 	@Test
 	public void findGroupsJoined() throws Exception {
 		Member member = new Member();
@@ -79,5 +77,4 @@ public class GroupServiceTest extends TestWithDBUnit {
 		Assert.assertTrue(groups.size() > 0);
 		Assert.assertTrue(groups.get(0).getMemberCount() == 1);
 	}
-
 }
