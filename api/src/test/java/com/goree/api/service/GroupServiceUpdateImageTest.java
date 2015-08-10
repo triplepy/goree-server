@@ -1,10 +1,10 @@
 package com.goree.api.service;
 
 import com.goree.api.domain.Group;
-import com.goree.api.mapper.MemberMapper;
 import com.goree.api.util.TestWithDBUnit;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +20,6 @@ public class GroupServiceUpdateImageTest extends TestWithDBUnit {
 	@Autowired
 	private GroupService groupService;
 
-	@Autowired
-	private MemberMapper memberMapper;
-
     @Value("${file.upload.path}")
 	private String fileUploadDir;
 
@@ -31,8 +28,9 @@ public class GroupServiceUpdateImageTest extends TestWithDBUnit {
 
 	private final String multiFileName = "test.jpg";
 	private MockMultipartFile multipartFile;
+    private File fileUploadDirObj;
 
-	@Override
+    @Override
 	public String getDatasetFilePath() {
 		return "src/test/resources/testdataset/group_test_setup.xml";
 	}
@@ -51,26 +49,32 @@ public class GroupServiceUpdateImageTest extends TestWithDBUnit {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+
+        fileUploadDirObj = new File(fileUploadDir);
 	}
 
 	@Test
 	public void updateImage_normal() throws IOException {
-		// when
+        // ensure destination directory exists.
+        if (!fileUploadDirObj.exists())
+            FileUtils.forceMkdir(fileUploadDirObj);
+
+		// when then
         updateAndAssert();
 	}
 
     @Test
 	public void updateImage_destDirNotExists() throws IOException {
 		// remove destination directory
-		File fileUploadDirObj = new File(fileUploadDir);
 		if (fileUploadDirObj.exists() && fileUploadDirObj.isDirectory())
 			FileUtils.forceDelete(fileUploadDirObj);
 
-		// when
+		// when then
         updateAndAssert();
 	}
 
     private void updateAndAssert() throws IOException {
+        // when
         Group resultGroup = groupService.updateImage(multipartFile, 1L);
         assertThat(resultGroup.getImagePath(), is(not(nullValue())));
 
@@ -82,5 +86,17 @@ public class GroupServiceUpdateImageTest extends TestWithDBUnit {
         assertTrue(resultFile.exists());
         assertTrue(resultFile.isFile());
         assertTrue(FileUtils.contentEquals(resultFile, testImageFile));
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+
+        try {
+            FileUtils.forceDelete(fileUploadDirObj);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
