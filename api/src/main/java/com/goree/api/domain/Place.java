@@ -1,5 +1,6 @@
 package com.goree.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,9 +10,12 @@ public class Place {
     private long id;
     private String name;
     private String address;
+    @JsonProperty(value = "xCoordinate")
     private BigDecimal xCoordinate;
+    @JsonProperty(value = "yCoordinate")
     private BigDecimal yCoordinate;
-    
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
