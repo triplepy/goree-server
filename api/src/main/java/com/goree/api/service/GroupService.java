@@ -3,6 +3,7 @@ package com.goree.api.service;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,7 @@ public class GroupService {
             String fileName = new Date().getTime() + file.getOriginalFilename();
             try {
                 if(staticPath != null) {
+                    FileUtils.forceMkdir(new File(staticPath));
                     File imagePath = new File(staticPath + fileName);
                     file.transferTo(imagePath);
                     groupMapper.updateImagePath(id, fileName);

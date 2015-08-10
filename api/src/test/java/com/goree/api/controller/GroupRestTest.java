@@ -14,9 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Date;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class GroupRestTest extends RestTestWithDBUnit{
@@ -62,9 +62,6 @@ public class GroupRestTest extends RestTestWithDBUnit{
         performSet(fileUpload("/group/id/1/updateImage").file(multipartFile))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.imagePath").exists());
-
-
-
     }
 
     @Test
