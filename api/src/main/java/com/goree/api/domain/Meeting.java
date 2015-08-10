@@ -1,5 +1,9 @@
 package com.goree.api.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.goree.api.util.GoreeDateDeserializer;
+import com.goree.api.util.GoreeDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +21,13 @@ public class Meeting {
     private Member promoter;
     private Date date;
     private String description;
-    
+
+    @JsonSerialize(using= GoreeDateSerializer.class)
+    @JsonDeserialize(using = GoreeDateDeserializer.class)
+    public Date getDate() {
+        return date;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof Meeting))
