@@ -26,7 +26,7 @@ public class MeetingFindByMemberRestTest extends RestTestWithDBUnit{
     public void commingUpMeetingsOfMember() throws Exception {
         long memberId = 1;
 
-        performSet(get("/meeting/commingUp/member/" + memberId))
+        performSet(get("/meeting/comingUp/member/" + memberId))
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$.[0].id").value(2))
                 .andExpect(jsonPath("$.[1].id").value(3))
