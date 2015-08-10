@@ -19,9 +19,23 @@ public class MemberController {
      * @api {post} /member Register Member
      * @apiName Register Member
      * @apiGroup Member
-     * @apiParam (Member) {json} User-info for to register
+     * @apiParam (Member) {json} User-info User info for to register
      * @apiParamExample {json} Request-Example:
-     * {"email":"arstarst@nate.com","password":"qlalfqjsgh","fullName":"Wonyoung Ju","nickname":"nickname","job":"programmer","age":22,"gender":"M","phone":"010-1234-0173","tags": [ {"name":"memberTest"} ] }
+     *   {
+     *     "email": "arstarst@nate.com",
+     *     "password": "qlalfqjsgh",
+     *     "fullName": "Wonyoung Ju",
+     *     "nickname": "nickname",
+     *     "job": "programmer",
+     *     "age": 22,
+     *     "gender": "M",
+     *     "phone": "010-1234-0173",
+     *     "tags": [
+     *       {
+     *         "name": "memberTest"
+     *       }
+     *     ]
+     *   }
      * @apiDescription 회원의 정보를 받아서 등록한다(회원가입)
      */
     @RequestMapping(value="", method=RequestMethod.POST)
