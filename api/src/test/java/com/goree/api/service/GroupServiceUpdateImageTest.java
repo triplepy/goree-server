@@ -56,8 +56,7 @@ public class GroupServiceUpdateImageTest extends TestWithDBUnit {
 	@Test
 	public void updateImage_normal() throws IOException {
         // ensure destination directory exists.
-        if (!fileUploadDirObj.exists())
-            FileUtils.forceMkdir(fileUploadDirObj);
+        FileUtils.forceMkdir(fileUploadDirObj);
 
 		// when then
         updateAndAssert();
