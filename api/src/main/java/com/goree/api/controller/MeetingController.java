@@ -2,7 +2,6 @@ package com.goree.api.controller;
 
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
-import com.goree.api.domain.Member;
 import com.goree.api.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,7 @@ public class MeetingController {
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value="/create", method= RequestMethod.POST)
+    @RequestMapping(value="", method= RequestMethod.POST)
     public Meeting createMeeting(@RequestBody Meeting meeting) {
         return meetingService.createMeeting(meeting);
     }
@@ -30,7 +29,7 @@ public class MeetingController {
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value="/id/{meetingId}",method=RequestMethod.GET)
+    @RequestMapping(value="/{meetingId}",method=RequestMethod.GET)
     public Meeting findMeetingById(@PathVariable long meetingId) {
         return meetingService.findMeetingById(meetingId);
     }
@@ -70,18 +69,17 @@ public class MeetingController {
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value="/commingUp", method=RequestMethod.POST)
-    public List<Meeting> commingUpMeetingsOfMember(Member member) {
-        return meetingService.commingUpMeetingsOfMember(member);
+    @RequestMapping(value="/commingUp/member/{memberId}", method=RequestMethod.GET)
+    public List<Meeting> commingUpMeetingsOfMember(@PathVariable long memberId) {
+        return meetingService.commingUpMeetingsOfMember(memberId);
     }
-
     /**
      * @api
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value="/done", method=RequestMethod.POST)
-    public List<Meeting> doneMeetingsOfMember(Member member) {
-        return meetingService.doneMeetingsOfMember(member);
+    @RequestMapping(value="/done/member/{memberId}", method=RequestMethod.GET)
+    public List<Meeting> doneMeetingsOfMember(@PathVariable long memberId) {
+        return meetingService.doneMeetingsOfMember(memberId);
     }
 }
