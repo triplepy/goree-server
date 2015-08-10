@@ -1,7 +1,6 @@
 package com.goree.api.controller;
 
 
-import com.google.gson.Gson;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.util.RestTestWithDBUnit;
@@ -11,15 +10,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
-import java.util.Date;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 public class MemberRestTest extends RestTestWithDBUnit {
