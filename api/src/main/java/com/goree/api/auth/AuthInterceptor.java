@@ -19,13 +19,20 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String tokenRecieved = request.getHeader("AuthToken");
-        AuthContext.token(tokenRecieved);
-
-        Member member = authService.findMemberLoggedIn();
-        AuthContext.memberInfo(member);
+        registerTokenToAuthContext(request);
+        registerMemberInfoToAuthContext();
 
         return true;
+    }
+
+    private void registerMemberInfoToAuthContext() {
+        Member member = authService.findMemberLoggedIn();
+        AuthContext.memberInfo(member);
+    }
+
+    private void registerTokenToAuthContext(HttpServletRequest request) {
+        String tokenRecieved = request.getHeader("AuthToken");
+        AuthContext.token(tokenRecieved);
     }
 
     @Override
