@@ -16,7 +16,7 @@ public class NoteCommentService {
         return noteCommentMapper.selectNoteCommentById(id);
     }
 
-    public List<NoteComment> findNoteCommentsById(long noteId) {
+    public List<NoteComment> findNoteCommentsByNoteId(long noteId) {
         return noteCommentMapper.selectNoteCommentsByNoteId(noteId);
     }
 

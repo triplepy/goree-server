@@ -91,7 +91,7 @@ public class NoteCommentServiceTest extends TestWithDBUnit{
     public void findNoteCommentsByNoteId(){
         List<NoteComment> expecteds = noteComments;
 
-        List<NoteComment> actuals = noteCommentService.findNoteCommentsById(1);
+        List<NoteComment> actuals = noteCommentService.findNoteCommentsByNoteId(1);
 
         Assert.assertTrue(expecteds.containsAll(actuals));
     }
