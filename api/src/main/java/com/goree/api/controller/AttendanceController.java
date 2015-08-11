@@ -29,7 +29,7 @@ public class AttendanceController {
     }
 
     /**
-     * @api {post} /attendance/map/member/:memberId/meeting/:meetingId/status/:status Map Meeting and Attendance
+     * @api {put} /attendance/map/member/:memberId/meeting/:meetingId/status/:status Map Meeting and Attendance
      * @apiName Map Meeting and Attendance
      * @apiGroup Attendance
      * @apiParam {number} memberId   member's sequence number
@@ -37,7 +37,7 @@ public class AttendanceController {
      * @apiParam {String="Y","N"} status     attendance status
      * @apiDescription 멤버 ID값과 미팅 ID값에 해당되는 참석여부 상태를 변경한다.
      */
-    @RequestMapping(value="/map/member/{memberId}/meeting/{meetingId}/status/{status}", method=RequestMethod.POST )
+    @RequestMapping(value="/map/member/{memberId}/meeting/{meetingId}/status/{status}", method=RequestMethod.PUT )
     public void mapMeetingAndAttendance(@PathVariable long memberId,@PathVariable long meetingId,
                                         @PathVariable Attendance.Status status) {
         attendanceService.mapMeetingAndAttendance(memberId, meetingId, status);

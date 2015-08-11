@@ -55,13 +55,23 @@ public class MeetingService {
         return findMeetingsByGroups(groupsJoined);
     }
 
-    public List<Meeting> commingUpMeetingsOfMember(Member member) {
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member.getId());
+    public List<Meeting> commingUpMeetingsOfMember(long memberId) {
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(memberId);
         return meetingMapper.selectCommingUpMeetingsOfGroups(groupsJoined);
     }
 
-    public List<Meeting> doneMeetingsOfMember(Member member) {
-        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(member.getId());
+    public List<Meeting> commingUpMeetingsOfMember(Member member) {
+        return commingUpMeetingsOfMember(member.getId());
+    }
+
+    public List<Meeting> doneMeetingsOfMember(long memberId) {
+        List<Group> groupsJoined = groupService.findRegistedGroupsByMember(memberId);
         return meetingMapper.selectDoneMeetingsOfGroups(groupsJoined);
     }
+    
+    public List<Meeting> doneMeetingsOfMember(Member member) {
+        return doneMeetingsOfMember(member.getId());
+    }
+
+
 }
