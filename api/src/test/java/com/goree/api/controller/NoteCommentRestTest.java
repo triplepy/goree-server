@@ -27,7 +27,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -74,9 +73,8 @@ public class NoteCommentRestTest {
 
         // when then
         mockMvc.perform(
-                get("/group/note/comment/"+noteComment1.getId())
-                .header("AuthToken", settings.longLivedTokenForTest()))
-                .andDo(print())
+                get("/group/note/comment/" + noteComment1.getId())
+                        .header("AuthToken", settings.longLivedTokenForTest()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int) noteComment1.getId())))
                 .andExpect(jsonPath("$.content", is(noteComment1.getContent())))
