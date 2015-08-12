@@ -16,7 +16,7 @@ public class MemberController {
 
     /**
      *
-     * @api {post} /member Register Member
+     * @api {post} /member/join Register Member
      * @apiName Register Member
      * @apiGroup Member
      * @apiParam (Member) {json} User-info User info for to register
