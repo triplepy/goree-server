@@ -38,7 +38,7 @@ public class MemberController {
      *   }
      * @apiDescription 회원의 정보를 받아서 등록한다(회원가입)
      */
-    @RequestMapping(value="", method=RequestMethod.POST)
+    @RequestMapping(value="/join", method=RequestMethod.POST)
     public Member registerMember(@RequestBody Member member) {
         return memberService.registerMember(member);
     }

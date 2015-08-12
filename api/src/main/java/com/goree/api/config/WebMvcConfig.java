@@ -14,10 +14,12 @@ public class WebMvcConfig {
 
     @Bean
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
+
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-                registry.addInterceptor(authInterceptor);
+                registry.addInterceptor(authInterceptor)
+                .excludePathPatterns("/member/join");
             }
         };
     }

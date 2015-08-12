@@ -5,17 +5,17 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.util.RestTestWithDBUnit;
 import org.junit.Test;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class MemberRestTest extends RestTestWithDBUnit {
@@ -97,14 +97,19 @@ public class MemberRestTest extends RestTestWithDBUnit {
                                  "{\"name\":\"memberTest\"}" +
                           "]" +
                       "}";
-        performSet(post("/member"),json)
-                .andExpect(jsonPath("$.email").value(expected.getEmail()))
-                .andExpect(jsonPath("$.fullName").value(expected.getFullName()))
-                .andExpect(jsonPath("$.age").value(expected.getAge()))
-                .andExpect(jsonPath("$.nickname").value(expected.getNickname()))
-                .andExpect(jsonPath("$.gender").value(expected.getGender().name()))
-                .andExpect(jsonPath("$.phone").value(expected.getPhone()))
-                .andExpect(jsonPath("$.job").value(expected.getJob()));
+        mockMvc.perform(post("/member/join")
+                .content(json)
+                .contentType(MediaType.parseMediaType("application/json;charset=UTF-8"))
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.email").value(expected.getEmail()))
+                    .andExpect(jsonPath("$.fullName").value(expected.getFullName()))
+                    .andExpect(jsonPath("$.age").value(expected.getAge()))
+                    .andExpect(jsonPath("$.nickname").value(expected.getNickname()))
+                    .andExpect(jsonPath("$.gender").value(expected.getGender().name()))
+                    .andExpect(jsonPath("$.phone").value(expected.getPhone()))
+                    .andExpect(jsonPath("$.job").value(expected.getJob()));
 
     }
 
