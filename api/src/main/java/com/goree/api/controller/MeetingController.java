@@ -38,7 +38,7 @@ public class MeetingController {
      *     "id": 1
      *   },
      *
-     *   "date": "Jul 28, 2015 12:00:00 AM",
+     *   "date": 1438009200000,
      *   "description": "etsnsaeitetaenharsithaneitnatre"
      *
      *   }

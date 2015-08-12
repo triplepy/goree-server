@@ -1,5 +1,6 @@
 package com.goree.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goree.api.domain.Group;
 import com.goree.api.domain.Meeting;
 import com.goree.api.domain.Member;
@@ -19,10 +20,9 @@ import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class MeetingRestTest extends RestTestWithDBUnit {
 
@@ -63,24 +63,8 @@ public class MeetingRestTest extends RestTestWithDBUnit {
         place.setYCoordinate(new BigDecimal("128.6978236"));
         expected.setPlace(place);
 
-        String json = "{\n" +
-                "  \"title\": \"createMeetingBBBBB\",\n" +
-                "  \"group\": {\n" +
-                "    \"id\": 1\n" +
-                "  },\n" +
-                "  \"place\": {\n" +
-                "    \"name\": \"Place the createMeeting\",\n" +
-                "    \"address\": \"Adddddddddddreeeesss\",\n" +
-                "    \"xCoordinate\": 36.017194,\n" +
-                "    \"yCoordinate\": 128.6978236\n" +
-                "  },\n" +
-                "  \"promoter\": {\n" +
-                "    \"id\": 1\n" +
-                "  },\n" +
-                "  \"date\": \"Jul 28, 2015 12:00:00 AM\",\n" +
-                "  \"description\": \"etsnsaeitetaenharsithaneitnatre\"\n" +
-                "}";
 
+        String json = new ObjectMapper().writeValueAsString(expected);
 
         performSet(post("/meeting"), json)
             .andExpect(jsonPath("$.title").value(expected.getTitle()))
