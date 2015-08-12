@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 
 public class MemberServiceTest extends TestWithDBUnit{
@@ -58,12 +58,35 @@ public class MemberServiceTest extends TestWithDBUnit{
         expected.setGender(Gender.M);
         expected.setPhone("010-8826-0173");
         expected.setJob("programmer");
+        expected.setFacebookUserId("facebookuserid");
+
         Tag tag = new Tag();
         tag.setName("memberTest");
         expected.setTags(Arrays.asList(tag));
         Member registered = memberService.registerMember(expected);
         Assert.assertNotNull(registered);
         Assert.assertEquals(expected.getEmail(), registered.getEmail());
+        Assert.assertEquals(expected.getFacebookUserId(), registered.getFacebookUserId());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void registerMemberWithoutFacebookUserId() {
+        Member expected = new Member();
+        expected.setEmail("rpxhdnjsdud" + new Date().getTime() + "@nate.com");
+        expected.setPassword("qlalfqjsgh");
+        expected.setFullName("Wonyoung Ju");
+        expected.setAge(22);
+        expected.setNickname("nickname");
+        expected.setGender(Gender.M);
+        expected.setPhone("010-8826-0173");
+        expected.setJob("programmer");
+        Tag tag = new Tag();
+        tag.setName("memberTest");
+        expected.setTags(Arrays.asList(tag));
+        Member registered = memberService.registerMember(expected);
+        Assert.assertNotNull(registered);
+        Assert.assertEquals(expected.getEmail(), registered.getEmail());
+        Assert.assertEquals(expected.getFacebookUserId(), registered.getFacebookUserId());;
     }
     
     @Test
@@ -100,10 +123,12 @@ public class MemberServiceTest extends TestWithDBUnit{
         expected.setAge(20);
         expected.setNickname("arstarst");
         expected.setGender(Gender.M);
+        expected.setFacebookUserId("12345");
         Member actual = memberService.findMemberById(expected.getId());
 
         Assert.assertEquals(expected.getEmail(), actual.getEmail());
         Assert.assertEquals(expected.getNickname(), actual.getNickname());
+        Assert.assertEquals(expected.getFacebookUserId(), actual.getFacebookUserId());
     }
 
     @Test

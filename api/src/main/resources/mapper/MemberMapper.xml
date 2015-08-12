@@ -18,9 +18,9 @@
   
   <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
     INSERT INTO 
-        member (email, password, full_name, nickname, facebook, twitter, kakaotalk, job, age, gender, phone) 
+        member (email, password, full_name, nickname, facebook, facebook_user_id, twitter, kakaotalk, job, age, gender, phone)
     VALUES
-        (#{email},#{password},#{fullName},#{nickname}, #{facebook},#{twitter},#{kakaotalk},#{job}, #{age},#{gender},#{phone})
+        (#{email},#{password},#{fullName},#{nickname}, #{facebook}, #{facebookUserId}, #{twitter},#{kakaotalk},#{job}, #{age},#{gender},#{phone})
   </insert>
   <select id="selectMemberByEmail" parameterType="string" resultMap="Member">
     SELECT * FROM member WHERE email = #{email}
@@ -41,9 +41,6 @@
     INSERT INTO member_has_tag (member_id, tag_id) 
     VALUES (#{param1}, #{param2})
   </insert>
-
-
-
 
   <update id="updateImagePath" >
       UPDATE member

@@ -5,6 +5,7 @@ import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
 import com.goree.api.mapper.MemberMapper;
 import com.goree.api.mapper.TagMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
@@ -33,8 +34,13 @@ public class MemberService {
     private GroupMapper groupMapper;
     
     public Member registerMember(Member member) {
+        if (StringUtils.isBlank(member.getFacebookUserId())) {
+            throw new IllegalArgumentException("facebook user id is blank.");
+        }
+
         memberMapper.insertMember(member);
         Member registered = memberMapper.selectMemberByEmail(member.getEmail());
+
 
         if (member.getTags() != null){
             try {

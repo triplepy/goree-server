@@ -1,6 +1,7 @@
 package com.goree.api.controller;
 
 
+import com.google.gson.Gson;
 import com.goree.api.domain.Member;
 import com.goree.api.domain.Tag;
 import com.goree.api.util.RestTestWithDBUnit;
@@ -79,24 +80,15 @@ public class MemberRestTest extends RestTestWithDBUnit {
         expected.setGender(Member.Gender.M);
         expected.setPhone("010-1234-0173");
         expected.setJob("programmer");
+        expected.setFacebookUserId("ARrseitnaris");
+
         Tag tag = new Tag();
         tag.setName("memberTest");
         expected.setTags(Arrays.asList(tag));
 
 
-        String json = "{" +
-                         "\"email\":\"arstarst@nate.com\"," +
-                         "\"password\":\"qlalfqjsgh\"," +
-                         "\"fullName\":\"Wonyoung Ju\"," +
-                         "\"nickname\":\"nickname\"," +
-                         "\"job\":\"programmer\"," +
-                         "\"age\":22," +
-                         "\"gender\":\"M\"," +
-                         "\"phone\":\"010-1234-0173\"," +
-                         "\"tags\": [" +
-                                 "{\"name\":\"memberTest\"}" +
-                          "]" +
-                      "}";
+        String json = new Gson().toJson(expected);
+
         mockMvc.perform(post("/member/join")
                 .content(json)
                 .contentType(MediaType.parseMediaType("application/json;charset=UTF-8"))
@@ -109,7 +101,8 @@ public class MemberRestTest extends RestTestWithDBUnit {
                     .andExpect(jsonPath("$.nickname").value(expected.getNickname()))
                     .andExpect(jsonPath("$.gender").value(expected.getGender().name()))
                     .andExpect(jsonPath("$.phone").value(expected.getPhone()))
-                    .andExpect(jsonPath("$.job").value(expected.getJob()));
+                    .andExpect(jsonPath("$.job").value(expected.getJob()))
+                    .andExpect(jsonPath("$.facebookUserId", is(expected.getFacebookUserId())));
 
     }
 
