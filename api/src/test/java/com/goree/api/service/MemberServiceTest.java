@@ -92,14 +92,15 @@ public class MemberServiceTest extends TestWithDBUnit{
     
     @Test
     public void deleteMemberById() {
-        memberService.deleteMemberById(testMember.getId());
+        int memberId = 3;
+        memberService.deleteMemberById(memberId);
         
         boolean deleted = !memberService.findMemberAll().stream()
-                .anyMatch(m-> m.getId() == testMember.getId());
+                .anyMatch(m-> m.getId() == memberId);
         Assert.assertTrue(deleted);
         
         List<Group> groupsHasDeletedMember = 
-                groupService.findRegistedGroupsByMember(testMember.getId());
+                groupService.findRegistedGroupsByMember(memberId);
         Assert.assertTrue(groupsHasDeletedMember.isEmpty());
     }
     
@@ -131,17 +132,19 @@ public class MemberServiceTest extends TestWithDBUnit{
         tag1.setName("tag1");
         tag1.setProvided('N');
         Tag tag2 = new Tag();
-        tag1.setId(2);
-        tag2.setName("tag3");
+        tag2.setId(2);
+        tag2.setName("tag2");
         tag2.setProvided('Y');
         expected.setTags(tags);
+        tags.add(tag1);
+        tags.add(tag2);
 
         Member actual = memberService.findMemberById(expected.getId());
 
         Assert.assertEquals(expected.getEmail(), actual.getEmail());
         Assert.assertEquals(expected.getNickname(), actual.getNickname());
         Assert.assertEquals(expected.getFacebookUserId(), actual.getFacebookUserId());
-        Assert.assertTrue(actual.getTags().containsAll(expected.getTags()));
+        assertThat(expected.getTags(), contains(actual.getTags().toArray()));
     }
 
     @Test

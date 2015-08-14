@@ -11,6 +11,7 @@
     <result column="twitter" property="twitter" />
     <result column="kakaotalk" property="kakaotalk" />
     <result column="age" property="age" />
+    <result column="job" property="job" />
     <result column="gender" property="gender" />
     <result column="phone" property="phone" />
     <result column="profile_img_url" property="imagePath" />
@@ -25,10 +26,51 @@
         (#{email},#{password},#{fullName},#{nickname}, #{facebook}, #{facebookUserId}, #{twitter},#{kakaotalk},#{job}, #{age},#{gender},#{phone})
   </insert>
   <select id="selectMemberByEmail" parameterType="string" resultMap="Member">
-    SELECT * FROM member WHERE email = #{email}
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE member.email = #{email}
   </select>
   <select id="selectMemberAll" resultMap="Member">
-    SELECT * FROM member
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
   </select>
   <select id="selectMemberById" parameterType="long" resultMap="Member">
     SELECT
@@ -44,17 +86,40 @@
         member.gender,
         member.phone,
         member.profile_img_url,
+        member.job,
         tag.tag_id,
         tag.tag_name,
         tag.provided
     FROM
         member
-            INNER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
-            INNER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
     WHERE member.member_id = #{id}
   </select>
   <select id="selectMemberByFacebookUserId" parameterType="string" resultMap="Member">
-    SELECT * FROM member WHERE facebook_user_id = #{id}
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE
+        member.facebook_user_id = #{id}
   </select>
   <delete id="deleteMemberById" parameterType="long">
     DELETE FROM member WHERE member_id = #{id}

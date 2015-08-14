@@ -74,4 +74,7 @@ public class GroupService {
     }
 
 
+    public List<Group> findGroupsByTags(List<Tag> tags) {
+        return groupMapper.selectGroupsByTags(tags);
+    }
 }

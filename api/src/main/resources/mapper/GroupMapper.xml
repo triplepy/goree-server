@@ -16,12 +16,7 @@
       <result column="member_count" property="memberCount" />
       <association select="com.goree.api.mapper.MemberMapper.selectMemberById" column="leader_id" property="leader"   />
   </resultMap>
-  <resultMap type="com.goree.api.domain.Group" id="GroupWithMember">
-    <id column="group_id" property="id" javaType="long" />
-    <result column="group_name" property="name" />
-    <result column="description" property="description" />
-    <collection property="member" resultMap="Member" />
-  </resultMap>
+
   <select id="selectGroupsByMemberId" resultMap="GroupWithLeaderNestedSelect">
     SELECT 
         `groups`.group_id, 
@@ -130,4 +125,31 @@
       WHERE group_id = #{param1}
 
   </update>
+
+  <select id="selectGroupsByTags" parameterType="list" resultMap="GroupWithLeaderNestedResult" >
+    SELECT
+        `groups`.group_id,
+        `groups`.group_name,
+        `groups`.description,
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        (SELECT COUNT(member_id) FROM group_has_member WHERE group_id = `groups`.group_id) as member_count
+    FROM
+        `groups`
+            INNER JOIN member
+                ON `groups`.leader_id = member.member_id
+                   INNER JOIN group_has_tag
+                     ON groups.group_id = group_has_tag.group_id
+                       INNER JOIN tag
+                         ON group_has_tag.tag_id = tag.tag_id
+    WHERE
+      tag.tag_id IN (
+      <foreach collection="list" item="item" separator=",">#{item.id} </foreach>
+      )
+    ORDER BY member_count DESC
+
+  </select>
+
 </mapper>

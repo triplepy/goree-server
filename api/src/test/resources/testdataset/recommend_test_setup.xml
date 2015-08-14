@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <member member_id="1" email="arst@arst.com" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
+  <member member_id="2" email="arst@arst.com2" password="arstarst" full_name="arstarstar" nickname="arstarst2" age="20" gender="M"/>
+  <member member_id="3" email="arst@arst.com3" password="arstarst" full_name="arstarstar" nickname="arstarst3" age="20" gender="M"/>
+  <member member_id="4" email="arst@arst.com4" password="arstarst" full_name="arstarstar" nickname="arstarst4" age="20" gender="M"/>
+
+  <groups group_id="1" leader_id="1" group_name="group1"  description="desc1"  />
+  <groups group_id="2" leader_id="1" group_name="group2"  description="desc2"  />
+  <groups group_id="3" leader_id="1" group_name="group3"  description="desc3"  />
+  <groups group_id="4" leader_id="1" group_name="group4"  description="desc4"  />
+  <groups group_id="5" leader_id="1" group_name="group5"  description="desc5"  />
+
+
+
+  <tag tag_id="1" tag_name="tag1" />
+  <tag tag_id="2" tag_name="tag2" />
+  <tag tag_id="3" tag_name="tag3" />
+  <tag tag_id="4" tag_name="tag4" />
+
+
+  <member_has_tag member_id="1" tag_id="1" />
+  <member_has_tag member_id="1" tag_id="3" />
+  <member_has_tag member_id="1" tag_id="4" />
+
+
+
+  <group_has_member group_id="1" member_id="1" />
+
+  <group_has_member group_id="2" member_id="1" />
+  <group_has_member group_id="2" member_id="2" />
+  <group_has_member group_id="2" member_id="3" />
+  <group_has_member group_id="2" member_id="4" />
+
+  <group_has_member group_id="3" member_id="2" />
+  <group_has_member group_id="3" member_id="3" />
+
+  <group_has_member group_id="4" member_id="4" />
+  <group_has_member group_id="4" member_id="3" />
+  <group_has_member group_id="4" member_id="2" />
+
+  <group_has_tag group_id="1" tag_id="2" />
+  <group_has_tag group_id="1" tag_id="3" />
+  <group_has_tag group_id="1" tag_id="4" />
+  <group_has_tag group_id="2" tag_id="2" />
+  <group_has_tag group_id="2" tag_id="3" />
+  <group_has_tag group_id="3" tag_id="2" />
+  <group_has_tag group_id="4" tag_id="1" />
+
+</dataset>

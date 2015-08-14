@@ -25,4 +25,6 @@ public interface GroupMapper {
     List<Group> selectGroupsByTagOrderByMemberCount(Tag tag);
 
     void updateImagePath(long id, String fileName);
+
+    List<Group> selectGroupsByTags(List<Tag> tags);
 }

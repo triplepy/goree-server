@@ -62,10 +62,10 @@ public class MemberRestTest extends RestTestWithDBUnit {
 
     @Test
     public void deleteMemberById() throws Exception{
-        performSet(delete("/member/id/1"));
+        performSet(delete("/member/id/3"));
 
         performSet(get("/member"))
-                .andExpect(jsonPath("$",hasSize(1)));
+                .andExpect(jsonPath("$",hasSize(2)));
 
     }
 
