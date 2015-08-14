@@ -14,6 +14,8 @@
     <result column="gender" property="gender" />
     <result column="phone" property="phone" />
     <result column="profile_img_url" property="imagePath" />
+    <association property="tags" resultMap="com.goree.api.mapper.TagMapper.Tag" />
+
   </resultMap>
   
   <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
@@ -29,7 +31,27 @@
     SELECT * FROM member
   </select>
   <select id="selectMemberById" parameterType="long" resultMap="Member">
-    SELECT * FROM member WHERE member_id = #{id}
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            INNER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            INNER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE member.member_id = #{id}
   </select>
   <select id="selectMemberByFacebookUserId" parameterType="string" resultMap="Member">
     SELECT * FROM member WHERE facebook_user_id = #{id}

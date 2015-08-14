@@ -10,11 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 
@@ -124,11 +125,23 @@ public class MemberServiceTest extends TestWithDBUnit{
         expected.setNickname("arstarst");
         expected.setGender(Gender.M);
         expected.setFacebookUserId("12345");
+        List<Tag> tags = new ArrayList<>();
+        Tag tag1 = new Tag();
+        tag1.setId(1);
+        tag1.setName("tag1");
+        tag1.setProvided('N');
+        Tag tag2 = new Tag();
+        tag1.setId(2);
+        tag2.setName("tag3");
+        tag2.setProvided('Y');
+        expected.setTags(tags);
+
         Member actual = memberService.findMemberById(expected.getId());
 
         Assert.assertEquals(expected.getEmail(), actual.getEmail());
         Assert.assertEquals(expected.getNickname(), actual.getNickname());
         Assert.assertEquals(expected.getFacebookUserId(), actual.getFacebookUserId());
+        Assert.assertTrue(actual.getTags().containsAll(expected.getTags()));
     }
 
     @Test
