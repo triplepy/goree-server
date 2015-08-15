@@ -31,7 +31,7 @@ public class MemberRestTest extends RestTestWithDBUnit {
     public void findMemberAll() throws Exception {
         performSet(get("/member"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].email").value("arst@arst.com"))
                 .andExpect(jsonPath("$[0].fullName").value("arstarstar"))

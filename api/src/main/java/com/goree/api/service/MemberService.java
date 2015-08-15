@@ -5,6 +5,7 @@ import com.goree.api.domain.Tag;
 import com.goree.api.mapper.GroupMapper;
 import com.goree.api.mapper.MemberMapper;
 import com.goree.api.mapper.TagMapper;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,6 +79,7 @@ public class MemberService {
             String fileName = new Date().getTime() + multipartFile.getOriginalFilename();
             try {
                 if(staticPath != null) {
+                    FileUtils.forceMkdir(new File(staticPath));
                     File imagePath = new File(staticPath + fileName);
                     multipartFile.transferTo(imagePath);
                     memberMapper.updateImagePath(id, fileName);
