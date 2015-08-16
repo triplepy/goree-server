@@ -27,23 +27,27 @@ public class AttendanceServiceTest extends TestWithDBUnit{
 
     @Test
     public void mapMeetingAndAttendance(){
+        // given
         Attendance expected = new Attendance();
 
         Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberService.findMemberAll().get(2);
+        Member member = memberService.findMemberById(3L);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.N);
 
+        long expectedMemberId = expected.getMember().getId();
+        long expectedMeetingId = expected.getMeeting().getId();
 
 
-        attendanceService.mapMeetingAndAttendance(expected.getMember().getId(), expected.getMeeting().getId(), expected.getStatus());
-
+        // when
+        attendanceService.mapMeetingAndAttendance(expectedMemberId, expectedMeetingId, expected.getStatus());
         Attendance actual = attendanceService.findAttendanceByMemberAndMeeting(member.getId(), meeting.getId());
 
 
+        // then
         Assert.assertEquals(expected, actual);
     }
 
@@ -54,7 +58,7 @@ public class AttendanceServiceTest extends TestWithDBUnit{
         Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberService.findMemberAll().get(0);
+        Member member = memberService.findMemberById(1L);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.N);
@@ -92,7 +96,7 @@ public class AttendanceServiceTest extends TestWithDBUnit{
         Meeting meeting = meetingService.findMeetingById(1);
         expected.setMeeting(meeting);
 
-        Member member = memberService.findMemberAll().get(2);
+        Member member = memberService.findMemberById(3L);
         expected.setMember(member);
 
         expected.setStatus(Attendance.Status.X);
@@ -103,4 +107,31 @@ public class AttendanceServiceTest extends TestWithDBUnit{
         Assert.assertEquals(expected,actual);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void findAttandanceByMemberAndMeeting_notExistsMember_notExistsMeeting() {
+        // given
+        long memberNotExists = 994940L;
+        long meetingNotExists = 123345L;
+
+        // when
+        Attendance attendance = attendanceService.findAttendanceByMemberAndMeeting(memberNotExists, meetingNotExists);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mapMeetingAndAttendance_notExistsMember_notExistsMeeting() {
+        // given
+        long memberNotExists = 994940L;
+        long meetingNotExists = 123345L;
+
+        // when
+        attendanceService.mapMeetingAndAttendance(memberNotExists, meetingNotExists, Attendance.Status.N);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mapMeetingAndAttendance_nullStatus() {
+        long memberId = 1L;
+        long meetingId = 1L;
+
+        attendanceService.mapMeetingAndAttendance(memberId, meetingId, null);
+    }
 }
