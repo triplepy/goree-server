@@ -15,43 +15,7 @@
         </association>
     </resultMap>
 
-    <!--<select id="selectNoteCommentById" resultMap="NoteComment" >-->
-      <!--SELECT-->
-        <!--note_comment.note_comment_id,-->
-        <!--note_comment.note_comment_content,-->
-        <!--note_comment.note_comment_create_date,-->
-        <!--member.member_id,-->
-        <!--member.nickname,-->
-        <!--note.note_id,-->
-        <!--note.note_content-->
-      <!--FROM-->
-        <!--note_comment INNER JOIN member-->
-          <!--ON note_comment.note_comment_writer_id = member.member_id-->
-           <!--INNER JOIN note-->
-             <!--ON note_comment.note_id = note.note_id-->
-      <!--WHERE-->
-        <!--note_comment.note_comment_id = #{param1}-->
 
-    <!--</select>-->
-
-    <!--<select id="selectNoteCommentsByNoteId" resultMap="NoteComment" >-->
-        <!--SELECT-->
-          <!--note_comment.note_comment_id,-->
-          <!--note_comment.note_comment_content,-->
-          <!--note_comment.note_comment_create_date,-->
-          <!--member.member_id,-->
-          <!--member.nickname,-->
-          <!--note.note_id,-->
-          <!--note.note_content-->
-        <!--FROM-->
-          <!--note_comment INNER JOIN member-->
-            <!--ON note_comment.note_comment_writer_id = member.member_id-->
-              <!--INNER JOIN note-->
-                <!--ON note_comment.note_id = note.note_id-->
-        <!--WHERE-->
-          <!--note_comment.note_id = #{param1}-->
-
-    <!--</select>-->
 
     <insert id="insertMeetingNoteComment" parameterType="com.goree.api.domain.MeetingNoteComment" >
         INSERT INTO
@@ -75,10 +39,28 @@
               INNER JOIN meeting_note
                 ON meeting_note_comment.meeting_note_id = meeting_note.meeting_note_id
         WHERE
-          meeting_note_comment.note_comment_id = #{param1}
+          meeting_note_comment.meeting_note_id = #{param1}
           ORDER BY meeting_note_comment.note_comment_id DESC
            LIMIT 1
 
+    </select>
+    <select id="selectMeetingNoteCommentsByMeetingNoteId" resultMap="MeetingNoteComment" >
+        SELECT
+          meeting_note_comment.note_comment_id,
+          meeting_note_comment.note_comment_content,
+          meeting_note_comment.note_comment_create_date,
+          member.member_id,
+          member.nickname,
+          meeting_note.meeting_note_id,
+          meeting_note.note_content
+        FROM
+            meeting_note_comment INNER JOIN member
+             ON meeting_note_comment.note_comment_writer_id = member.member_id
+              INNER JOIN meeting_note
+                ON meeting_note_comment.meeting_note_id = meeting_note.meeting_note_id
+        WHERE
+          meeting_note_comment.meeting_note_id = #{param1}
+        ORDER BY meeting_note_comment.note_comment_id DESC
     </select>
 
 </mapper>

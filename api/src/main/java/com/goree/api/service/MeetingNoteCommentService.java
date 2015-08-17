@@ -6,6 +6,8 @@ import com.goree.api.mapper.MeetingNoteCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MeetingNoteCommentService {
     @Autowired
@@ -19,5 +21,9 @@ public class MeetingNoteCommentService {
 
     public MeetingNoteComment findMeetingNoteCommentLastOneByMeetingNoteId(long meetingNoteId) {
         return meetingNoteCommentMapper.selectMeetingNoteCommentLastOneByMeetingNoteId(meetingNoteId);
+    }
+
+    public List<MeetingNoteComment> findMeetingNoteCommentsByMeetingNoteId(long meetingNoteId) {
+        return meetingNoteCommentMapper.selectMeetingNoteCommentsByMeetingNoteId(meetingNoteId);
     }
 }
