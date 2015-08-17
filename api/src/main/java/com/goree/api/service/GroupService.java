@@ -14,6 +14,9 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.*;
+import static org.apache.commons.lang3.StringUtils.*;
+
 @Service
 @Transactional
 public class GroupService {
@@ -44,10 +47,12 @@ public class GroupService {
     }
 
     public List<Group> findGroupsByTagOrderByMemberCount(Tag tag) {
+        checkArgument(tag != null, "tag is null");
         return groupMapper.selectGroupsByTagOrderByMemberCount(tag);
     }
 
     public List<Group> findGroupsByTagOrderByMemberCount(String tagName) {
+        checkArgument(isNotBlank(tagName), "tagName cannot blank. (tagName : "+tagName+")");
         Tag tag = new Tag();
         tag.setName(tagName);
         return findGroupsByTagOrderByMemberCount(tag);
