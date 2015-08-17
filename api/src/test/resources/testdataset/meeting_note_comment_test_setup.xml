@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <member member_id="1" email="meeting Test" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
+  <groups group_id="1" leader_id="1" group_name="meeting_test"  description="artsarstars"  />
+  <place place_id="1" place_name="place name" address="place address" x_coordinate="36.017194" y_coordinate="128.6978236" />
+  <meeting meeting_id="1" meeting_desc="every body11" meeting_title="title1" group_id="1" date="2015-07-28 00:00:00" promoter_id="1" place_id="1" />
+
+  <meeting_note meeting_note_id="1" meeting_id="1" note_writer_id="1" note_content="findMeetingNoteTest"/>
+  <meeting_note meeting_note_id="2" meeting_id="1" note_writer_id="1" note_content="findLastMeetingNoteTest"/>
+
+  <meeting_note_comment note_comment_id="1" meeting_note_id="1" note_comment_writer_id="1" note_comment_content="writeMeetingNoteCommentTest" />
+  <meeting_note_comment/>
+</dataset>
