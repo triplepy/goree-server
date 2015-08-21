@@ -1,7 +1,6 @@
 package com.goree.api.controller;
 
 import com.goree.api.domain.Group;
-import com.goree.api.domain.Tag;
 import com.goree.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class GroupController {
      */
     @RequestMapping(value="", method=RequestMethod.POST)
     public Group makingGroup(@RequestBody Group group) {
-        return groupService.makingGroup(group);
+        return groupService.addGroup(group);
     }
 
 

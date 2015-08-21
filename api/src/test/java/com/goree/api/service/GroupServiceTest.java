@@ -44,7 +44,7 @@ public class GroupServiceTest extends TestWithDBUnit {
 		expected.setDescription("It is description");
 		expected.setLeader(leader);
 
-		Group actual = groupService.makingGroup(expected);
+		Group actual = groupService.addGroup(expected);
 
 		Assert.assertEquals(expected.getName(), actual.getName());
 		Assert.assertEquals(expected.getDescription(), actual.getDescription());
