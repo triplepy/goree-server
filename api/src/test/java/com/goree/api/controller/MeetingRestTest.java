@@ -51,7 +51,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
         expected.setGroup(groupOfExpected);
         Date meetingDate = Date.from(
                 LocalDate.of(
-                        2015, Month.JULY, 28).atTime(0, 0)
+                        2030, Month.JULY, 28).atTime(0, 0)
                          .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         Member promoter = memberService.findMemberAll().get(0);
