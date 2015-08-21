@@ -1,6 +1,7 @@
 package com.goree.api.auth;
 
 import com.goree.api.domain.Member;
+import com.goree.api.util.HttpHeaderConstants;
 import com.goree.api.util.TestWithDBUnit;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class AuthInterceptorTest extends TestWithDBUnit {
 
     private void httpRequestToController() {
         try {
-            mockMvc.perform(get("/auth/user").header("AuthToken", settings.longLivedTokenForTest()))
+            mockMvc.perform(get("/auth/user").header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             throw new RuntimeException(e);

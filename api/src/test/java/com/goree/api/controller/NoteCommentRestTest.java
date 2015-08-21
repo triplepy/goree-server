@@ -6,6 +6,7 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Note;
 import com.goree.api.domain.NoteComment;
 import com.goree.api.service.NoteCommentService;
+import com.goree.api.util.HttpHeaderConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,7 +75,7 @@ public class NoteCommentRestTest {
         // when then
         mockMvc.perform(
                 get("/group/note/comment/" + noteComment1.getId())
-                        .header("AuthToken", settings.longLivedTokenForTest()))
+                        .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int) noteComment1.getId())))
                 .andExpect(jsonPath("$.content", is(noteComment1.getContent())))
@@ -106,7 +107,7 @@ public class NoteCommentRestTest {
         // when then
         mockMvc.perform(
                 get("/group/note/comment/s/note/"+note.getId())
-                .header("AuthToken", settings.longLivedTokenForTest()))
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id", is((int) noteComment1.getId())))
                 .andExpect(jsonPath("$.[0].content", is(noteComment1.getContent())))

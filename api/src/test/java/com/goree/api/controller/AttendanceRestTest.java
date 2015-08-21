@@ -1,72 +1,99 @@
 package com.goree.api.controller;
 
 
-import com.goree.api.util.RestTestWithDBUnit;
+import com.goree.api.Application;
+import com.goree.api.auth.FacebookSettings;
+import com.goree.api.domain.Attendance;
+import com.goree.api.domain.Group;
+import com.goree.api.domain.Meeting;
+import com.goree.api.domain.Member;
+import com.goree.api.service.AttendanceService;
+import com.goree.api.util.HttpHeaderConstants;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.CoreMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class AttendanceRestTest extends RestTestWithDBUnit {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {Application.class})
+@WebAppConfiguration
+public class AttendanceRestTest {
+    private MockMvc mockMvc;
 
-    @Override
-    public String getDatasetFilePath() {
-        return "src/test/resources/testdataset/attendance_test_setup.xml";
+    @InjectMocks
+    private AttendanceController attendanceController;
+
+    @Mock
+    private AttendanceService attendanceService;
+
+    @Autowired
+    private FacebookSettings settings;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(attendanceController).build();
     }
 
     @Test
     public void findAttendanceByMemberAndMeeting() throws Exception {
-        int meetingId = 1;
-        int memberId = 1;
+        // given
+        long memberId = 1L;
+        long meetingId = 1L;
 
-        performSet(get("/attendance/find/member/" + memberId + "/meeting/" + meetingId))
-        .andExpect(jsonPath("$.meeting.id").value(meetingId))
-        .andExpect(jsonPath("$.member.id").value(memberId))
-        .andExpect(jsonPath("$.status").value("N"));
+        Meeting meeting = new Meeting();
+        meeting.setId(meetingId);
+        meeting.setTitle("Meeting ing");
+        Member promoter = new Member();
+        promoter.setId(1121);
+        meeting.setPromoter(promoter);
+
+        Group group = new Group();
+        group.setId(123123L);
+        group.setName("arvoinearvsonei");
+        group.setLeader(promoter);
+        group.setDescription("arvarvsrsav");
+        meeting.setGroup(group);
+
+        Member member = new Member();
+        member.setId(memberId);
+
+
+        Attendance attendance = new Attendance();
+        attendance.setMeeting(meeting);
+        attendance.setMember(member);
+        attendance.setStatus(Attendance.Status.Y);
+        when(attendanceService.findAttendanceByMemberAndMeeting(memberId, meetingId)).thenReturn(attendance);
+
+        // when
+
+        // then
+        mockMvc.perform(get("/attendance/find/member/"+memberId+"/meeting/" + meetingId)
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.member.id").value((int) memberId))
+                    .andExpect(jsonPath("$.meeting.id").value((int) memberId))
+                    .andExpect(jsonPath("$.meeting.title").value(meeting.getTitle()))
+                    .andExpect(jsonPath("$.status", is(attendance.getStatus().toString())));
+
     }
 
 
 
-    @Test
-    public void mapMeetingAndAttendanceCaseIsN() throws Exception {
-        int meetingId = 1;
-        int memberId = 1;
-        String status = "Y";
-
-        performSet(put("/attendance/map/member/" + memberId + "/meeting/" + meetingId + "/status/" + status));
-
-        performSet(get("/attendance/find/member/" + memberId + "/meeting/" + meetingId))
-                .andExpect(jsonPath("$.meeting.id").value(meetingId))
-                .andExpect(jsonPath("$.member.id").value(memberId))
-                .andExpect(jsonPath("$.status").value("Y"));
-    }
-
-    @Test
-    public void mapMeetingAndAttendanceCaseIsY() throws Exception {
-        int meetingId = 1;
-        int memberId = 2;
-        String status = "Y";
-
-        performSet(put("/attendance/map/member/" + memberId + "/meeting/" + meetingId + "/status/" + status));
-
-        performSet(get("/attendance/find/member/" + memberId + "/meeting/" + meetingId))
-                .andExpect(jsonPath("$.meeting.id").value(meetingId))
-                .andExpect(jsonPath("$.member.id").value(memberId))
-                .andExpect(jsonPath("$.status").value("Y"));
-    }
-    @Test
-    public void mapMeetingAndAttendanceCaseIsX() throws Exception {
-        int meetingId = 1;
-        int memberId = 3;
-        String status = "Y";
-
-        performSet(put("/attendance/map/member/" + memberId + "/meeting/" + meetingId + "/status/" + status));
-
-        performSet(get("/attendance/find/member/" + memberId + "/meeting/" + meetingId))
-                .andExpect(jsonPath("$.meeting.id").value(meetingId))
-                .andExpect(jsonPath("$.member.id").value(memberId))
-                .andExpect(jsonPath("$.status").value("Y"));
-    }
 
 }

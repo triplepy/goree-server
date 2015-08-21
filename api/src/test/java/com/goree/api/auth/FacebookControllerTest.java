@@ -1,6 +1,7 @@
 package com.goree.api.auth;
 
 import com.goree.api.Application;
+import com.goree.api.util.HttpHeaderConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +46,7 @@ public class FacebookControllerTest {
         assertThat(AuthContext.token(), is(nullValue()));
 
         // when then
-        mockMvc.perform(get("/auth/user").header("AuthToken", settings.longLivedTokenForTest()))
+        mockMvc.perform(get("/auth/user").header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andExpect(jsonPath("$.id", is(expectedUserId)));
     }
 }
