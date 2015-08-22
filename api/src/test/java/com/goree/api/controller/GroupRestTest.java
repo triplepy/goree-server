@@ -31,7 +31,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
 
 
     @Test
-    public void makingGroup () throws Exception {
+    public void addGroup() throws Exception {
         Member leader = memberMapper.selectMemberByEmail("arst@arst.com");
 
         Group expected = new Group();
@@ -44,7 +44,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
         System.out.println(jsonData);
 
 
-        performSet(post("/group"), jsonData)
+        performSet(post(GroupController.ADD_GROUP_URL), jsonData)
             .andExpect(jsonPath("$.name").value(expected.getName()))
             .andExpect(jsonPath("$.description").value(expected.getDescription()))
             .andExpect(jsonPath("$.leader.email").value(expected.getLeader().getEmail()));
@@ -59,14 +59,14 @@ public class GroupRestTest extends RestTestWithDBUnit{
         FileInputStream fis = new FileInputStream(file);
         MockMultipartFile multipartFile = new MockMultipartFile("file", file.getName(),null,fis);
 
-        performSet(fileUpload("/group/id/1/updateImage").file(multipartFile))
+        performSet(fileUpload(GroupController.UPDATE_IMAGE_URL, 1).file(multipartFile))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.imagePath").exists());
     }
 
     @Test
     public void findGroupAll() throws Exception {
-        performSet(get("/group"))
+        performSet(get(GroupController.FIND_GROUP_ALL_URL))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$.[0].id").value(1))
                 .andExpect(jsonPath("$.[0].leader.id").value(1))
@@ -79,7 +79,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
     public void findGroupsJoined() throws Exception {
         int memberId = 1;
 
-        performSet(get("/group/joined/member/id/"+memberId))
+        performSet(get(GroupController.FIND_GROUPS_JOINED_URL, memberId))
                 .andExpect(jsonPath("$.[0].id").value(1))
                 .andExpect(jsonPath("$", hasSize(1)));
     }
@@ -87,7 +87,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
     @Test
     public void findGroupById() throws Exception {
         int groupId = 1;
-        performSet(get("/group/id/"+ groupId))
+        performSet(get(GroupController.FIND_GROUP_BY_ID_URL, groupId))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.leader.id").value(1))
                 .andExpect(jsonPath("$.name").value("abcbacba"))
@@ -99,7 +99,7 @@ public class GroupRestTest extends RestTestWithDBUnit{
     public void findGroupByName() throws Exception {
         String groupName = "abcbacba";
 
-        performSet(get("/group/name/" + groupName))
+        performSet(get(GroupController.FIND_GROUP_BY_NAME_URL, groupName))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.leader.id").value(1))
                 .andExpect(jsonPath("$.name").value("abcbacba"))
@@ -113,11 +113,11 @@ public class GroupRestTest extends RestTestWithDBUnit{
         int groupId = 1;
         int memberId = 2;
 
-        performSet(put("/group/join/" + groupId + "/member/" + memberId));
+        performSet(put(GroupController.JOIN_MEMBER_URL, groupId, memberId));
 
         int expectedMemberCount = 2;
 
-        performSet(get("/group/id/" + groupId))
+        performSet(get(GroupController.FIND_GROUP_BY_ID_URL, groupId))
                 .andExpect(jsonPath("$.id").value(groupId))
                 .andExpect(jsonPath("$.leader.id").value(1))
                 .andExpect(jsonPath("$.name").value("abcbacba"))

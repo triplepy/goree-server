@@ -82,7 +82,7 @@ public class AttendanceRestTest {
         // when
 
         // then
-        mockMvc.perform(get("/attendance/find/member/"+memberId+"/meeting/" + meetingId)
+        mockMvc.perform(get(AttendanceController.FIND_ATTENDANCE_BY_MEMBER_AND_MEETING_URL, memberId, meetingId)
                 .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                     .andDo(print())
                     .andExpect(status().isOk())
