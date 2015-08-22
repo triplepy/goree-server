@@ -1,9 +1,6 @@
 package com.goree.api.config;
 
-import java.io.IOException;
-
-import javax.sql.DataSource;
-
+import com.goree.api.exception.ConfigException;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,13 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import com.goree.api.exception.ConfigException;
+import javax.sql.DataSource;
+import java.io.IOException;
 
 @Configuration
 @MapperScan(basePackages="com.goree.api.mapper")
 public class MyBatisConfig {
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource){
+    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(mapperLocations());
