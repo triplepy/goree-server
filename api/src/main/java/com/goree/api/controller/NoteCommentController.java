@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/group/note/comment")
 public class NoteCommentController {
+    private static final String URL_PREFIX = "/group/note/comment";
+    public static final String FIND_NOTECOMMENTS_BY_NOTE_ID_URL = URL_PREFIX + "/s/note/{noteId}";
+    public static final String FIND_NOTECOMMENT_BY_ID_URL = URL_PREFIX + "/{id}";
+
     @Autowired
     private NoteCommentService noteCommentService;
 
@@ -23,7 +26,7 @@ public class NoteCommentController {
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = FIND_NOTECOMMENT_BY_ID_URL, method = RequestMethod.GET)
     public NoteComment findNoteCommentById(@PathVariable long id) {
         return noteCommentService.findNoteCommentById(id);
     }
@@ -34,7 +37,7 @@ public class NoteCommentController {
      * @apiGroup
      * @apiDescription
      */
-    @RequestMapping(value = "/s/note/{noteId}")
+    @RequestMapping(value = FIND_NOTECOMMENTS_BY_NOTE_ID_URL)
     public List<NoteComment> findNoteCommentsByNoteId(@PathVariable long noteId) {
         return noteCommentService.findNoteCommentsByNoteId(noteId);
     }
@@ -45,6 +48,7 @@ public class NoteCommentController {
      * @apiGroup
      * @apiDescription
      */
+    // TODO URL mapping
     public NoteComment writeNoteComment(NoteComment noteComment) {
         return noteCommentService.writeNoteComment(noteComment);
     }
