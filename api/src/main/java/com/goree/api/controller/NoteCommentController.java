@@ -22,7 +22,7 @@ public class NoteCommentController {
 
     /**
      * @api {get} /group/note/comment/:id Find a note commend.
-     * @apiParam {long} noteCommentId
+     * @apiParam {long} id   note commend id
      * @apiGroup NoteComment
      * @apiDescription note comment id를 통해 한 개의 note comment를 가져온다.
      */
@@ -33,7 +33,7 @@ public class NoteCommentController {
 
     /**
      * @api {get} /group/note/comment/s/note/:noteId
-     * @apiParam {long} noteId
+     * @apiParam {long} id  note id
      * @apiGroup NoteComment
      * @apiDescription noteId를 제공하면, 해당 노트에 달려있는 모든 comment를 반환한다.
      */

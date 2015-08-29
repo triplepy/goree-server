@@ -18,7 +18,7 @@ public class NoteController {
      * @api {get} /group/note/:id Find note by id
      * @apiGroup Note
      * @apiDescription note id를 통해 note 한 개를 받아온다.
-     * @apiParam {long} noteId
+     * @apiParam {long} id   note id
      */
     @RequestMapping(value = FIND_NOTE_BY_ID_URL, method = RequestMethod.GET)
     public Note findNoteById(@PathVariable long id) {
