@@ -21,10 +21,10 @@ public class NoteCommentController {
 
 
     /**
-     * //TODO doc 작성
-     * @api
-     * @apiGroup
-     * @apiDescription
+     * @api {get} /group/note/comment/:id Find a note commend.
+     * @apiParam {long} noteCommentId
+     * @apiGroup NoteComment
+     * @apiDescription note comment id를 통해 한 개의 note comment를 가져온다.
      */
     @RequestMapping(value = FIND_NOTECOMMENT_BY_ID_URL, method = RequestMethod.GET)
     public NoteComment findNoteCommentById(@PathVariable long id) {
@@ -32,12 +32,12 @@ public class NoteCommentController {
     }
 
     /**
-     * //TODO doc 작성
-     * @api
-     * @apiGroup
-     * @apiDescription
+     * @api {get} /group/note/comment/s/note/:noteId
+     * @apiParam {long} noteId
+     * @apiGroup NoteComment
+     * @apiDescription noteId를 제공하면, 해당 노트에 달려있는 모든 comment를 반환한다.
      */
-    @RequestMapping(value = FIND_NOTECOMMENTS_BY_NOTE_ID_URL)
+    @RequestMapping(value = FIND_NOTECOMMENTS_BY_NOTE_ID_URL, method = RequestMethod.GET)
     public List<NoteComment> findNoteCommentsByNoteId(@PathVariable long noteId) {
         return noteCommentService.findNoteCommentsByNoteId(noteId);
     }

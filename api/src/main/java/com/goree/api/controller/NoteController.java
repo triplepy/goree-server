@@ -15,9 +15,10 @@ public class NoteController {
     private NoteService noteService;
 
     /**
-     * @api
-     * @apiGroup
-     * @apiDescription
+     * @api {get} /group/note/:id Find note by id
+     * @apiGroup Note
+     * @apiDescription note id를 통해 note 한 개를 받아온다.
+     * @apiParam {long} noteId
      */
     @RequestMapping(value = FIND_NOTE_BY_ID_URL, method = RequestMethod.GET)
     public Note findNoteById(@PathVariable long id) {
@@ -25,9 +26,9 @@ public class NoteController {
     }
 
     /**
-     * @api
-     * @apiGroup
-     * @apiDescription
+     * @api {post} /group/note Write note
+     * @apiGroup Note
+     * @apiDescription note 한 개를 생성한다. body에 json 형태로 note 객체 정보를 전달하면 된다.
      */
     @RequestMapping(value = WRITE_NOTE_URL, method = RequestMethod.POST)
     public Note writeNote(@RequestBody Note note) {
