@@ -68,6 +68,7 @@ public class MemberController {
      * @apiParam {number} member ID (sequence)
      * @apiDescription Member ID에 해당되는 회원의 이미지를 등록혹은 변경한다.
      */
+    // TODO "등록 혹은 변경"인 경우 PUT 메서드가 더 적합함. 변경 필요.
     @RequestMapping(value= UPDATE_IMAGE_URL, method=RequestMethod.POST, consumes="multipart/form-data")
     public Member updateImage(@RequestPart MultipartFile file, @PathVariable long memberId) {
         return memberService.updateImage(memberId, file);
