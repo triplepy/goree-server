@@ -17,6 +17,10 @@ public class NoteService {
 
     public Note writeNote(Note note) {
         noteMapper.insertNote(note);
-        return noteMapper.selectLastNoteByGroupId(note.getGroup().getId());
+        return findNoteByNote(note);
+    }
+
+    public Note findNoteByNote(Note note) {
+        return noteMapper.selectNoteByNote(note);
     }
 }

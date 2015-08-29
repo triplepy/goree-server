@@ -35,6 +35,49 @@
      note.note_id = #{id}
   </select>
 
+  <select id="selectNoteByNote" parameterType="com.goree.api.domain.Note" resultMap="Note">
+    SELECT
+      note.note_id,
+      note.note_content,
+      note.note_create_date,
+      groups.group_id,
+      groups.group_name,
+      groups.description,
+      member.member_id,
+      member.nickname
+    FROM
+      note INNER JOIN groups
+      on note.group_id = groups.group_id
+           INNER JOIN member
+             on note.note_writer_id = member.member_id
+    <where>
+      <if test="id != null and id > 0">
+        note.note_id = #{id}
+      </if>
+      <if test="content != null">
+        AND note.note_content = #{content}
+      </if>
+      <if test="createDate != null">
+        AND note.note_create_date = #{createDate}
+      </if>
+      <if test="group.id != null and group.id > 0">
+        AND groups.group_id = #{group.id}
+      </if>
+      <if test="group.name != null">
+        AND groups.group_name = #{group.name}
+      </if>
+      <if test="group.description != null">
+        AND groups.description = #{group.description}
+      </if>
+      <if test="noteWriter != null and noteWriter.id != null and noteWriter.id > 0">
+        AND member.member_id = #{noteWriter.id}
+      </if>
+      <if test="noteWriter != null and noteWriter.nickname != null">
+        AND member.nickname = #{noteWriter.nickname}
+      </if>
+    </where>
+  </select>
+
   <insert id="insertNote" parameterType="com.goree.api.domain.Note">
     INSERT INTO
       note ( group_id, note_writer_id, note_content)
