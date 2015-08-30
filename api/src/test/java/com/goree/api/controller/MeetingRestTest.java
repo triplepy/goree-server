@@ -51,7 +51,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
         expected.setGroup(groupOfExpected);
         Date meetingDate = Date.from(
                 LocalDate.of(
-                        2015, Month.JULY, 28).atTime(0, 0)
+                        2030, Month.JULY, 28).atTime(0, 0)
                          .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         Member promoter = memberService.findMemberAll().get(0);
@@ -66,7 +66,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
 
         String json = new ObjectMapper().writeValueAsString(expected);
 
-        performSet(post("/meeting"), json)
+        performSet(post(MeetingController.CREATE_MEETING_URL), json)
             .andExpect(jsonPath("$.title").value(expected.getTitle()))
             .andExpect(jsonPath("$.description").value(expected.getDescription()))
             .andExpect(jsonPath("$.group.name").value(expected.getGroup().getName()))
@@ -86,7 +86,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
     public void findMeetingById() throws Exception {
         int meetingId = 1;
 
-        performSet(get("/meeting/"+meetingId))
+        performSet(get(MeetingController.FIND_MEETING_BY_ID_URL, meetingId))
             .andExpect(jsonPath("$.id").value(meetingId))
             .andExpect(jsonPath("$.date", is(notNullValue())))
             .andExpect(jsonPath("$.place", is(notNullValue())))
@@ -99,7 +99,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
     public void findMeetingsByGroupId() throws Exception{
         long groupId = 1;
 
-        performSet(get("/meeting/group/" + groupId))
+        performSet(get(MeetingController.FIND_MEETINGS_BY_GROUP_ID_URL, groupId))
             .andExpect(jsonPath("$",hasSize(4)))
 
             //groupId의 값은 Long 이지만 Json의 ID 값을 Integer 형으로 인식하기때문에 1을 하드코딩...
@@ -110,7 +110,7 @@ public class MeetingRestTest extends RestTestWithDBUnit {
     public void findMeetingsByGroups() throws Exception {
         String json = "[{\"id\":1},{\"id\":2}]";
 
-        performSet(post("/meeting/groups"), json)
+        performSet(post(MeetingController.FIND_MEETINGS_BY_GROUPS_URL), json)
             .andExpect(jsonPath("$", hasSize(4)));
 
     }

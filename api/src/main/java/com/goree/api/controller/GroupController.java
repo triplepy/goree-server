@@ -1,7 +1,6 @@
 package com.goree.api.controller;
 
 import com.goree.api.domain.Group;
-import com.goree.api.domain.Tag;
 import com.goree.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +9,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/group")
 public class GroupController {
-    
+    private static final String URL_PREFIX = "/group";
+    public static final String FIND_GROUP_ALL_URL = URL_PREFIX;
+    public static final String ADD_GROUP_URL = URL_PREFIX;
+    public static final String UPDATE_IMAGE_URL = URL_PREFIX+"/id/{id}/updateImage";
+    public static final String FIND_GROUPS_JOINED_URL = URL_PREFIX+"/joined/member/id/{memberId}";
+    public static final String FIND_GROUP_BY_ID_URL = URL_PREFIX+"/id/{id}";
+    public static final String FIND_GROUP_BY_NAME_URL = URL_PREFIX+"/name/{name}";
+    public static final String JOIN_MEMBER_URL = URL_PREFIX+"/join/{groupId}/member/{memberId}";
+    public static final String FIND_GROUPS_BY_TAG_ORDERBY_MEMBERCOUNT_URL = URL_PREFIX+"/orderByMemberCount/tagName/{tagName}";
+
     @Autowired
     private GroupService groupService;
 
@@ -22,7 +29,7 @@ public class GroupController {
      * @apiGroup Group
      * @apiDescription 등록된 모든 그룹의 리스트를 가져온다.
      */
-    @RequestMapping(value="", method=RequestMethod.GET)
+    @RequestMapping(value=FIND_GROUP_ALL_URL, method=RequestMethod.GET)
     public List<Group> findGroupAll() {
         return groupService.findGroupAll();
     }
@@ -34,9 +41,9 @@ public class GroupController {
      * @apiGroup Group
      * @apiDescription Group의 정보를 받아서 등록한다.
      */
-    @RequestMapping(value="", method=RequestMethod.POST)
-    public Group makingGroup(@RequestBody Group group) {
-        return groupService.makingGroup(group);
+    @RequestMapping(value= ADD_GROUP_URL, method=RequestMethod.POST)
+    public Group addGroup(@RequestBody Group group) {
+        return groupService.addGroup(group);
     }
 
 
@@ -48,9 +55,9 @@ public class GroupController {
      * @apiParam {Number} groupId group ID (sequence)
      * @apiDescription Group ID에 해당되는 그룹의 이미지를 등록혹은 변경한다.
      */
-    @RequestMapping(value="/id/{id}/updateImage", method=RequestMethod.POST,consumes="multipart/form-data")
+    @RequestMapping(value= UPDATE_IMAGE_URL, method=RequestMethod.POST,consumes="multipart/form-data")
     public Group updateImage(@RequestPart MultipartFile file, @PathVariable long id){
-        return groupService.updateImage(file,id);
+        return groupService.updateImage(file, id);
     }
 
     /**
@@ -61,7 +68,7 @@ public class GroupController {
      * @apiSampleRequest /group/joined/member/id/1
      * @apiDescription Member ID에 해당되는 회원이 가입한 그룹리스트를 가져온다.
      */
-    @RequestMapping(value= "/joined/member/id/{memberId}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_GROUPS_JOINED_URL, method=RequestMethod.GET)
     public List<Group> findGroupsJoined(@PathVariable long memberId) {
         return groupService.findRegistedGroupsByMember(memberId);
     }
@@ -75,7 +82,7 @@ public class GroupController {
      * @apiSampleRequest /group/id/1
      * @apiDescription Group ID에 해당되는 그룹의 정보를 가져온다.
      */
-    @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_GROUP_BY_ID_URL, method=RequestMethod.GET)
     public Group findGroupById(@PathVariable long id) {
         return groupService.findGroupById(id);
     }
@@ -88,7 +95,7 @@ public class GroupController {
      * @apiSampleRequest /group/name/ThisIsGroup
      * @apiDescription Group 이름에 해당되는 그룹의 정보를 가져온다.
      */
-    @RequestMapping(value="/name/{name}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_GROUP_BY_NAME_URL, method=RequestMethod.GET)
     public Group findGroupByName(@PathVariable String name) {
         return groupService.findGroupByName(name);
     }
@@ -103,7 +110,7 @@ public class GroupController {
      * @apiSampleRequest /group/join/1/member/2
      * @apiDescription Group ID에 해당되는 그룹에, Member ID에 해당되는 멤버를 가입시킨다.
      */
-    @RequestMapping(value = "/join/{groupId}/member/{memberId}", method=RequestMethod.PUT)
+    @RequestMapping(value = JOIN_MEMBER_URL, method=RequestMethod.PUT)
     public void joinMember(@PathVariable long groupId, @PathVariable long memberId) {
         groupService.joinMember(groupId, memberId);
     }
@@ -117,7 +124,7 @@ public class GroupController {
      * @apiSampleRequest /group/orderByMemberCount/tagName/ThisIsTag
      * @apiDescription 태그 이름을 받아서 해당태그를 가진 그룹들을 멤버수를 기준으로 내림차순으로 가져온다.
      */
-    @RequestMapping(value="/orderByMemberCount/tagName/{tagName}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_GROUPS_BY_TAG_ORDERBY_MEMBERCOUNT_URL, method=RequestMethod.GET)
     public List<Group> findGroupsByTagOrderByMemberCount(@PathVariable String tagName) {
         return groupService.findGroupsByTagOrderByMemberCount(tagName);
     }

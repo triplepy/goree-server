@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/attendance")
 public class AttendanceController {
+    private static final String URL_PREFIX = "/attendance";
+    public static final String FIND_ATTENDANCE_BY_MEMBER_AND_MEETING_URL = URL_PREFIX+"/find/member/{memberId}/meeting/{meetingId}";
+    public static final String MAP_MEETING_AND_ATTENDANCE_URL = URL_PREFIX+"/map/member/{memberId}/meeting/{meetingId}/status/{status}";
 
     @Autowired
     private AttendanceService attendanceService;
@@ -23,7 +25,7 @@ public class AttendanceController {
      * @apiParam {number} meetingId  meeting's sequence number
      * @apiDescription 미팅 ID값과 멤버 ID값을 이용해 미팅 참석여부를 가져온다.
      */
-    @RequestMapping(value="/find/member/{memberId}/meeting/{meetingId}",method=RequestMethod.GET)
+    @RequestMapping(value= FIND_ATTENDANCE_BY_MEMBER_AND_MEETING_URL,method=RequestMethod.GET)
     public Attendance findAttendanceByMemberAndMeeting(@PathVariable long memberId,@PathVariable  long meetingId) {
         return attendanceService.findAttendanceByMemberAndMeeting(memberId, meetingId);
     }
@@ -37,7 +39,7 @@ public class AttendanceController {
      * @apiParam {String="Y","N"} status     attendance status
      * @apiDescription 멤버 ID값과 미팅 ID값에 해당되는 참석여부 상태를 변경한다.
      */
-    @RequestMapping(value="/map/member/{memberId}/meeting/{meetingId}/status/{status}", method=RequestMethod.PUT )
+    @RequestMapping(value= MAP_MEETING_AND_ATTENDANCE_URL, method=RequestMethod.PUT )
     public void mapMeetingAndAttendance(@PathVariable long memberId,@PathVariable long meetingId,
                                         @PathVariable Attendance.Status status) {
         attendanceService.mapMeetingAndAttendance(memberId, meetingId, status);

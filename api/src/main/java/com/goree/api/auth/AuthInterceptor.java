@@ -1,6 +1,7 @@
 package com.goree.api.auth;
 
 import com.goree.api.domain.Member;
+import com.goree.api.util.HttpHeaderConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,13 +32,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     }
 
     private void registerTokenToAuthContext(HttpServletRequest request) {
-        String tokenRecieved = request.getHeader("AuthToken");
+        String tokenRecieved = request.getHeader(HttpHeaderConstants.AUTH_TOKEN);
         AuthContext.token(tokenRecieved);
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        // do nothing
+        AuthContext.clear();
     }
 
     @Override

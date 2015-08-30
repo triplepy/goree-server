@@ -9,8 +9,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/member")
 public class MemberController {
+    private static final String URL_PREFIX = "/member";
+    public static final String FIND_MEMBER_BY_ID_URL = URL_PREFIX + "/id/{id}";
+    public static final String DELETE_MEMBER_BY_ID_URL = URL_PREFIX + "/id/{id}";
+    public static final String UPDATE_IMAGE_URL = URL_PREFIX + "/id/{memberId}/updateImage";
+    public static final String REGISTER_MEMBER_URL = URL_PREFIX + "/join";
+    public static final String FIND_MEMBER_ALL_URL = URL_PREFIX;
+
     @Autowired
     private MemberService memberService;
 
@@ -38,7 +44,7 @@ public class MemberController {
      *   }
      * @apiDescription 회원의 정보를 받아서 등록한다(회원가입)
      */
-    @RequestMapping(value="/join", method=RequestMethod.POST)
+    @RequestMapping(value= REGISTER_MEMBER_URL, method=RequestMethod.POST)
     public Member registerMember(@RequestBody Member member) {
         return memberService.registerMember(member);
     }
@@ -49,7 +55,7 @@ public class MemberController {
      * @apiGroup Member
      * @apiDescription 가입된 모든 멤버의 리스트를 가져온다.
      */
-    @RequestMapping(value="", method=RequestMethod.GET)
+    @RequestMapping(value=FIND_MEMBER_ALL_URL, method=RequestMethod.GET)
     public List<Member> findMemberAll() {
         return memberService.findMemberAll();
     }
@@ -62,7 +68,8 @@ public class MemberController {
      * @apiParam {number} member ID (sequence)
      * @apiDescription Member ID에 해당되는 회원의 이미지를 등록혹은 변경한다.
      */
-    @RequestMapping(value="/id/{memberId}/updateImage", method=RequestMethod.POST, consumes="multipart/form-data")
+    // TODO "등록 혹은 변경"인 경우 PUT 메서드가 더 적합함. 변경 필요.
+    @RequestMapping(value= UPDATE_IMAGE_URL, method=RequestMethod.POST, consumes="multipart/form-data")
     public Member updateImage(@RequestPart MultipartFile file, @PathVariable long memberId) {
         return memberService.updateImage(memberId, file);
     }
@@ -74,7 +81,7 @@ public class MemberController {
      * @apiParam {number} userId    User ID (sequence)
      * @apiDescription 멤버의 id(시퀀스)를 받아서 해당 멤버를 삭제한다.
      */
-    @RequestMapping(value="/id/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value= DELETE_MEMBER_BY_ID_URL, method=RequestMethod.DELETE)
     public void deleteMemberById(@PathVariable long id) {
         memberService.deleteMemberById(id);
     }
@@ -86,7 +93,7 @@ public class MemberController {
      * @apiParam {number} User Id   User ID (sequence)
      * @apiDescription 해당 id(시퀀스)를 가진 회원의 정보를 가져온다.
      */
-    @RequestMapping(value="/id/{id}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_MEMBER_BY_ID_URL, method=RequestMethod.GET)
     public Member findMemberById(@PathVariable long id) {
         return memberService.findMemberById(id);
     }

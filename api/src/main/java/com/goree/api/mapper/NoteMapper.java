@@ -8,5 +8,5 @@ public interface NoteMapper {
 
     void insertNote(Note note);
 
-    Note selectLastNoteByGroupId(long groupId);
+    Note selectNoteByNote(Note note);
 }

@@ -29,7 +29,7 @@ public class MemberRestTest extends RestTestWithDBUnit {
 
     @Test
     public void findMemberAll() throws Exception {
-        performSet(get("/member"))
+        performSet(get(MemberController.FIND_MEMBER_ALL_URL))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(1))
@@ -48,7 +48,8 @@ public class MemberRestTest extends RestTestWithDBUnit {
 
     @Test
     public void findMemberByid() throws Exception {
-        performSet(get("/member/id/1"))
+        long memberId = 1L;
+        performSet(get(MemberController.FIND_MEMBER_BY_ID_URL, memberId))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.email").value("arst@arst.com"))
@@ -56,17 +57,15 @@ public class MemberRestTest extends RestTestWithDBUnit {
                 .andExpect(jsonPath("$.nickname").value("arstarst"))
                 .andExpect(jsonPath("$.age").value(20))
                 .andExpect(jsonPath("$.gender").value("M"));
-
-
     }
 
     @Test
     public void deleteMemberById() throws Exception{
-        performSet(delete("/member/id/3"));
+        long memberId = 3L;
+        performSet(delete(MemberController.DELETE_MEMBER_BY_ID_URL, memberId));
 
-        performSet(get("/member"))
-                .andExpect(jsonPath("$",hasSize(2)));
-
+        performSet(get(MemberController.FIND_MEMBER_ALL_URL))
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
@@ -89,7 +88,7 @@ public class MemberRestTest extends RestTestWithDBUnit {
 
         String json = new Gson().toJson(expected);
 
-        mockMvc.perform(post("/member/join")
+        mockMvc.perform(post(MemberController.REGISTER_MEMBER_URL)
                 .content(json)
                 .contentType(MediaType.parseMediaType("application/json;charset=UTF-8"))
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
@@ -103,7 +102,6 @@ public class MemberRestTest extends RestTestWithDBUnit {
                     .andExpect(jsonPath("$.phone").value(expected.getPhone()))
                     .andExpect(jsonPath("$.job").value(expected.getJob()))
                     .andExpect(jsonPath("$.facebookUserId", is(expected.getFacebookUserId())));
-
     }
 
     @Test
@@ -115,11 +113,9 @@ public class MemberRestTest extends RestTestWithDBUnit {
         MockMultipartFile multipartFile = new MockMultipartFile("file", file.getName(),null,fis);
 
 
-        performSet(fileUpload("/member/id/"+ memberId + "/updateImage").file(multipartFile))
+        performSet(fileUpload(MemberController.UPDATE_IMAGE_URL, memberId).file(multipartFile))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.imagePath").value(notNullValue()));
-
-
     }
 
 }

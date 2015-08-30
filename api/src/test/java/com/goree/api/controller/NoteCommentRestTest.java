@@ -6,6 +6,7 @@ import com.goree.api.domain.Member;
 import com.goree.api.domain.Note;
 import com.goree.api.domain.NoteComment;
 import com.goree.api.service.NoteCommentService;
+import com.goree.api.util.HttpHeaderConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,8 +74,8 @@ public class NoteCommentRestTest {
 
         // when then
         mockMvc.perform(
-                get("/group/note/comment/" + noteComment1.getId())
-                        .header("AuthToken", settings.longLivedTokenForTest()))
+                get(NoteCommentController.FIND_NOTECOMMENT_BY_ID_URL, noteComment1.getId())
+                        .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is((int) noteComment1.getId())))
                 .andExpect(jsonPath("$.content", is(noteComment1.getContent())))
@@ -86,7 +87,7 @@ public class NoteCommentRestTest {
     }
 
     @Test
-    public void findNoteCommentsById() throws Exception {
+    public void findNoteCommentsByNoteId() throws Exception {
         NoteComment noteComment2;
         noteComment2 = new NoteComment();
         noteComment2.setId(1L);
@@ -105,8 +106,8 @@ public class NoteCommentRestTest {
 
         // when then
         mockMvc.perform(
-                get("/group/note/comment/s/note/"+note.getId())
-                .header("AuthToken", settings.longLivedTokenForTest()))
+                get(NoteCommentController.FIND_NOTECOMMENTS_BY_NOTE_ID_URL, note.getId())
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].id", is((int) noteComment1.getId())))
                 .andExpect(jsonPath("$.[0].content", is(noteComment1.getContent())))

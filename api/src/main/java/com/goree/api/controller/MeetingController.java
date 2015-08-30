@@ -9,8 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/meeting")
 public class MeetingController {
+    private static final String URL_PREFIX = "/meeting";
+    public static final String CREATE_MEETING_URL = URL_PREFIX;
+    public static final String FIND_MEETING_BY_ID_URL = URL_PREFIX+"/{meetingId}";
+    public static final String FIND_MEETINGS_BY_GROUP_ID_URL = URL_PREFIX+"/group/{groupId}";
+    public static final String FIND_MEETINGS_BY_GROUPS_URL = URL_PREFIX+"/groups";
+    public static final String FIND_MEETING_BY_MEMBER_ID_URL = URL_PREFIX+"/member/{memberId}";
+    public static final String COMINGUP_MEETINGS_OF_MEMBER_URL = URL_PREFIX+"/comingUp/member/{memberId}";
+    public static final String DONE_MEETINGS_OF_MEMBER_URL = URL_PREFIX+"/done/member/{memberId}";
+
     @Autowired
     private MeetingService meetingService;
 
@@ -45,7 +53,7 @@ public class MeetingController {
      *
      * @apiDescription 미팅 정보를 json 형태로 받아서 등록한다.
      */
-    @RequestMapping(value="", method= RequestMethod.POST)
+    @RequestMapping(value= CREATE_MEETING_URL, method= RequestMethod.POST)
     public Meeting createMeeting(@RequestBody Meeting meeting) {
         return meetingService.createMeeting(meeting);
     }
@@ -58,7 +66,7 @@ public class MeetingController {
      * @apiSampleRequest /meeting/1
      * @apiDescription 미팅 ID에 해당하는 미팅의 정보를 가져온다.
      */
-    @RequestMapping(value="/{meetingId}",method=RequestMethod.GET)
+    @RequestMapping(value= FIND_MEETING_BY_ID_URL,method=RequestMethod.GET)
     public Meeting findMeetingById(@PathVariable long meetingId) {
         return meetingService.findMeetingById(meetingId);
     }
@@ -71,7 +79,7 @@ public class MeetingController {
      * @apiSampleRequest /meeting/group/1
      * @apiDescription 그룹 ID에 해당하는 미팅의 리스트를 가져온다.
      */
-    @RequestMapping(value="/group/{groupId}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_MEETINGS_BY_GROUP_ID_URL, method=RequestMethod.GET)
     public List<Meeting> findMeetingsByGroupId(@PathVariable long groupId) {
         return meetingService.findMeetingsByGroupId(groupId);
     }
@@ -85,7 +93,7 @@ public class MeetingController {
      *  [{"id":1},{"id":2}]
      * @apiDescription 그룹 리스트(id값)을 받아서 미팅 리스트를 가져온다. (사실 필요없어 보인다...)
      */
-    @RequestMapping(value="/groups", method=RequestMethod.POST)
+    @RequestMapping(value= FIND_MEETINGS_BY_GROUPS_URL, method=RequestMethod.POST)
     public List<Meeting> findMeetingsByGroups(@RequestBody List<Group> groups) {
         return meetingService.findMeetingsByGroups(groups);
     }
@@ -98,7 +106,7 @@ public class MeetingController {
      * @apiSampleRequest /meeting/member/1
      * @apiDescription 회원 ID에 해당되는 미팅의 리스트를 가져온다.
      */
-    @RequestMapping(value="/member/{memberId}", method=RequestMethod.GET)
+    @RequestMapping(value= FIND_MEETING_BY_MEMBER_ID_URL, method=RequestMethod.GET)
     public List<Meeting> findMeetingsByMemberId(@PathVariable long memberId) {
         return meetingService.findMeetingsByMemberId(memberId);
     }
@@ -111,7 +119,7 @@ public class MeetingController {
      * @apiSampleRequest /meeting/comingUp/member/1
      * @apiDescription 회원 ID에 해당되는 미팅 중, 다가올 미팅들을 최근 순서대로 가져온다.
      */
-    @RequestMapping(value="/comingUp/member/{memberId}", method=RequestMethod.GET)
+    @RequestMapping(value= COMINGUP_MEETINGS_OF_MEMBER_URL, method=RequestMethod.GET)
     public List<Meeting> comingUpMeetingsOfMember(@PathVariable long memberId) {
         return meetingService.commingUpMeetingsOfMember(memberId);
     }
@@ -123,7 +131,7 @@ public class MeetingController {
      * @apiSampleRequest /meeting/done/member/1
      * @apiDescription 회원 ID에 해당되는 미팅 중, 지나간 미팅들을 최근 순서대로 가져온다.
      */
-    @RequestMapping(value="/done/member/{memberId}", method=RequestMethod.GET)
+    @RequestMapping(value= DONE_MEETINGS_OF_MEMBER_URL, method=RequestMethod.GET)
     public List<Meeting> doneMeetingsOfMember(@PathVariable long memberId) {
         return meetingService.doneMeetingsOfMember(memberId);
     }

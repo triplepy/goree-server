@@ -12,8 +12,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebIntegrationTest({"server.port=48181"})
 abstract public class RestTestWithDBUnit extends TestWithDBUnit {
@@ -36,7 +36,7 @@ abstract public class RestTestWithDBUnit extends TestWithDBUnit {
 
     public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder) throws Exception{
         return this.mockMvc.perform(requestBuilder.accept(MediaType.parseMediaType("application/json;charset=UTF-8"))
-                .header("AuthToken", settings.longLivedTokenForTest()))
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest()))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -45,7 +45,7 @@ abstract public class RestTestWithDBUnit extends TestWithDBUnit {
 
     public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder,String jsonData) throws Exception{
         return this.mockMvc.perform(requestBuilder
-                .header("AuthToken", settings.longLivedTokenForTest())
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest())
                 .contentType(MediaType.parseMediaType("application/json;charset=UTF-8")).content(jsonData)
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andDo(print())
@@ -55,7 +55,7 @@ abstract public class RestTestWithDBUnit extends TestWithDBUnit {
 
     public ResultActions performSet(MockHttpServletRequestBuilder requestBuilder,byte[] contentData) throws Exception{
         return this.mockMvc.perform(requestBuilder
-                .header("AuthToken", settings.longLivedTokenForTest())
+                .header(HttpHeaderConstants.AUTH_TOKEN, settings.longLivedTokenForTest())
                 .contentType(MediaType.parseMediaType("application/json;charset=UTF-8")).content(contentData)
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andDo(print())

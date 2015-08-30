@@ -8,7 +8,12 @@ import com.goree.api.mapper.MeetingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.*;
+import static java.util.Objects.*;
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class MeetingService {
@@ -20,8 +25,19 @@ public class MeetingService {
     private GroupService groupService;
 
     public Meeting createMeeting(Meeting meeting) {
+        checkArgument(meeting != null);
+        checkArgument(isNotBlank(meeting.getTitle()));
+        requireNonNull(meeting.getGroup(), "group must not be null.");
+        requireNonNull(meeting.getDate(), "date must not be null");
+        checkArgument(meeting.getDate().after(new Date()));
+        requireNonNull(meeting.getPromoter(), "promoter must not be null.");
+        requireNonNull(meeting.getPlace(),"place must not be null");
+
+
         Place placeExists = placeService.findPlaceByItself(meeting.getPlace());
-        if (placeExists == null) {
+
+        boolean placeIsNotExists = placeExists == null;
+        if(placeIsNotExists) {
             Place created = placeService.createPlace(meeting.getPlace());
             meeting.setPlace(created);
         }

@@ -21,4 +21,9 @@ public class AuthContext {
     public static Member memberInfo() {
         return memberInfo.get();
     }
+
+    public static void clear() {
+        token.remove();
+        memberInfo.remove();
+    }
 }

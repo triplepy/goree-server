@@ -8,9 +8,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNot.not;
 
 
@@ -30,7 +33,7 @@ public class NoteServiceTest extends TestWithDBUnit{
     }
 
     @Test
-    public void findNoteById(){
+    public void findNoteById() {
         Note expected = new Note();
         expected.setId(1);
         expected.setContent("findNoteById");
@@ -46,22 +49,26 @@ public class NoteServiceTest extends TestWithDBUnit{
     }
 
     @Test
-    public void writeNote(){
-        Note expected = new Note();
-        expected.setContent("arstarstarst");
+    public void writeNote() {
+        // given
+        Note newNote = new Note();
+        newNote.setContent("content");
+        Member noteWriter = memberService.findMemberById(2L);
+        newNote.setNoteWriter(noteWriter);
+        Group group = groupService.findGroupById(1L);
+        newNote.setGroup(group);
 
-        Group group = groupService.findGroupById(1);
-        expected.setGroup(group);
+        // when
+        Note written = noteService.writeNote(newNote);
 
-        Member member = memberService.findMemberAll().get(1);
-        expected.setNoteWriter(member);
-
-        Note actual = noteService.writeNote(expected);
-
-        Assert.assertEquals(expected, actual);
-        assertThat(actual.getGroup(),is(not(nullValue())));
-        assertThat(actual.getNoteWriter(), is(not(nullValue())));
-        assertThat(actual.getCreateDate(), is(not(nullValue())));
+        // then
+        assertThat(written.getId(), greaterThan(0L));
+        Date now = new Date();
+        assertThat(written.getCreateDate(), is(not(nullValue())));
+        assertThat(written.getCreateDate().before(now), is(true));
+        assertThat(written.getContent(), is(newNote.getContent()));
+        assertThat(written.getNoteWriter().getId(), is(newNote.getNoteWriter().getId()));
+        assertThat(written.getGroup().getId(), is(newNote.getGroup().getId()));
     }
 
 }

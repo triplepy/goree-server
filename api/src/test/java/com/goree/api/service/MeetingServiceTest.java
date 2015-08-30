@@ -26,7 +26,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class MeetingServiceTest extends TestWithDBUnit {
 
@@ -62,7 +62,7 @@ public class MeetingServiceTest extends TestWithDBUnit {
         expected.setGroup(groupOfExpected);
         Date meetingDate = Date.from(
                 LocalDate.of(
-                        2015, Month.JULY, 28).atTime(0, 0)
+                        2030, Month.JULY, 28).atTime(0, 0)
                          .atZone(ZoneId.systemDefault()).toInstant());
         expected.setDate(meetingDate);
         Member promoter = memberService.findMemberAll().get(0);
