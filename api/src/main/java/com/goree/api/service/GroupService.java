@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.google.common.base.Preconditions.*;
-import static java.util.Objects.*;
-import static org.apache.commons.lang3.StringUtils.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 @Transactional

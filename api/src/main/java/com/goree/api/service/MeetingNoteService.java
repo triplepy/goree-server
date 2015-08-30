@@ -6,9 +6,9 @@ import com.goree.api.mapper.MeetingNoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.google.common.base.Preconditions.*;
-import static java.util.Objects.*;
-import static org.apache.commons.lang3.StringUtils.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 public class MeetingNoteService {
