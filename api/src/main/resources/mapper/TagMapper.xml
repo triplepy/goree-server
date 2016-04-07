@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.TagMapper">
+  <resultMap type="com.goree.api.domain.Tag" id="Tag">
+    <id column="tag_id" property="id" javaType="long" />
+    <result column="tag_name" property="name" />
+    <result column="provided" property="provided" />
+  </resultMap>
+  
+  <insert id="insertTag" parameterType="com.goree.api.domain.Tag">
+    INSERT INTO tag (tag_name) VALUES(#{name})
+  </insert>
+  
+  <insert id="insertTags">
+    INSERT INTO tag (tag_name) VALUES 
+    <foreach item="item" collection="list" separator=",">
+        (#{item.name})
+    </foreach>
+  
+  </insert>
+  
+  <select id="selectTagByName" parameterType="string" resultMap="Tag">
+    SELECT * FROM tag WHERE tag_name = #{name}
+  </select>
+  
+  <select id="selectTagById" parameterType="long" resultMap="Tag">
+    SELECT * FROM tag WHERE tag_id = #{id}
+  </select>
+  
+  <select id="selectTagByStartWord" parameterType="string" resultMap="Tag">
+    SELECT 
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided,
+        (SELECT
+		    (SELECT COUNT(member_id) FROM member_has_tag WHERE tag_id = tag.tag_id) 
+		    + 
+		    (SELECT COUNT(group_id) FROM group_has_tag WHERE tag_id = tag.tag_id)
+		FROM DUAL) AS count
+    FROM 
+        tag WHERE tag_name LIKE CONCAT(#{startWords}, '%')
+    ORDER BY 
+        count DESC,
+        tag.tag_name ASC
+  </select>
+</mapper>

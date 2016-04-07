@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <member member_id="1" email="NoteCommentTest" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
+    <member member_id="2" email="NoteCommentTest2" password="arstarst" full_name="arstarstar" nickname="asdf" age="20" gender="M"/>
+    <groups group_id="1" leader_id="2" group_name="abcbacba"  description="artsarstars"  />
+    <note note_id="1" group_id="1" note_writer_id="1" note_content="NoteCommentTest" />
+    <note_comment note_comment_id="1" note_id="1" note_comment_writer_id="2" note_comment_content="NoteComcomcomcomcocm" />
+    <note_comment note_comment_id="2" note_id="1" note_comment_writer_id="1" note_comment_content="noteComcom" />
+</dataset>

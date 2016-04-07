@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.MeetingNoteMapper">
+  <resultMap type="com.goree.api.domain.MeetingNote" id="MeetingNote">
+    <id column="meeting_note_id" property="id" javaType="long" />
+    <result column="note_content" property="content" />
+    <result column="note_create_date" property="createdDate" />
+    <association javaType="com.goree.api.domain.Meeting" property="meeting" >
+      <id column="meeting_id" property="id" javaType="long" />
+      <result column="meeting_title" property="title" />
+    </association>
+    <association javaType="com.goree.api.domain.Member" property="writer" >
+      <id column="member_id" property="id" javaType="long" />
+      <result column="nickname" property="nickname" />
+    </association>
+
+  </resultMap>
+
+  <select id="selectMeetingNoteById" resultMap="MeetingNote" parameterType="long" >
+    SELECT
+      meeting_note.meeting_note_id,
+      meeting_note.note_content,
+      meeting_note.note_create_date,
+      meeting.meeting_id,
+      meeting.meeting_title,
+      meeting.meeting_desc,
+      member.member_id,
+      member.nickname
+    FROM
+      meeting_note INNER JOIN meeting
+      on meeting_note.meeting_id = meeting.meeting_id
+           INNER JOIN member
+             on meeting_note.note_writer_id = member.member_id
+    WHERE
+     meeting_note.meeting_note_id = #{id}
+  </select>
+
+  <insert id="insertMeetingNote" parameterType="com.goree.api.domain.MeetingNote">
+    INSERT INTO
+      meeting_note ( meeting_id, note_writer_id, note_content)
+    VALUES
+      ( #{meeting.id}, #{writer.id}, #{content})
+
+  </insert>
+
+  <select id="selectLastMeetingNoteByMeetingId" resultMap="MeetingNote" >
+    SELECT
+      meeting_note.meeting_note_id,
+      meeting_note.note_content,
+      meeting_note.note_create_date,
+      meeting.meeting_id,
+      meeting.meeting_title,
+      meeting.meeting_desc,
+      member.member_id,
+      member.nickname
+    FROM
+      meeting_note INNER JOIN meeting
+       on meeting_note.meeting_id = meeting.meeting_id
+         INNER JOIN member
+           on meeting_note.note_writer_id = member.member_id
+    WHERE
+      meeting_note.meeting_id = #{param1}
+    ORDER BY meeting_note_id DESC
+      LIMIT 1
+
+  </select>
+
+
+</mapper>

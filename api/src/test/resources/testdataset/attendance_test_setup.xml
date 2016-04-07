@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <member member_id="1" email="Attendance Test" password="arstarst" full_name="arstarstar" nickname="arstarst" age="20" gender="M"/>
+  <member member_id="2" email="Attendance Test2" password="arstarst2" full_name="a2rstarstar" nickname="arst2arst" age="20" gender="M"/>
+  <member member_id="3" email="Attendance Test3" password="arstarst3" full_name="a3r3starstar" nickname="arst332arst" age="20" gender="M"/>
+
+  <groups group_id="1" leader_id="1" group_name="meeting_test"  description="artsarstars"  />
+  <place place_id="1" place_name="place name" address="place address" x_coordinate="36.017194" y_coordinate="128.6978236" />
+
+  <meeting meeting_id="1" meeting_desc="every body!!" meeting_title="title" group_id="1" date="2015-10-23 00:00:00" promoter_id="1" place_id="1" />
+
+  <meeting_has_member meeting_id="1" member_id="1" attendance="N" />
+  <meeting_has_member meeting_id="1" member_id="2" attendance="Y" />
+</dataset>

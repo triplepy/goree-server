@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goree.api.mapper.MemberMapper">
+  <resultMap type="com.goree.api.domain.Member" id="Member">
+    <id column="member_id" property="id" javaType="long" />
+    <result column="email" property="email" />
+    <result column="full_name" property="fullName" />
+    <result column="nickname" property="nickname" />
+    <result column="facebook" property="facebook" />
+    <result column="facebook_user_id" property="facebookUserId" />
+    <result column="twitter" property="twitter" />
+    <result column="kakaotalk" property="kakaotalk" />
+    <result column="age" property="age" />
+    <result column="job" property="job" />
+    <result column="gender" property="gender" />
+    <result column="phone" property="phone" />
+    <result column="profile_img_url" property="imagePath" />
+    <association property="tags" resultMap="com.goree.api.mapper.TagMapper.Tag" />
+
+  </resultMap>
+  
+  <insert id="insertMember" parameterType="com.goree.api.domain.Member" >
+    INSERT INTO 
+        member (email, password, full_name, nickname, facebook, facebook_user_id, twitter, kakaotalk, job, age, gender, phone)
+    VALUES
+        (#{email},#{password},#{fullName},#{nickname}, #{facebook}, #{facebookUserId}, #{twitter},#{kakaotalk},#{job}, #{age},#{gender},#{phone})
+  </insert>
+  <select id="selectMemberByEmail" parameterType="string" resultMap="Member">
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE member.email = #{email}
+  </select>
+  <select id="selectMemberAll" resultMap="Member">
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+  </select>
+  <select id="selectMemberById" parameterType="long" resultMap="Member">
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE member.member_id = #{id}
+  </select>
+  <select id="selectMemberByFacebookUserId" parameterType="string" resultMap="Member">
+    SELECT
+        member.member_id,
+        member.email,
+        member.full_name,
+        member.nickname,
+        member.facebook,
+        member.facebook_user_id,
+        member.twitter,
+        member.kakaotalk,
+        member.age,
+        member.gender,
+        member.phone,
+        member.profile_img_url,
+        member.job,
+        tag.tag_id,
+        tag.tag_name,
+        tag.provided
+    FROM
+        member
+            LEFT OUTER JOIN member_has_tag ON member.member_id = member_has_tag.member_id
+            LEFT OUTER JOIN tag ON tag.tag_id = member_has_tag.tag_id
+    WHERE
+        member.facebook_user_id = #{id}
+  </select>
+  <delete id="deleteMemberById" parameterType="long">
+    DELETE FROM member WHERE member_id = #{id}
+  </delete>
+  <insert id="insertMemberHasTag">
+    INSERT INTO member_has_tag (member_id, tag_id) 
+    VALUES (#{param1}, #{param2})
+  </insert>
+
+  <update id="updateImagePath" >
+      UPDATE member
+      SET profile_img_url = #{param2}
+      WHERE member_id = #{param1}
+  </update>
+</mapper>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <place place_id="1" place_name="findPlaceById Test" address="Adddrerererereresss" x_coordinate="36.017194" y_coordinate="128.6978236" />
+    <place place_id="2" place_name="findPlaceByItself" address="findPlaceByItself ADDD" x_coordinate="36.017194" y_coordinate="128.6978236" />
+    
+</dataset>
